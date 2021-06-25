@@ -33,6 +33,7 @@ public class PostSaveController {
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
         try {
             postService.createPost(post);
+            
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
