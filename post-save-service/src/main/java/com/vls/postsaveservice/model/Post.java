@@ -1,12 +1,14 @@
 package com.vls.postsaveservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "post")
-public class post {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +19,7 @@ public class post {
     private String description;
 
     @Column(name = "created_time")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date created_time;
 
     @Column(name = "thing_id")
@@ -28,10 +31,10 @@ public class post {
     @Column(name = "exchange_method")
     private String exchange_method;
 
-    public post() {
+    public Post() {
     }
 
-    public post(String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method) {
+    public Post(String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method) {
         this.description = description;
         this.created_time = created_time;
         this.thing_id = thing_id;
@@ -39,7 +42,7 @@ public class post {
         this.exchange_method = exchange_method;
     }
 
-    public post(UUID id, String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method) {
+    public Post(UUID id, String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
