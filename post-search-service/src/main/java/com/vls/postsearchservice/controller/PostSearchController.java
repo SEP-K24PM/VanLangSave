@@ -21,7 +21,8 @@ public class PostSearchController {
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
     public String posts(@RequestBody String name) {
         List<Post> posts = new ArrayList<Post>();
-        postRepository.findByThingName(name).forEach(posts::add);
+        postRepository.findBy(name).forEach(posts::add);
         return name;
     }
+
 }

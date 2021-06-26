@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PostRepository extends ElasticsearchRepository<Post, UUID> {
-    List<Post> findByThingName(String name);
+    List<Post> findBy(String name);
 }
