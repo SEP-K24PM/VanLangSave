@@ -1,6 +1,11 @@
 package com.vls.postsaveservice.service;
 
+import com.vls.postsaveservice.domainobject.CategoryObject;
+import com.vls.postsaveservice.domainobject.PostObject;
+import com.vls.postsaveservice.domainobject.ThingObject;
+import com.vls.postsaveservice.model.Category;
 import com.vls.postsaveservice.model.Post;
+import com.vls.postsaveservice.model.Thing;
 import com.vls.postsaveservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +28,9 @@ public class PostService {
         return list;
     }
 
-    public void createPost(Post post) {
-        postRepository.save(post);
+    public Post createPost(Post post) {
+        return postRepository.save(post);
     }
+
+
 }
