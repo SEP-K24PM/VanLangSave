@@ -19,10 +19,10 @@ public class PostSearchController {
     }
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public String posts(@RequestBody String name) {
+    public List<Post> posts(@RequestBody String name) {
         List<Post> posts = new ArrayList<Post>();
         postRepository.findBy(name).forEach(posts::add);
-        return name;
+        return posts;
     }
 
 }
