@@ -1,4 +1,4 @@
-package com.vls.adminservice.Entity;
+package com.vls.adminservice.Module;
 
 
 import javax.persistence.*;
