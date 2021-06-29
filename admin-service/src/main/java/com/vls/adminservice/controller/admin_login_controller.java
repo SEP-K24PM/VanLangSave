@@ -1,11 +1,13 @@
 package com.vls.adminservice.controller;
 
+import ch.qos.logback.classic.Logger;
 import com.vls.adminservice.Entity.Admin_account;
 import com.vls.adminservice.repository.admin_accountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,9 +21,12 @@ public class admin_login_controller {
     @GetMapping("/admin_acc")
     public String listAll(Model model) {
         List<Admin_account> listAcc = admin_accRepo.findAll();
-        model.addAttribute("list", listAcc);
+        if (listAcc != null){
+            return "succes";
+        }else{
+            return "fail";
+        }
 
-        return "success";
     }
     @GetMapping("/hello")
     public String hello() {
