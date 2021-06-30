@@ -15,10 +15,13 @@ import java.util.List;
 
 @RestController
 public class admin_login_controller {
+
     @GetMapping("/")
-    public String hello() {
+    public String hello(Model model) {
+        model.addAttribute("test", "test");
         return "login_demoTemp";
     }
+
     @Autowired
     private admin_accountRepository admin_accRepo;
 
@@ -36,4 +39,5 @@ public class admin_login_controller {
             return "fail";
         }
     }
+
 }
