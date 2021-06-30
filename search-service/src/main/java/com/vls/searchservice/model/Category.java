@@ -1,16 +1,10 @@
-package com.vls.postduplicationservice.model;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+package com.vls.searchservice.model;
 
 import java.util.UUID;
 
 public class Category {
-    @Id
     private UUID id;
 
-    @Field(type = FieldType.Text)
     private String category_name;
 
     public Category() {

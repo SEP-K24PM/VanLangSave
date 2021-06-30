@@ -1,11 +1,6 @@
 package com.vls.postduplicationservice.service;
 
-import com.vls.postduplicationservice.domainobject.CategoryObject;
-import com.vls.postduplicationservice.domainobject.PostObject;
-import com.vls.postduplicationservice.domainobject.ThingObject;
-import com.vls.postduplicationservice.model.Category;
-import com.vls.postduplicationservice.model.Post;
-import com.vls.postduplicationservice.model.Thing;
+import com.vls.postduplicationservice.dto.PostElastic;
 import com.vls.postduplicationservice.repository.PostRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
@@ -23,49 +18,14 @@ public class RabbitMQService implements RabbitListenerConfigurer {
         this.postRepository = postRepository;
     }
 
-
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar rabbitListenerEndpointRegistrar) {
 
     }
 
     @RabbitListener(queues = "post_queue")
-    public void receivedMessage(PostObject postObject) {
-        saveIntoElastic(postObject);
+    public void receivedMessage(PostElastic postElastic) {
+        postRepository.save(postElastic);
     }
 
-    private void saveIntoElastic(PostObject postObject) {
-        Post post = convertToPost(postObject);
-        postRepository.save(post);
-    }
-
-    private Post convertToPost(PostObject postObject) {
-        Post post = new Post(postObject.getId(),
-                postObject.getDescription(),
-                postObject.getExchange_methods(),
-                postObject.getCreated_time(),
-                convertToThing(postObject.getThing()));
-        return post;
-    }
-
-    private Thing convertToThing(ThingObject thingObject) {
-        Thing thing = new Thing(
-                thingObject.getId(),
-                thingObject.getThing_name(),
-                thingObject.getOrigin(),
-                thingObject.getPrice(),
-                thingObject.getQuantity(),
-                thingObject.getUsed_time(),
-                convertToCategory(thingObject.getCategoryObject())
-        );
-        return thing;
-    }
-
-    private Category convertToCategory(CategoryObject categoryObject) {
-        Category category = new Category(
-                categoryObject.getId(),
-                categoryObject.getCategory_name()
-        );
-        return category;
-    }
 }
