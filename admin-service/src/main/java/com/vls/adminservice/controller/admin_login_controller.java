@@ -32,12 +32,7 @@ public class admin_login_controller {
         if (!listAcc.isEmpty() && listAcc.size() == 1) {
             for (Admin_account acc: listAcc) {
                 Admin_account account = new Admin_account(acc);
-                if ( session == null){
-                    session.setAttribute("id",account.getUUID());
-                }
-                else {
-                    session = null;
-                }
+                session.setAttribute("id",account.getUUID());
                 temp = "id : " + account.getUUID();
             }
             return temp;
