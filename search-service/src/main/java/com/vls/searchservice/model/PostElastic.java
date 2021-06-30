@@ -1,10 +1,15 @@
 package com.vls.searchservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class PostElastic {
     private String id;
     private String description;
     private String exchange_methods;
-    private String created_time;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
+    private Date created_time;
     private String thing_name;
     private String origin;
     private String category_name;
@@ -12,7 +17,7 @@ public class PostElastic {
     public PostElastic() {
     }
 
-    public PostElastic(String id, String description, String exchange_methods, String created_time, String thing_name, String origin, String category_name) {
+    public PostElastic(String id, String description, String exchange_methods, Date created_time, String thing_name, String origin, String category_name) {
         this.id = id;
         this.description = description;
         this.exchange_methods = exchange_methods;
@@ -22,7 +27,7 @@ public class PostElastic {
         this.category_name = category_name;
     }
 
-    public PostElastic(String description, String exchange_methods, String created_time, String thing_name, String origin, String category_name) {
+    public PostElastic(String description, String exchange_methods, Date created_time, String thing_name, String origin, String category_name) {
         this.description = description;
         this.exchange_methods = exchange_methods;
         this.created_time = created_time;
@@ -55,11 +60,11 @@ public class PostElastic {
         this.exchange_methods = exchange_methods;
     }
 
-    public String getCreated_time() {
+    public Date getCreated_time() {
         return created_time;
     }
 
-    public void setCreated_time(String created_time) {
+    public void setCreated_time(Date created_time) {
         this.created_time = created_time;
     }
 

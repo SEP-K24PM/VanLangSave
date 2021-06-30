@@ -1,5 +1,6 @@
 package com.vls.postsearchservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -16,6 +17,7 @@ public class PostElastic {
     @Field(type = FieldType.Text)
     private String exchange_methods;
     @Field(type = FieldType.Text)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date created_time;
     @Field(type = FieldType.Text)
     private String thing_name;

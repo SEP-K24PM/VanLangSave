@@ -24,8 +24,8 @@ public class RabbitMQService implements RabbitListenerConfigurer {
     }
 
     @RabbitListener(queues = "post_queue")
-    public void receivedMessage(PostElastic postElastic) {
-        postRepository.save(postElastic);
+    public void receivedMessage(PostElastic postelastic) {
+        postRepository.save(postelastic);
     }
 
 }

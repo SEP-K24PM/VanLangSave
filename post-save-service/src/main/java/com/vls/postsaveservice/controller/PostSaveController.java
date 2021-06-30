@@ -37,8 +37,8 @@ public class PostSaveController {
         try {
             Post newPost = postService.createPost(post);
             new Thread(() -> {
-                PostElastic postElastic = rabbitMQSender.convertToPostElastic(newPost);
-                rabbitMQSender.send(postElastic);
+                PostElastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
+                rabbitMQSender.send(postelastic);
             }).start();
 
             return new ResponseEntity<>(null, HttpStatus.CREATED);
