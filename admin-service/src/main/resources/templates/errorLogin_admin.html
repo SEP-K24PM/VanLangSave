@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Failed</title>
+  <style>
+    div{
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>
+      Login Fail
+    </h1>
+    <br>
+    <h2>
+      Check again your username and password
+    </h2>
+  </div>
+  <form th:action="@{/}">
+    <button type="submit">Go Back</button>
+  </form>
+</body>
+</html>
