@@ -1,35 +1,24 @@
-package com.vls.postsearchservice.model;
+package com.vls.searchservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "post", createIndex = false)
-public class PostElastic {
-    @Id
+public class postelastic {
     private String id;
-    @Field(type = FieldType.Text)
     private String description;
-    @Field(type = FieldType.Text)
     private String exchange_methods;
-    @Field(type = FieldType.Text)
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date created_time;
-    @Field(type = FieldType.Text)
+    private boolean visible;
     private String thing_name;
-    @Field(type = FieldType.Text)
     private String origin;
-    @Field(type = FieldType.Text)
     private String category_name;
 
-    public PostElastic() {
+    public postelastic() {
     }
 
-    public PostElastic(String id, String description, String exchange_methods, Date created_time, String thing_name, String origin, String category_name) {
+    public postelastic(String id, String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
         this.id = id;
         this.description = description;
         this.exchange_methods = exchange_methods;
@@ -39,7 +28,7 @@ public class PostElastic {
         this.category_name = category_name;
     }
 
-    public PostElastic(String description, String exchange_methods, Date created_time, String thing_name, String origin, String category_name) {
+    public postelastic(String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
         this.description = description;
         this.exchange_methods = exchange_methods;
         this.created_time = created_time;
@@ -80,6 +69,14 @@ public class PostElastic {
         this.created_time = created_time;
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     public String getThing_name() {
         return thing_name;
     }
@@ -106,11 +103,12 @@ public class PostElastic {
 
     @Override
     public String toString() {
-        return "PostElastic{" +
+        return "postelastic{" +
                 "id='" + id + '\'' +
                 ", description='" + description + '\'' +
                 ", exchange_methods='" + exchange_methods + '\'' +
-                ", created_time='" + created_time + '\'' +
+                ", created_time=" + created_time +
+                ", visible=" + visible +
                 ", thing_name='" + thing_name + '\'' +
                 ", origin='" + origin + '\'' +
                 ", category_name='" + category_name + '\'' +

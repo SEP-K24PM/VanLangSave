@@ -1,6 +1,6 @@
 package com.vls.postduplicationservice.service;
 
-import com.vls.postduplicationservice.dto.PostElastic;
+import com.vls.postduplicationservice.dto.postelastic;
 import com.vls.postduplicationservice.repository.PostRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
@@ -24,8 +24,8 @@ public class RabbitMQService implements RabbitListenerConfigurer {
     }
 
     @RabbitListener(queues = "post_queue")
-    public void receivedMessage(PostElastic postelastic) {
-        postRepository.save(postelastic);
+    public void receivedMessage(postelastic post) {
+        postRepository.save(post);
     }
 
 }

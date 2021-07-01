@@ -1,6 +1,6 @@
 package com.vls.postsaveservice.controller;
 
-import com.vls.postsaveservice.dto.PostElastic;
+import com.vls.postsaveservice.dto.postelastic;
 import com.vls.postsaveservice.model.Post;
 import com.vls.postsaveservice.service.*;
 
@@ -37,7 +37,7 @@ public class PostSaveController {
         try {
             Post newPost = postService.createPost(post);
             new Thread(() -> {
-                PostElastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
+                postelastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
                 rabbitMQSender.send(postelastic);
             }).start();
 

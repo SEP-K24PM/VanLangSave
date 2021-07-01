@@ -80,9 +80,9 @@
             <div class="container">
                 <h2 class="content__CTA" th:if="${blankInput == false}" th:utext="${resultCountMessage}"></h2>
                 <h2 class="content__CTA" th:unless="${blankInput == true}">Vui lòng nhập từ khoá để tìm kiếm</h2>
-                <div th:if="${blankInput == false}" class="mainProduct__list">
-                    <div th:if="${not#lists.isEmpty(result)}" class="mainProduct__list-item">
-                        <a th:each="post: ${result}" href="/productDetail.html">
+                <div th:if="${blankInput == false && not#lists.isEmpty(result)}" class="mainProduct__list">
+                    <div th:each="post: ${result}" class="mainProduct__list-item">
+                        <a href="/productDetail.html">
                             <div class="item-img">
                                 <!--Ảnh sản phẩm-->
 <!--                                <img th:src="@{~/img/detail/detail1.1.jpg}" alt="">-->
@@ -110,12 +110,6 @@
                             </div>
                         </a>
                     </div>
-                </div>
-                <div th:unless="${blankInput == true}" class="paging-btn">
-                    <span class="active">1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
                 </div>
             </div>
         </section>

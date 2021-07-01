@@ -8,34 +8,37 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = PostElastic.class)
-public class PostElastic {
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = postelastic.class)
+public class postelastic {
     private String id;
     private String description;
     private String exchange_methods;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date created_time;
+    private boolean visible;
     private String thing_name;
     private String origin;
     private String category_name;
 
-    public PostElastic() {
+    public postelastic() {
     }
 
-    public PostElastic(String id, String description, String exchange_methods, Date created_time, String thing_name, String origin, String category_name) {
+    public postelastic(String id, String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
         this.id = id;
         this.description = description;
         this.exchange_methods = exchange_methods;
         this.created_time = created_time;
+        this.visible = visible;
         this.thing_name = thing_name;
         this.origin = origin;
         this.category_name = category_name;
     }
 
-    public PostElastic(String description, String exchange_methods, Date created_time, String thing_name, String origin, String category_name) {
+    public postelastic(String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
         this.description = description;
         this.exchange_methods = exchange_methods;
         this.created_time = created_time;
+        this.visible = visible;
         this.thing_name = thing_name;
         this.origin = origin;
         this.category_name = category_name;
@@ -73,6 +76,14 @@ public class PostElastic {
         this.created_time = created_time;
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     public String getThing_name() {
         return thing_name;
     }
@@ -99,11 +110,12 @@ public class PostElastic {
 
     @Override
     public String toString() {
-        return "PostElastic{" +
+        return "postelastic{" +
                 "id='" + id + '\'' +
                 ", description='" + description + '\'' +
                 ", exchange_methods='" + exchange_methods + '\'' +
-                ", created_time='" + created_time + '\'' +
+                ", created_time=" + created_time +
+                ", visible=" + visible +
                 ", thing_name='" + thing_name + '\'' +
                 ", origin='" + origin + '\'' +
                 ", category_name='" + category_name + '\'' +
