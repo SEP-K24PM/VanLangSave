@@ -17,6 +17,6 @@ public interface admin_accountRepository extends JpaRepository<Admin_account, St
     @Query("SELECT acc FROM Admin_account acc")
     List<Admin_account> findall();
 
-    //@Query("SELECT r.id FROM Admin_account r where r.name = :name")
-    //List<Long> find(@Param("name") String name);
+    @Query("SELECT info.id FROM Admin_account info where info.id = :id")
+    List<Admin_account> findAdminByID(@Param("id") String id);
 }

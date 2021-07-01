@@ -21,6 +21,9 @@ public class Admin_account {
     public String getUUID(){
         return id;
     }
+    public String getName(){
+        return username;
+    }
     @Override
     public String toString(){
         String result= "username:"+this.username+" pwd"+this.pwd + " uuid" + this.id;

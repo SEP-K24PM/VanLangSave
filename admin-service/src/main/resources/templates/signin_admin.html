@@ -105,7 +105,7 @@
         <a class="logo" href="index.html">
             <img src="img/icons/10.svg" alt="">
         </a>
-        <form class="signin-form" autocomplete="off" th:action="@{admin/login}" th:object="${Admin_account}" method="post">
+        <form class="signin-form" autocomplete="off" th:action="@{admin/welcome}" th:object="${Admin_account}" method="post">
                     <h3>Sign In</h3>
                     <input type="text" name="username" placeholder="Username" th:value="${username}" />
                     <div class="input-icon">
