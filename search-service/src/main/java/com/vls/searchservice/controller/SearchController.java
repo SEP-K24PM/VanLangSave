@@ -34,10 +34,14 @@ public class SearchController {
 
     @RequestMapping("/posts")
     public String posts(@RequestBody String search, Model model) throws ParseException {
-        List<LinkedHashMap> result = restTemplate.postForObject("http://post-search-service/posts", search, List.class);
-        List<PostElastic> convertedResult = postService.convertToPostElasticList(result);
-        model.addAttribute("result", convertedResult);
-        model.addAttribute("resultCountMessage", "Có " + convertedResult.size() + " kết quả");
+        if(!search.isBlank()) {
+            List<LinkedHashMap> result = restTemplate.postForObject("http://post-search-service/posts", search, List.class);
+            List<PostElastic> convertedResult = postService.convertToPostElasticList(result);
+            model.addAttribute("result", convertedResult);
+            model.addAttribute("resultCountMessage", "Có " + convertedResult.size() + " kết quả");
+        } else {
+            model.addAttribute("blankInput", true);
+        }
         return "result";
     }
 }

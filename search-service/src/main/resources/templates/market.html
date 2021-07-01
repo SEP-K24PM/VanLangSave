@@ -68,11 +68,11 @@
             <div class="search-input">
                 <form id="form-search" action="/search/posts" method="post">
                     <a href="" target="_blank" hidden></a>
-                    <input th:name="search" type="text" placeholder="Tìm kiếm" />
-                    <div class="autocom-box">
-                        <!-- here list are inserted from javascript -->
-                    </div>
-                    <i onclick="submit()" class="icon" ><img th:src="@{/img/icons/icons8-search.svg}"/></i>
+                    <input th:name="search" type="text" placeholder="Tìm kiếm" required />
+<!--                    <div class="autocom-box">-->
+<!--                        &lt;!&ndash; here list are inserted from javascript &ndash;&gt;-->
+<!--                    </div>-->
+                    <button type="submit" class="searchMarket"><i class="icon"><img  src="/img/icons/icons8-search.svg"></img></i></button>
                 </form>
             </div>
         </div>
@@ -200,11 +200,6 @@
     </footer>
     <script type="text/javascript" th:src="@{~/dest/jsmain.min.js}"></script>
     <script type="text/javascript" th:src="@{~/dest/main.js}"></script>
-    <script>
-        function submit() {
-            document.getElementById("form-search").submit();
-        }
-    </script>
     </body>
 
 </html>
