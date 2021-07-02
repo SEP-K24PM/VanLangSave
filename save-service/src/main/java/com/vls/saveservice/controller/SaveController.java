@@ -2,12 +2,14 @@ package com.vls.saveservice.controller;
 
 import com.vls.saveservice.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class SaveController {
 
     private final RestTemplate restTemplate;
@@ -29,5 +31,8 @@ public class SaveController {
         return result;
     }
 
-
+    @RequestMapping(value = "/thing", method = RequestMethod.GET)
+    public String createThing(Model model) {
+        return "createThing";
+    }
 }
