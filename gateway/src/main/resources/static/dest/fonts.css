@@ -1,0 +1,71 @@
+/* FONT FACE - font-display: fallback; */
+@font-face {
+    font-family: 'KS';
+    src: url('../fonts/KeplerStd-Disp.woff2') format('woff2'),
+    url('../fonts/KeplerStd-Disp.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+@font-face {
+    font-family: 'LatoThin';
+    src: url('../fonts/Lato-Thin.woff2') format('woff2'),
+    url('../fonts/Lato-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'LatoMedium';
+    src: url('../fonts/Lato-Medium.woff2') format('woff2'),
+    url('../fonts/Lato-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'LatoBlack';
+    src: url('../fonts/Lato-Black.woff2') format('woff2'),
+    url('../fonts/Lato-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('../fonts/Lato-Bold.woff2') format('woff2'),
+    url('../fonts/Lato-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: fallback;
+}
+
+
+@font-face {
+    font-family: 'SPB';
+    src: url('../fonts/SofiaPro-SemiBold.woff2') format('woff2'),
+    url('../fonts/SofiaPro-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: fallback;
+}
+@font-face {
+    font-family: 'SP';
+    src: url('../fonts/SofiaPro.woff2') format('woff2'),
+    url('../fonts/SofiaPro.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+
+@font-face {
+    font-family: 'BNB';
+    src: url('../fonts/BluuNext-Bold.woff2') format('woff2'),
+    url('../fonts/BluuNext-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: fallback;
+}

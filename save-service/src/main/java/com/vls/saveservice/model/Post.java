@@ -14,19 +14,21 @@ public class Post {
     private UUID thing_id;
     private UUID post_status_id;
     private String exchange_method;
+    private String contact;
 
     public Post() {
     }
 
-    public Post(String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method) {
+    public Post(String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method, String contact) {
         this.description = description;
         this.created_time = created_time;
         this.thing_id = thing_id;
         this.post_status_id = post_status_id;
         this.exchange_method = exchange_method;
+        this.contact = contact;
     }
 
-    public Post(UUID id, String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method) {
+    public Post(UUID id, String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method, String contact) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
@@ -81,6 +83,14 @@ public class Post {
 
     public void setExchange_method(String exchange_method) {
         this.exchange_method = exchange_method;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     @Override

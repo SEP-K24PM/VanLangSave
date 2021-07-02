@@ -1,6 +1,6 @@
 package com.vls.postsearchservice.controller;
 
-import com.vls.postsearchservice.model.Post;
+import com.vls.postsearchservice.dto.postelastic;
 import com.vls.postsearchservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +19,8 @@ public class PostSearchController {
     }
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public List<Post> posts(@RequestBody String name) {
-        List<Post> posts = new ArrayList<Post>();
+    public List<postelastic> posts(@RequestBody String name) {
+        List<postelastic> posts = new ArrayList<>();
         postRepository.findBy(name).forEach(posts::add);
         return posts;
     }

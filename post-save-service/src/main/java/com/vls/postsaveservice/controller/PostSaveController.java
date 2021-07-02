@@ -1,6 +1,6 @@
 package com.vls.postsaveservice.controller;
 
-import com.vls.postsaveservice.domainobject.PostObject;
+import com.vls.postsaveservice.dto.postelastic;
 import com.vls.postsaveservice.model.Post;
 import com.vls.postsaveservice.service.*;
 
@@ -19,13 +19,11 @@ public class PostSaveController {
 
     private final PostService postService;
     private final RabbitMQSender rabbitMQSender;
-    private final DomainObjectService domainObjectService;
 
     @Autowired
-    public PostSaveController(PostService postService, RabbitMQSender rabbitMQSender, DomainObjectService domainObjectService) {
+    public PostSaveController(PostService postService, RabbitMQSender rabbitMQSender) {
         this.postService = postService;
         this.rabbitMQSender = rabbitMQSender;
-        this.domainObjectService = domainObjectService;
     }
 
     @RequestMapping("/posts")
@@ -39,8 +37,8 @@ public class PostSaveController {
         try {
             Post newPost = postService.createPost(post);
             new Thread(() -> {
-                PostObject postObject = domainObjectService.convertToPostOject(newPost);
-                rabbitMQSender.send(postObject);
+                postelastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
+                rabbitMQSender.send(postelastic);
             }).start();
 
             return new ResponseEntity<>(null, HttpStatus.CREATED);
