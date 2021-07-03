@@ -1,7 +1,7 @@
-package com.vls.reportservice.controller;
+package com.vls.admin_reportmanagementservice.controller;
 
-import com.vls.reportservice.model.Post_report;
-import com.vls.reportservice.service.ReportService;
+import com.vls.admin_reportmanagementservice.model.Post_report;
+import com.vls.admin_reportmanagementservice.service.AdminReportService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class ReportController {
+public class AdminReportController {
 
-    private final ReportService reportService;
+    private final AdminReportService adminreportService;
 
     @Autowired
-    public ReportController(ReportService reportService) {
-        this.reportService = reportService;
+    public AdminReportController(AdminReportService adminreportService) {
+        this.adminreportService = adminreportService;
     }
 
     @RequestMapping("/reports")
     public List<Post_report> getAllReports() {
-        List<Post_report> list = reportService.getAllReports();
+        List<Post_report> list = adminreportService.getAllReports();
         return list;
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
+
 }
