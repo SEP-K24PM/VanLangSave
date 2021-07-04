@@ -38,6 +38,7 @@ public class Thing {
     @Column(name = "post_id")
     private UUID post_id;
 
+    @Transient
     private String category_name;
 
     public Thing() {

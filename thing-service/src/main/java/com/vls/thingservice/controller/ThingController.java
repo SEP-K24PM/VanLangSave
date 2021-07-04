@@ -22,7 +22,7 @@ public class ThingController {
     }
 
     @RequestMapping("/list/{userId}")
-    public List<Thing> getAllThings(@PathVariable String userId) {
+    public List<Thing> getAllThings(@PathVariable("userId") String userId) {
         UUID userID = UUID.fromString(userId);
         List<Thing> list = thingService.getListThings(userID);
         List<Thing> listWithCateName = categoryService.addCategoryNameToThing(list);
