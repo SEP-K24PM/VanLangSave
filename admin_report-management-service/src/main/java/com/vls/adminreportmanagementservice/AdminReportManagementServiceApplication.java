@@ -1,4 +1,4 @@
-package com.vls.admin_reportmanagementservice;
+package com.vls.adminreportmanagementservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

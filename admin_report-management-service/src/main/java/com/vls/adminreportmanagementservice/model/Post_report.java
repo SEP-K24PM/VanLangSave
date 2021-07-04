@@ -1,9 +1,8 @@
-package com.vls.admin_reportmanagementservice.model;
+package com.vls.adminreportmanagementservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -71,7 +70,7 @@ public class Post_report {
         this.description = description;
     }
 
-    public Date getPost_id() {
+    public UUID getPost_id() {
         return post_id;
     }
 
