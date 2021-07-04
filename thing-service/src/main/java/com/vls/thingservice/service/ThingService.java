@@ -18,6 +18,14 @@ public class ThingService {
     }
 
     public List<Thing> getListThings(UUID userId) {
-        return thingRepository.findByUser_id(userId);
+        return thingRepository.findByUserid(userId);
     }
+
+    public Thing addThing(Thing thing) {
+        Thing savedThing = thingRepository.save(thing);
+        savedThing.setImage(savedThing.getId().toString()+".png");
+        thingRepository.save(savedThing);
+        return savedThing;
+    }
+
 }

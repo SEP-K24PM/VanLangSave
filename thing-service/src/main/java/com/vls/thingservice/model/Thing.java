@@ -30,7 +30,7 @@ public class Thing {
     private String image;
 
     @Column(name = "user_id")
-    private UUID user_id;
+    private UUID userid;
 
     @Column(name = "category_id")
     private UUID category_id;
@@ -43,19 +43,19 @@ public class Thing {
     public Thing() {
     }
 
-    public Thing(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
+    public Thing(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID userid, UUID category_id, UUID post_id) {
         this.thing_name = thing_name;
         this.origin = origin;
         this.price = price;
         this.quantity = quantity;
         this.used_time = used_time;
         this.image = image;
-        this.user_id = user_id;
+        this.userid = userid;
         this.category_id = category_id;
         this.post_id = post_id;
     }
 
-    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
+    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID userid, UUID category_id, UUID post_id) {
         this.id = id;
         this.thing_name = thing_name;
         this.origin = origin;
@@ -63,7 +63,7 @@ public class Thing {
         this.quantity = quantity;
         this.used_time = used_time;
         this.image = image;
-        this.user_id = user_id;
+        this.userid = userid;
         this.category_id = category_id;
         this.post_id = post_id;
     }
@@ -124,12 +124,12 @@ public class Thing {
         this.image = image;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserid() {
+        return userid;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserid(UUID user_id) {
+        this.userid = user_id;
     }
 
     public UUID getCategory_id() {
@@ -166,7 +166,7 @@ public class Thing {
                 ", quantity=" + quantity +
                 ", used_time='" + used_time + '\'' +
                 ", image='" + image + '\'' +
-                ", user_id=" + user_id +
+                ", user_id=" + userid +
                 ", category_id=" + category_id +
                 ", post_id=" + post_id +
                 '}';

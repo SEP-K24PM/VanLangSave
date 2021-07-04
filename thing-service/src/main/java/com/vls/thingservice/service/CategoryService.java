@@ -3,7 +3,6 @@ package com.vls.thingservice.service;
 import com.vls.thingservice.model.Category;
 import com.vls.thingservice.model.Thing;
 import com.vls.thingservice.repository.CategoryRepository;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

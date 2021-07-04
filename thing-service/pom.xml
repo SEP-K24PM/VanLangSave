@@ -51,6 +51,11 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>7.0.1</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
