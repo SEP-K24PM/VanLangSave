@@ -13,17 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
@@ -42,18 +36,6 @@ public class ThingControllerTest extends AbstractTest {
     @Before
     public void setUp() {
         super.setUp();
-    }
-
-    @Test
-    public void getListThingShouldReturnOkStatus() throws Exception {
-        String userId = "c77bd9d9-9177-4bca-bf15-62a071e866e9";
-        String uri = "/list/{userId}";
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri, userId)
-                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
-        String content = mvcResult.getResponse().getContentAsString();
     }
 
     @Test
@@ -79,5 +61,22 @@ public class ThingControllerTest extends AbstractTest {
 
         List<Thing> allThingsResult = thingController.getAllThings(userId.toString());
         Assert.assertEquals(listWithCateName.size(), allThingsResult.size());
+        Assert.assertEquals(listWithCateName, allThingsResult);
     }
+
+    @Test
+    public void addThingShouldReturnRightThing() {
+        Thing newThing = new Thing("thing name 1", "origin 1", 10000, 1,
+                "used time 1", "image1.png",
+                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        Thing savedThing = new Thing(UUID.randomUUID(), newThing.getThing_name(), newThing.getOrigin(),
+                newThing.getPrice(), newThing.getQuantity(), newThing.getUsed_time(), newThing.getImage(),
+                newThing.getUserid(), newThing.getCategory_id(), newThing.getPost_id());
+
+        Mockito.when(thingService.addThing(newThing)).thenReturn(savedThing);
+
+        Thing result = thingController.addThing(newThing);
+        Assert.assertEquals(result, savedThing);
+    }
+
 }

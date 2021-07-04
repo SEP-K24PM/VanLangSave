@@ -30,7 +30,7 @@ public class ThingController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Thing thing(@RequestBody Thing thing) {
+    public Thing addThing(@RequestBody Thing thing) {
         Thing savedThing = thingService.addThing(thing);
         return savedThing;
     }
