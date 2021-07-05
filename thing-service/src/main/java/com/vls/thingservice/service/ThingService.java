@@ -34,10 +34,6 @@ public class ThingService {
         return thingRepository.findById(UUID.fromString(thingId));
     }
 
-    public boolean checkIfThingExists(UUID id) {
-        return thingRepository.existsById(id);
-    }
-
     public Thing updateThing(Thing thing) {
         return thingRepository.save(thing);
     }

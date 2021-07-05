@@ -1,5 +1,6 @@
 package com.vls.thingservice.controller;
 
+import com.google.api.Http;
 import com.vls.thingservice.model.Thing;
 import com.vls.thingservice.service.CategoryService;
 import com.vls.thingservice.service.ThingService;
@@ -8,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,20 +17,16 @@ import java.util.UUID;
 public class ThingController {
 
     private final ThingService thingService;
-    private final CategoryService categoryService;
 
     @Autowired
-    public ThingController(ThingService thingService, CategoryService categoryService) {
+    public ThingController(ThingService thingService) {
         this.thingService = thingService;
-        this.categoryService = categoryService;
     }
 
     @RequestMapping("/list/{userId}")
-    public List<Thing> getAllThings(@PathVariable("userId") String userId) {
-        UUID userID = UUID.fromString(userId);
-        List<Thing> list = thingService.getListThings(userID);
-        List<Thing> listWithCateName = categoryService.addCategoryNameToThing(list);
-        return listWithCateName;
+    public ResponseEntity<List<Thing>> getAllThings(@PathVariable("userId") String userId) {
+        List<Thing> things = thingService.getListThings(UUID.fromString(userId));
+        return new ResponseEntity<>(things, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/details/{thingId}")
@@ -44,12 +40,8 @@ public class ThingController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Thing> addThing(@RequestBody Thing thing) {
-        try {
-            Thing _thing = thingService.addThing(thing);
-            return new ResponseEntity<>(_thing, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Thing _thing = thingService.addThing(thing);
+        return new ResponseEntity<>(_thing, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/update/{thingId}", method = RequestMethod.PUT)
