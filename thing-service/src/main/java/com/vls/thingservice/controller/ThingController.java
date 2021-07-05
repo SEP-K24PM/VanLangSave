@@ -4,9 +4,12 @@ import com.vls.thingservice.model.Thing;
 import com.vls.thingservice.service.CategoryService;
 import com.vls.thingservice.service.ThingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -29,9 +32,27 @@ public class ThingController {
         return listWithCateName;
     }
 
+    @RequestMapping(value = "/details/{thingId}")
+    public ResponseEntity<Thing> getThingDetails(@PathVariable("thingId") String thingId) {
+        Optional<Thing> thing = thingService.getThingDetails(thingId);
+        if(thing.isPresent()) {
+            return new ResponseEntity<>(thing.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Thing addThing(@RequestBody Thing thing) {
         Thing savedThing = thingService.addThing(thing);
         return savedThing;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public Thing updateThing(@RequestBody Thing thing) {
+        Thing updatedThing = new Thing();
+        if(thingService.checkIfThingExists(thing.getId())) {
+            updatedThing = thingService.updateThing(thing);
+        }
+        return updatedThing;
     }
 }
