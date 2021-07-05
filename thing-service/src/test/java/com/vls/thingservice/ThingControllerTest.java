@@ -1,10 +1,12 @@
 package com.vls.thingservice;
 
 import com.vls.thingservice.controller.ThingController;
+import com.vls.thingservice.model.Post;
 import com.vls.thingservice.model.Thing;
 import com.vls.thingservice.repository.CategoryRepository;
 import com.vls.thingservice.repository.ThingRepository;
 import com.vls.thingservice.service.CategoryService;
+import com.vls.thingservice.service.PostService;
 import com.vls.thingservice.service.ThingService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +37,9 @@ public class ThingControllerTest extends AbstractTest {
 
     @Mock
     private CategoryService categoryService;
+
+    @Mock
+    private PostService postService;
 
     @Override
     @Before
@@ -125,6 +131,27 @@ public class ThingControllerTest extends AbstractTest {
 
         ResponseEntity<Thing> exceptionResponse = thingController.updateThing(UUID.randomUUID().toString(), thing);
         Assert.assertEquals(404, exceptionResponse.getStatusCodeValue());
+
+
+
+    }
+
+    @Test
+    public void updateThingWithInvalidPostStatus() {
+        String thingId = UUID.randomUUID().toString();
+        Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
+                "used time 1", "image1.png",
+                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        Post post = new Post(UUID.randomUUID(), "description",
+                new Date(), UUID.randomUUID(), "Đóng","Free", "contact");
+
+        thing.setPost_id(post.getThing_id());
+
+        Mockito.when(postService.getPost(post.getId())).thenReturn(java.util.Optional.of(post));
+        Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
+
+        ResponseEntity<Thing> response = thingController.updateThing(thingId, thing);
+        Assert.assertEquals(403, response.getStatusCodeValue());
     }
 
 }

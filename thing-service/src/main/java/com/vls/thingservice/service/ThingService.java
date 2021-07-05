@@ -1,9 +1,10 @@
 package com.vls.thingservice.service;
 
+import com.vls.thingservice.model.Post;
 import com.vls.thingservice.model.Thing;
+import com.vls.thingservice.repository.PostRepository;
 import com.vls.thingservice.repository.ThingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.UUID;
 @Service
 public class ThingService {
     private final ThingRepository thingRepository;
+    private final PostService postService;
 
     @Autowired
-    public ThingService(ThingRepository thingRepository) {
+    public ThingService(ThingRepository thingRepository, PostService postService) {
         this.thingRepository = thingRepository;
+        this.postService = postService;
     }
 
     public List<Thing> getListThings(UUID userId) {
@@ -38,4 +41,14 @@ public class ThingService {
         return thingRepository.save(thing);
     }
 
+    public boolean checkIsPosibleToUpdate(Thing thing) {
+        Optional<Post> post = postService.getPost(thing.getPost_id());
+        if(post.isPresent()) {
+            if(post.get().getStatus().equalsIgnoreCase("Mở")) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 }
