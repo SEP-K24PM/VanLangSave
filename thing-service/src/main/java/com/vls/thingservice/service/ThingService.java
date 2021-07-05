@@ -49,6 +49,6 @@ public class ThingService {
             }
             return false;
         }
-        return false;
+        return true;
     }
 }

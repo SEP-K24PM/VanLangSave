@@ -1,8 +1,6 @@
 package com.vls.thingservice.controller;
 
-import com.google.api.Http;
 import com.vls.thingservice.model.Thing;
-import com.vls.thingservice.service.CategoryService;
 import com.vls.thingservice.service.ThingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

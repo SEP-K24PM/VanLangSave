@@ -114,6 +114,8 @@ public class ThingControllerTest extends AbstractTest {
     @Test
     public void updateThing() {
         String thingId = UUID.randomUUID().toString();
+//        Post post = new Post(UUID.randomUUID(), "description",
+//                new Date(), UUID.randomUUID(), "Mở","Free", "contact");
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
                 UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
@@ -122,17 +124,17 @@ public class ThingControllerTest extends AbstractTest {
                 "used time 1", "image1.png",
                 thing.getUserid(), UUID.randomUUID(), UUID.randomUUID());
 
+//        Mockito.when(postService.getPost(post.getId())).thenReturn(java.util.Optional.of(post));
         Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
         Mockito.when(thingService.updateThing(thing)).thenReturn(updatedThing);
+        Mockito.when(thingService.checkIsPosibleToUpdate(thing)).thenReturn(true);
 
         ResponseEntity<Thing> response = thingController.updateThing(thingId, thing);
-        Assert.assertEquals(updatedThing, response.getBody());
         Assert.assertEquals(200, response.getStatusCodeValue());
+        Assert.assertEquals(updatedThing, response.getBody());
 
         ResponseEntity<Thing> exceptionResponse = thingController.updateThing(UUID.randomUUID().toString(), thing);
         Assert.assertEquals(404, exceptionResponse.getStatusCodeValue());
-
-
 
     }
 
