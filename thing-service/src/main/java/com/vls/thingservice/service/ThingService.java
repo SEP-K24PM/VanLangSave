@@ -42,12 +42,15 @@ public class ThingService {
     }
 
     public boolean checkIsPosibleToUpdate(Thing thing) {
-        Optional<Post> post = postService.getPost(thing.getPost_id());
-        if(post.isPresent()) {
-            if(post.get().getStatus().equalsIgnoreCase("Mở")) {
-                return true;
+        if(thing.getPost_id() != null) {
+            Optional<Post> post = postService.getPost(thing.getPost_id());
+            if(post.isPresent()) {
+                if(post.get().getStatus().equalsIgnoreCase("Mở")) {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            return true;
         }
         return true;
     }
