@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,12 +52,24 @@ public class ThingController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public Thing updateThing(@RequestBody Thing thing) {
-        Thing updatedThing = new Thing();
-        if(thingService.checkIfThingExists(thing.getId())) {
-            updatedThing = thingService.updateThing(thing);
+    @RequestMapping(value = "/update/{thingId}", method = RequestMethod.PUT)
+    public ResponseEntity<Thing> updateThing(@PathVariable String thingId, @RequestBody Thing thing) {
+        Optional<Thing> thingData = thingService.getThingDetails(thingId);
+        if(thingData.isPresent()) {
+            Thing _thing = thingData.get();
+            _thing.setId(UUID.fromString(thingId));
+            _thing.setThing_name(thing.getThing_name());
+            _thing.setOrigin(thing.getOrigin());
+            _thing.setPrice(thing.getPrice());
+            _thing.setQuantity(thing.getQuantity());
+            _thing.setImage(thing.getImage());
+            _thing.setUserid(thing.getUserid());
+            _thing.setUsed_time(thing.getUsed_time());
+            _thing.setCategory_id(thing.getCategory_id());
+            _thing.setPost_id(thing.getPost_id());
+            return new ResponseEntity<>(thingService.updateThing(_thing), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return updatedThing;
     }
 }
