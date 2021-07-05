@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class ThingControllerTest extends AbstractTest {
 
         Mockito.when(thingService.addThing(newThing)).thenReturn(savedThing);
 
-        Thing result = thingController.addThing(newThing);
-        Assert.assertEquals(result, savedThing);
+        ResponseEntity<Thing> result = thingController.addThing(newThing);
+        Assert.assertEquals(result.getBody(), savedThing);
     }
 
 }

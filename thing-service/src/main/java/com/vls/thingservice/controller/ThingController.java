@@ -42,9 +42,13 @@ public class ThingController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Thing addThing(@RequestBody Thing thing) {
-        Thing savedThing = thingService.addThing(thing);
-        return savedThing;
+    public ResponseEntity<Thing> addThing(@RequestBody Thing thing) {
+        try {
+            Thing _thing = thingService.addThing(thing);
+            return new ResponseEntity<>(_thing, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
