@@ -1,10 +1,10 @@
-package com.vls.saveservice;
+package com.vls.postservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SaveServiceApplicationTests {
+class PostServiceApplicationTests {
 
     @Test
     void contextLoads() {

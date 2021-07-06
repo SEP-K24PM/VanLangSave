@@ -1,4 +1,4 @@
-package com.vls.saveservice;
+package com.vls.postservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class SaveServiceApplication {
+public class PostServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SaveServiceApplication.class, args);
+        SpringApplication.run(PostServiceApplication.class, args);
     }
 
 }
