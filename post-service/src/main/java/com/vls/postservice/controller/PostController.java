@@ -24,4 +24,14 @@ public class PostController {
         Post result = restTemplate.postForObject("http://post-save-service/post/", post, Post.class);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+//    @RequestMapping(value = "/update/{postId}")
+//    public ResponseEntity<Post> update(@PathVariable("postId") String postId) {
+//
+//    }
+
+    @RequestMapping("/testupdate")
+    public String testUpdate() {
+        return restTemplate.getForObject("http://post-update-service/", String.class);
+    }
 }
