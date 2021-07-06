@@ -1,0 +1,11 @@
+server:
+  port: 8202
+
+spring:
+  application:
+    name: admin-report-management-service
+  cloud:
+    gateway:
+      routes:
+        -predicates:
+          -Path=/reports/**

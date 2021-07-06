@@ -6,29 +6,33 @@ import com.vls.adminreportmanagementservice.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-public class AdminReportController{
+public class AdminReportController {
 
-private final AdminReportService adminReportService;
+    private final AdminReportService adminReportService;
 
-
-@Autowired
-public AdminReportController(AdminReportService adminReportService){
+    @Autowired
+    public AdminReportController(AdminReportService adminReportService) {
         this.adminReportService = adminReportService;
 
-        }
+    }
+    @RequestMapping("/")
+    public String index() {return "index";}
 
-@RequestMapping("/reports")
-public List<Post_report> getAllReports(){
-        List<Post_report>  list = adminReportService.getAllReports();
+    @RequestMapping("/reports")
+    public List<Post_report> getAllReports() {
+        List<Post_report> list = adminReportService.getAllReports();
         return list;
-        }
+    }
 
-        }
+    @RequestMapping("/reports/{id}")
+    public Post_report getReportDetail (@PathVariable("id") UUID id) {
+        return adminReportService.findPost_reportById(id);
+    }
+
+}

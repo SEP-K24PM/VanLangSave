@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface AdminreportRepository extends JpaRepository<Post_report, UUID> {
-    public Post_report findPost_reportById(UUID id);
+    Post_report findPost_reportById(UUID id);
 }

@@ -4,11 +4,13 @@ import com.vls.adminreportmanagementservice.model.Post_report;
 import com.vls.adminreportmanagementservice.repository.AdminreportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class AdminReportService {
+public class  AdminReportService {
 
     private final AdminreportRepository adminreportRepository;
 
@@ -23,4 +25,7 @@ public class AdminReportService {
         return list;
     }
 
+    public Post_report findPost_reportById(UUID id) {
+        return adminreportRepository.findPost_reportById(id);
+    }
 }
