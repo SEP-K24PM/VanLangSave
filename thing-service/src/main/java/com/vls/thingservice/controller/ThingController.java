@@ -66,4 +66,19 @@ public class ThingController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping("delete/{thingId}")
+    public ResponseEntity<Thing> deleteThing(@PathVariable("thingId") String thingId) {
+        Optional<Thing> thing = thingService.getThingDetails(thingId);
+        if(thing.isPresent()) {
+            if(thingService.checkIsPosibleToUpdate(thing.get())) {
+                thingService.deleteThing(thingId);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

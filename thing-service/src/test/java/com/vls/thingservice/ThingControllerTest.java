@@ -114,8 +114,6 @@ public class ThingControllerTest extends AbstractTest {
     @Test
     public void updateThing() {
         String thingId = UUID.randomUUID().toString();
-//        Post post = new Post(UUID.randomUUID(), "description",
-//                new Date(), UUID.randomUUID(), "Mở","Free", "contact");
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
                 UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
@@ -124,7 +122,6 @@ public class ThingControllerTest extends AbstractTest {
                 "used time 1", "image1.png",
                 thing.getUserid(), UUID.randomUUID(), UUID.randomUUID());
 
-//        Mockito.when(postService.getPost(post.getId())).thenReturn(java.util.Optional.of(post));
         Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
         Mockito.when(thingService.updateThing(thing)).thenReturn(updatedThing);
         Mockito.when(thingService.checkIsPosibleToUpdate(thing)).thenReturn(true);
@@ -153,6 +150,47 @@ public class ThingControllerTest extends AbstractTest {
         Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
 
         ResponseEntity<Thing> response = thingController.updateThing(thingId, thing);
+        Assert.assertEquals(403, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void deleteThing() {
+        String thingId = UUID.randomUUID().toString();
+        Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
+                "used time 1", "image1.png",
+                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+
+        Thing updatedThing = new Thing("thing name 2", "origin 1", 10000, 1,
+                "used time 1", "image1.png",
+                thing.getUserid(), UUID.randomUUID(), UUID.randomUUID());
+
+        Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
+        Mockito.when(thingService.deleteThing(thingId)).thenReturn(true);
+        Mockito.when(thingService.checkIsPosibleToUpdate(thing)).thenReturn(true);
+
+        ResponseEntity<Thing> response = thingController.deleteThing(thingId);
+        Assert.assertEquals(204, response.getStatusCodeValue());
+
+        ResponseEntity<Thing> exceptionResponse = thingController.deleteThing(UUID.randomUUID().toString());
+        Assert.assertEquals(404, exceptionResponse.getStatusCodeValue());
+
+    }
+
+    @Test
+    public void deleteThingWithInvalidPostStatus() {
+        String thingId = UUID.randomUUID().toString();
+        Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
+                "used time 1", "image1.png",
+                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        Post post = new Post(UUID.randomUUID(), "description",
+                new Date(), UUID.randomUUID(), "Đóng","Free", "contact");
+
+        thing.setPost_id(post.getThing_id());
+
+        Mockito.when(postService.getPost(post.getId())).thenReturn(java.util.Optional.of(post));
+        Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
+
+        ResponseEntity<Thing> response = thingController.deleteThing(thingId);
         Assert.assertEquals(403, response.getStatusCodeValue());
     }
 

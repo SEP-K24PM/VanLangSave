@@ -54,4 +54,13 @@ public class ThingService {
         }
         return true;
     }
+
+    public boolean deleteThing(String thingId) {
+        try {
+            thingRepository.deleteById(UUID.fromString(thingId));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
