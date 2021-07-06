@@ -26,36 +26,21 @@ public class PostSaveController {
         this.thingService = thingService;
     }
 
-    @RequestMapping(value = "/posts")
-    public List<Post> list() {
-        return postService.getAllPosts();
-    }
-
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        try {
-            if(postService.checkThingIsAvailable(post.getThing_id())) {
-                post.setStatus("Mở");
-                post.setCreated_time(new Date());
-                post.setVisible(true);
-                Post newPost = postService.createPost(post);
-                new Thread(() -> {
-                    postelastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
-                    rabbitMQSender.send(postelastic);
-                    thingService.updateThingWithNewPost(post.getThing_id(), post.getId());
-                }).start();
-                return new ResponseEntity<>(newPost, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        if(postService.checkThingIsAvailable(post.getThing_id())) {
+            post.setStatus("Mở");
+            post.setCreated_time(new Date());
+            post.setVisible(true);
+            Post newPost = postService.createPost(post);
+            new Thread(() -> {
+                postelastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
+                rabbitMQSender.send(postelastic);
+                thingService.updateThingWithNewPost(post.getThing_id(), post.getId());
+            }).start();
+            return new ResponseEntity<>(newPost, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public ResponseEntity<String> test(@RequestBody String test) {
-        String test1 = "tested";
-        return new ResponseEntity<>(test1, HttpStatus.CREATED);
     }
 }
