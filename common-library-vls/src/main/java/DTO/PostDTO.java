@@ -1,69 +1,40 @@
-package com.vls.postsaveservice.model;
+package DTO;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "post")
-public class Post {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+public class PostDTO {
     private UUID id;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "created_time")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date created_time;
-
-    @Column(name = "thing_id")
-    private UUID thing_id;
-
-    @Column(name = "visible")
     private boolean visible;
-
-    @Column(name = "deletion")
     private boolean deletion;
-
-    @Column(name = "status")
+    private String contact;
+    private String exchange_method;
     private String status;
 
-    @Column(name = "exchange_method")
-    private String exchange_method;
-
-    @Column(name = "contact")
-    private String contact;
-
-    public Post() {
+    public PostDTO() {
     }
 
-    public Post(String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status, String exchange_method, String contact) {
+    public PostDTO(String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status) {
         this.description = description;
         this.created_time = created_time;
-        this.thing_id = thing_id;
         this.visible = visible;
         this.deletion = deletion;
-        this.status = status;
-        this.exchange_method = exchange_method;
         this.contact = contact;
+        this.exchange_method = exchange_method;
+        this.status = status;
     }
 
-    public Post(UUID id, String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status, String exchange_method, String contact) {
+    public PostDTO(UUID id, String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
-        this.thing_id = thing_id;
         this.visible = visible;
         this.deletion = deletion;
-        this.status = status;
-        this.exchange_method = exchange_method;
         this.contact = contact;
+        this.exchange_method = exchange_method;
+        this.status = status;
     }
 
     public UUID getId() {
@@ -90,14 +61,6 @@ public class Post {
         this.created_time = created_time;
     }
 
-    public UUID getThing_id() {
-        return thing_id;
-    }
-
-    public void setThing_id(UUID thing_id) {
-        this.thing_id = thing_id;
-    }
-
     public boolean isVisible() {
         return visible;
     }
@@ -114,12 +77,12 @@ public class Post {
         this.deletion = deletion;
     }
 
-    public String getStatus() {
-        return status;
+    public String getContact() {
+        return contact;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getExchange_method() {
@@ -130,12 +93,12 @@ public class Post {
         this.exchange_method = exchange_method;
     }
 
-    public String getContact() {
-        return contact;
+    public String getStatus() {
+        return status;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -144,12 +107,11 @@ public class Post {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", created_time=" + created_time +
-                ", thing_id=" + thing_id +
                 ", visible=" + visible +
                 ", deletion=" + deletion +
-                ", status='" + status + '\'' +
-                ", exchange_method='" + exchange_method + '\'' +
                 ", contact='" + contact + '\'' +
+                ", exchange_method='" + exchange_method + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
