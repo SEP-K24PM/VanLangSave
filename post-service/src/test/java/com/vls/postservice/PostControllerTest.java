@@ -49,4 +49,21 @@ public class PostControllerTest extends AbstractTest{
         Assert.assertEquals(201, response.getStatusCodeValue());
         Assert.assertEquals(savedPost, response.getBody());
     }
+
+    @Test
+    public void updatePost() {
+        UUID postId = UUID.randomUUID();
+        Post post = new Post(postId,"description", new Date(), UUID.randomUUID(),
+                true, false, "Mở", "Free", "contact");
+
+        Post updatedPost = new Post(postId,"description", new Date(), UUID.randomUUID(),
+                true, false, "Mở", "Free", "contact");
+
+        Mockito.when(restTemplate.postForObject("http://post-update-service/post/", post, Post.class))
+                .thenReturn(updatedPost);
+
+        ResponseEntity<Post> response = postController.update(postId.toString(), post);
+        Assert.assertEquals(200, response.getStatusCodeValue());
+        Assert.assertEquals(updatedPost, response.getBody());
+    }
 }
