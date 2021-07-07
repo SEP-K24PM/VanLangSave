@@ -1,6 +1,7 @@
 package com.vls.postupdateservice.controller;
 
 import com.vls.postupdateservice.model.Post;
+import com.vls.postupdateservice.service.PostElasticService;
 import com.vls.postupdateservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class PostUpdateController {
 
     private final PostService postService;
+    private final PostElasticService postElasticService;
 
     @Autowired
-    public PostUpdateController(PostService postService) {
+    public PostUpdateController(PostService postService, PostElasticService postElasticService) {
         this.postService = postService;
+        this.postElasticService = postElasticService;
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)
@@ -31,8 +34,8 @@ public class PostUpdateController {
                 _post.setContact(post.getContact());
                 _post.setExchange_method(post.getExchange_method());
                 new Thread(() -> {
-                    
-                });
+                    postElasticService.update(_post);
+                }).start();
                 return new ResponseEntity<>(postService.updatePost(_post), HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
