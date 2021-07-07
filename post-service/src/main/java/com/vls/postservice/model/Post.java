@@ -1,43 +1,20 @@
-package com.vls.postsaveservice.model;
+package com.vls.postservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(name = "post")
 public class Post {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private UUID id;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "created_time")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date created_time;
-
-    @Column(name = "thing_id")
     private UUID thing_id;
-
-    @Column(name = "visible")
     private boolean visible;
-
-    @Column(name = "deletion")
     private boolean deletion;
-
-    @Column(name = "status")
     private String status;
-
-    @Column(name = "exchange_method")
     private String exchange_method;
-
-    @Column(name = "contact")
     private String contact;
 
     public Post() {
@@ -64,6 +41,22 @@ public class Post {
         this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isDeletion() {
+        return deletion;
+    }
+
+    public void setDeletion(boolean deletion) {
+        this.deletion = deletion;
     }
 
     public UUID getId() {
@@ -98,22 +91,6 @@ public class Post {
         this.thing_id = thing_id;
     }
 
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    public boolean isDeletion() {
-        return deletion;
-    }
-
-    public void setDeletion(boolean deletion) {
-        this.deletion = deletion;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -145,8 +122,6 @@ public class Post {
                 ", description='" + description + '\'' +
                 ", created_time=" + created_time +
                 ", thing_id=" + thing_id +
-                ", visible=" + visible +
-                ", deletion=" + deletion +
                 ", status='" + status + '\'' +
                 ", exchange_method='" + exchange_method + '\'' +
                 ", contact='" + contact + '\'' +
