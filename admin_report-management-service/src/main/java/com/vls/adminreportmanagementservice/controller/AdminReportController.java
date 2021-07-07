@@ -21,8 +21,10 @@ public class AdminReportController {
         this.adminReportService = adminReportService;
 
     }
-    @RequestMapping("/")
-    public String index() {return "index";}
+    @RequestMapping("/index")
+    public String index() {
+        return "index";
+    }
 
     @RequestMapping("/reports")
     public List<Post_report> getAllReports() {
