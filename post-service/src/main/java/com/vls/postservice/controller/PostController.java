@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class PostController {
@@ -25,13 +26,10 @@ public class PostController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-//    @RequestMapping(value = "/update/{postId}")
-//    public ResponseEntity<Post> update(@PathVariable("postId") String postId) {
-//
-//    }
-
-    @RequestMapping("/testupdate")
-    public String testUpdate() {
-        return restTemplate.getForObject("http://post-update-service/", String.class);
+    @RequestMapping(value = "/update/{postId}")
+    public ResponseEntity<Post> update(@PathVariable("postId") String postId, @RequestBody Post post) {
+        post.setId(UUID.fromString(postId));
+        Post result = restTemplate.postForObject("http://post-update-service/post/", post, Post.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
