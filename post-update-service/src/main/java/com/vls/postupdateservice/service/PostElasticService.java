@@ -21,12 +21,12 @@ public class PostElasticService {
         this.categoryService = categoryService;
     }
 
-    public void update(Post _post) {
+    public postelastic update(Post _post) {
         Thing thing = thingService.findThingById(_post.getThing_id());
         Category category = categoryService.findCategoryById(thing.getCategory_id());
         postelastic postelastic = new postelastic(_post.getId().toString(), _post.getDescription(),
                 _post.getExchange_method(), _post.getCreated_time(), _post.isVisible(),
                 thing.getThing_name(), thing.getOrigin(), category.getCategory_name());
-        postElasticRepository.save(postelastic);
+        return postElasticRepository.save(postelastic);
     }
 }
