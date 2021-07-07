@@ -19,8 +19,8 @@ public class AccountController {
     @GetMapping("/show")
     public ResponseEntity<List<Account>> getAllUser() {
         try {
-            List<Account> users = new ArrayList<Account>();
-            accountRepository._findall().forEach(users::add);
+            List<Account> users = accountRepository.ListAllUser();
+
             List<Account> temp = users;
             if (users.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

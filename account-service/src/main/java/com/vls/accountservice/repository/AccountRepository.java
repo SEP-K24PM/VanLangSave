@@ -9,5 +9,5 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query("SELECT user FROM Account user")
-    List<Account> _findall();
+    List<Account> ListAllUser();
 }
