@@ -14,6 +14,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query("SELECT info.email FROM Account as info where info.email = :email")
     Account giveAccountInfo(@Param("email") String email);
-//@Param("email") String email
+
+    @Query("SELECT info.email FROM Account as info where info.email = :email")
+    List<Account> CheckedUser(@Param("email") String email); //check tài khoản đã tồn tại chưa
 
 }
