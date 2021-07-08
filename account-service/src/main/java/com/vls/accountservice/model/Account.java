@@ -24,12 +24,10 @@ public class Account {
     public Account()
     {
     }
+
     public Account(String email)
     {
-        UUID uuid = UUID.randomUUID();
-
         this.email = email;
-        this.id = uuid;
         this.block  =false;
     }
     public Account(Account account){
