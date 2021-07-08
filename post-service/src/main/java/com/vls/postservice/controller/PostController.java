@@ -32,4 +32,10 @@ public class PostController {
         Post result = restTemplate.postForObject("http://post-update-service/post/", post, Post.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/delete/{postId}")
+    public ResponseEntity<Boolean> delete(@PathVariable("postId") UUID postId) {
+        boolean result = restTemplate.postForObject("http://post-delete-service/", postId, Boolean.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
