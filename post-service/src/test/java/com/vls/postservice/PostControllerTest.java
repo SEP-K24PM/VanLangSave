@@ -66,4 +66,14 @@ public class PostControllerTest extends AbstractTest{
         Assert.assertEquals(200, response.getStatusCodeValue());
         Assert.assertEquals(updatedPost, response.getBody());
     }
+
+    @Test
+    public void deletePost() {
+        UUID postId = UUID.randomUUID();
+        Mockito.when(restTemplate.postForObject("http://post-delete-service/", postId, Boolean.class))
+                .thenReturn(true);
+        ResponseEntity<Boolean> response = postController.delete(postId);
+        Assert.assertEquals(200, response.getStatusCodeValue());
+        Assert.assertEquals(true, response.getBody());
+    }
 }

@@ -38,7 +38,7 @@ public class PostDeleteControllerTest extends AbstractTest {
     private ThingService thingService;
 
     @Test
-    public void createPost() {
+    public void deletePost() {
         UUID thingId = UUID.randomUUID();
 
         Post post = new Post("description", new Date(), thingId,

@@ -26,8 +26,13 @@ public class PostService {
         return postRepository.findById(postId);
     }
 
-    public void deletePost(Post post) {
-        postRepository.delete(post);
+    public boolean deletePost(Post post) {
+        try {
+            postRepository.delete(post);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean checkIfDeletePossible(Post post) {

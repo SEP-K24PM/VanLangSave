@@ -20,16 +20,15 @@ public class ThingService {
         return thingRepository.findThingById(id);
     }
 
-    public Thing removePostIdFromThing(UUID thingId) {
-        Thing thing = findThingById(thingId);
-        thing.setPost_id(null);
-        return thingRepository.save(thing);
+    public boolean removePostIdFromThing(UUID thingId) {
+        try {
+            Thing thing = findThingById(thingId);
+            thing.setPost_id(null);
+            thingRepository.save(thing);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean checkPostOfThingIsAvailable(UUID thingId) {
-        Thing thing = findThingById(thingId);
-        if(thing.getPost_id() == null)
-            return true;
-        return false;
-    }
 }
