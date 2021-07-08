@@ -1,4 +1,4 @@
-package com.vls.accountservice.module;
+package com.vls.accountservice.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,6 +36,12 @@ public class Account {
         this.id = account.id;
         this.email = account.email;
         this.block = account.block;
+    }
+    public Account(String email, UUID id,boolean block)
+    {
+        this.email = email;
+        this.id = id;
+        this.block  =block;
     }
     public String getEmail()
     {

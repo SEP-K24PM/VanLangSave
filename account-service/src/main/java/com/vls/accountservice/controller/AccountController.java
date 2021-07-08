@@ -1,15 +1,13 @@
 package com.vls.accountservice.controller;
 
-import com.vls.accountservice.module.Account;
+import com.vls.accountservice.model.Account;
 import com.vls.accountservice.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class AccountController {
@@ -36,7 +34,7 @@ public class AccountController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Account> createTutorial(@RequestBody String email) {
+    public ResponseEntity<Account> SaveUser(@RequestBody String email) {
         if (checked(email)){
             Account user = new Account();
             user.setEmail(email);
@@ -61,13 +59,13 @@ public class AccountController {
         return new ResponseEntity( info.getEmail() ,HttpStatus.OK);
     }
     public boolean checked(String email){
-        List<Account> checkList = accountRepository.CheckedUser(email);
-        if (checkList.isEmpty()){
-            return true;
+        List<Account> checkList = accountRepository.ListAllUser();
+        for (Account user:checkList) {
+            if (user.getEmail().equals(email)){
+                return false;
+            }
         }
-        else {
-            return false;
-        }
+        return true;
     }
 
 }
