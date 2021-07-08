@@ -20,15 +20,10 @@ public class ThingService {
         return thingRepository.findThingById(id);
     }
 
-    public boolean removePostIdFromThing(UUID thingId) {
-        try {
-            Thing thing = findThingById(thingId);
-            thing.setPost_id(null);
-            thingRepository.save(thing);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void removePostIdFromThing(UUID thingId) {
+        Thing thing = findThingById(thingId);
+        thing.setPost_id(null);
+        thingRepository.save(thing);
     }
 
 }

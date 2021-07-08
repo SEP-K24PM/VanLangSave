@@ -32,15 +32,12 @@ public class PostDeleteController {
         if(postData.isPresent()) {
             Post post = postData.get();
             if(postService.checkIfDeletePossible(post)) {
-                boolean delete = thingService.removePostIdFromThing(post.getThing_id());
-                if(delete) {
-                    postService.deletePost(post);
-                    new Thread(() -> {
-                        postElasticService.delete(post);
-                    }).start();
-                    return new ResponseEntity<>(true, HttpStatus.OK);
-                }
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                thingService.removePostIdFromThing(post.getThing_id());
+                postService.deletePost(post);
+                new Thread(() -> {
+                    postElasticService.delete(post);
+                }).start();
+                return new ResponseEntity<>(true, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }

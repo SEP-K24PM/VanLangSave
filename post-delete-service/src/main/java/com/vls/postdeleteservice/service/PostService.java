@@ -14,25 +14,18 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final ThingService thingService;
 
     @Autowired
-    public PostService(PostRepository postRepository, ThingService thingService) {
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.thingService = thingService;
     }
 
     public Optional<Post> getPost(UUID postId) {
         return postRepository.findById(postId);
     }
 
-    public boolean deletePost(Post post) {
-        try {
-            postRepository.delete(post);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void deletePost(Post post) {
+        postRepository.delete(post);
     }
 
     public boolean checkIfDeletePossible(Post post) {
