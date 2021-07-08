@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
@@ -37,7 +39,6 @@ public class AccountController {
     public ResponseEntity<Account> createTutorial(@RequestBody String email) {
         Account user = new Account();
         user.setEmail(email);
-        System.out.println(email);
         try {
             Account _user = accountRepository.save(user);
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
@@ -45,6 +46,15 @@ public class AccountController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/user/{email}")
+    public ResponseEntity<Account> userProfile(@PathVariable String email) {
+        Account info = accountRepository.giveAccountInfo(email);
+        if(info.getEmail().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity( info.getEmail() ,HttpStatus.OK);
     }
 
 }

@@ -23,16 +23,19 @@ public class Account {
 
     public Account()
     {
-        UUID uuid = UUID.randomUUID();
-        id = uuid;
     }
-    public Account(String email, String pwd)
+    public Account(String email)
     {
         UUID uuid = UUID.randomUUID();
 
         this.email = email;
         this.id = uuid;
         this.block  =false;
+    }
+    public Account(Account account){
+        this.id = account.id;
+        this.email = account.email;
+        this.block = account.block;
     }
     public String getEmail()
     {

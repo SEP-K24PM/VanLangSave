@@ -12,6 +12,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     @Query("SELECT user FROM Account user")
     List<Account> ListAllUser();
 
-    @Query("SELECT info.email FROM Account info where info.email = :email")
-    List<Account> giveAccountInfo(@Param("email") String email);
+    @Query("SELECT info.email FROM Account as info where info.email = :email")
+    Account giveAccountInfo(@Param("email") String email);
+//@Param("email") String email
+
 }
