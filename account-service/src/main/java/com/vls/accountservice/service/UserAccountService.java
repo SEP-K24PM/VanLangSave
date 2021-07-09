@@ -1,6 +1,6 @@
 package com.vls.accountservice.service;
 
-import com.vls.accountservice.module.User_Account;
+import com.vls.accountservice.model.User_Account;
 import com.vls.accountservice.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

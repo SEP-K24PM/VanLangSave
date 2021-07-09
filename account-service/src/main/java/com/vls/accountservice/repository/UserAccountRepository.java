@@ -1,6 +1,6 @@
 package com.vls.accountservice.repository;
 
-import com.vls.accountservice.module.User_Account;
+import com.vls.accountservice.model.User_Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

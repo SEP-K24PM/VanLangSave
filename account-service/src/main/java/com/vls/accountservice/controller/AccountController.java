@@ -1,6 +1,6 @@
 package com.vls.accountservice.controller;
 
-import com.vls.accountservice.module.User_Account;
+import com.vls.accountservice.model.User_Account;
 import com.vls.accountservice.repository.UserAccountRepository;
 import com.vls.accountservice.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.vls.accountservice.module;
+package com.vls.accountservice.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
