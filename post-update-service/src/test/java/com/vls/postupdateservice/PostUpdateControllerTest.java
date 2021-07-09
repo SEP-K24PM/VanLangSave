@@ -5,6 +5,10 @@ import com.vls.postupdateservice.dto.postelastic;
 import com.vls.postupdateservice.model.Category;
 import com.vls.postupdateservice.model.Post;
 import com.vls.postupdateservice.model.Thing;
+import com.vls.postupdateservice.repository.CategoryRepository;
+import com.vls.postupdateservice.repository.PostElasticRepository;
+import com.vls.postupdateservice.repository.PostRepository;
+import com.vls.postupdateservice.repository.ThingRepository;
 import com.vls.postupdateservice.service.CategoryService;
 import com.vls.postupdateservice.service.PostElasticService;
 import com.vls.postupdateservice.service.PostService;
@@ -14,7 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,25 +25,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
 public class PostUpdateControllerTest extends AbstractTest{
-    @InjectMocks
     private PostUpdateController postUpdateController;
-
-    @Mock
     private ThingService thingService;
-
-    @Mock
     private CategoryService categoryService;
-
-    @Mock
     private PostService postService;
+    private PostElasticService postElasticService;
 
     @Mock
-    private PostElasticService postElasticService;
+    private PostRepository postRepository;
+    @Mock
+    private ThingRepository thingRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
+    @Mock
+    private PostElasticRepository postElasticRepository;
 
     private UUID postId;
     private Post post;
@@ -56,51 +60,46 @@ public class PostUpdateControllerTest extends AbstractTest{
         postId = UUID.randomUUID();
         post = new Post(postId,"description", new Date(), UUID.randomUUID(),
                 true, false, "Mở", "Free", "contact");
-
-        updatedPost = new Post(postId,"description", new Date(), UUID.randomUUID(),
+        updatedPost = new Post(postId,"description", new Date(), post.getThing_id(),
                 true, false, "Mở", "Free", "contact");
-
-        thing = new Thing("thing name 1", "origin 1", 10000, 1,
+        thing = new Thing(post.getThing_id(),"thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
                 UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        category = new Category(thing.getCategory_id(),"name");
+        postelastic = new postelastic();
 
-        category = new Category("name");
+        postService = new PostService(postRepository);
+        thingService = new ThingService(thingRepository);
+        categoryService = new CategoryService(categoryRepository);
+        postElasticService = new PostElasticService(postElasticRepository, thingService, categoryService);
+        postUpdateController = new PostUpdateController(postService, postElasticService);
 
-        postelastic = new postelastic(post.getDescription(), post.getExchange_method(), post.getCreated_time(),
-                post.isVisible(), thing.getThing_name(), thing.getOrigin(), category.getCategory_name());
+        Mockito.when(postRepository.findById(postId)).thenReturn(java.util.Optional.ofNullable(post));
+        Mockito.when(postRepository.save(post)).thenReturn(updatedPost);
+        Mockito.when(thingRepository.findThingById(post.getThing_id())).thenReturn(thing);
+        Mockito.when(categoryRepository.findCategoryById(thing.getCategory_id())).thenReturn(category);
+        Mockito.when(postElasticRepository.save(postelastic)).thenReturn(postelastic);
     }
 
     @Test
     public void updateReturnOK() {
-        Mockito.when(postService.getPostDetails(postId)).thenReturn(java.util.Optional.of(post));
-        Mockito.when(postService.checkIfAllowUpdate(post)).thenReturn(true);
-        Mockito.when(postService.updatePost(post)).thenReturn(updatedPost);
-        Mockito.when(postElasticService.update(post)).thenReturn(postelastic);
-
         ResponseEntity<Post> response = postUpdateController.update(post);
         Assert.assertEquals(200, response.getStatusCodeValue());
         Assert.assertEquals(updatedPost, response.getBody());
     }
 
     @Test
-    public void updateReturnNotFound() {
-        Mockito.when(postService.checkIfAllowUpdate(post)).thenReturn(true);
-        Mockito.when(postService.updatePost(post)).thenReturn(updatedPost);
-        Mockito.when(postElasticService.update(post)).thenReturn(postelastic);
-
+    public void updateReturnForbidden() {
+        post.setStatus("Đóng");
         ResponseEntity<Post> response = postUpdateController.update(post);
-        Assert.assertEquals(404, response.getStatusCodeValue());
+        Assert.assertEquals(403, response.getStatusCodeValue());
     }
 
     @Test
-    public void updateReturnForbidden() {
-        post.setStatus("Đóng");
-        Mockito.when(postService.getPostDetails(postId)).thenReturn(java.util.Optional.of(post));
-        Mockito.when(postService.checkIfAllowUpdate(post)).thenReturn(false);
-        Mockito.when(postService.updatePost(post)).thenReturn(updatedPost);
-        Mockito.when(postElasticService.update(post)).thenReturn(postelastic);
-
+    public void updateReturnNotFound() {
+        Optional<Post> emptyPostData = Optional.empty();
+        Mockito.when(postRepository.findById(postId)).thenReturn(emptyPostData);
         ResponseEntity<Post> response = postUpdateController.update(post);
-        Assert.assertEquals(403, response.getStatusCodeValue());
+        Assert.assertEquals(404, response.getStatusCodeValue());
     }
 }

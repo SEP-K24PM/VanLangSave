@@ -37,7 +37,6 @@ public class RabbitMQServiceTest extends AbstractTest {
                 "exchange method", new Date(), true, "thing name", "origin", "category name");
 
         Mockito.when(postRepository.save(postelastic)).thenReturn(postelastic);
-
-
+        rabbitMQService.receivedMessage(postelastic);
     }
 }
