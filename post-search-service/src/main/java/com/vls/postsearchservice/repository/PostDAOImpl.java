@@ -17,8 +17,6 @@ import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 @Repository
 public class PostDAOImpl implements PostDAO {
-
-
     private final ElasticsearchRestTemplate elasticSearchRestTemplate;
 
     @Autowired
