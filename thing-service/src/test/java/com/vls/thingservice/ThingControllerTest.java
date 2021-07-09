@@ -174,24 +174,6 @@ public class ThingControllerTest extends AbstractTest {
         Assert.assertEquals(updatedThing, responseRightWithNullPostID.getBody());
     }
 
-//    @Test
-//    public void updateThingWithInvalidPostStatus() {
-//        String thingId = UUID.randomUUID().toString();
-//        Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
-//                "used time 1", "image1.png",
-//                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-//        Post post = new Post(UUID.randomUUID(), "description",
-//                new Date(), UUID.randomUUID(), "Đóng","Free", "contact");
-//
-//        thing.setPost_id(post.getThing_id());
-//
-//        Mockito.when(postService.getPost(post.getId())).thenReturn(java.util.Optional.of(post));
-//        Mockito.when(thingService.getThingDetails(thingId)).thenReturn(java.util.Optional.of(thing));
-//
-//        ResponseEntity<Thing> response = thingController.updateThing(thingId, thing);
-//        Assert.assertEquals(403, response.getStatusCodeValue());
-//    }
-
     @Test
     public void deleteThing() {
         UUID thingId = UUID.randomUUID();
