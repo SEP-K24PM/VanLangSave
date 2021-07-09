@@ -22,7 +22,6 @@ public class CategoryService {
         List<Thing> listWithCateName = new ArrayList<>();
         Category tmpCategory = new Category();
         for (Thing thing: list) {
-
             if(categoryRepository.existsById(thing.getCategory_id())) {
                 tmpCategory = categoryRepository.getOne(thing.getCategory_id());
             }

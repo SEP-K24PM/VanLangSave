@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 public class RabbitMQSender {
 
     private RabbitTemplate rabbitTemplate;
-    private final ThingRepository thingRepository;
-    private final CategoryRepository categoryRepository;
+    private final ThingService thingService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public RabbitMQSender(RabbitTemplate rabbitTemplate, ThingRepository thingRepository, CategoryRepository categoryRepository) {
+    public RabbitMQSender(RabbitTemplate rabbitTemplate, ThingService thingService, CategoryService categoryService) {
         this.rabbitTemplate = rabbitTemplate;
-        this.thingRepository = thingRepository;
-        this.categoryRepository = categoryRepository;
+        this.thingService = thingService;
+        this.categoryService = categoryService;
     }
 
     @Value("${spring.rabbitmq.exchange}")
@@ -36,8 +36,8 @@ public class RabbitMQSender {
     }
 
     public postelastic convertToPostElastic(Post post) {
-        Thing thing = thingRepository.findThingById(post.getThing_id());
-        Category category = categoryRepository.findCategoryById(thing.getCategory_id());
+        Thing thing = thingService.findThingById(post.getThing_id());
+        Category category = categoryService.findCategoryById(thing.getCategory_id());
 
         postelastic postElastic = new postelastic(
                 post.getId().toString(),

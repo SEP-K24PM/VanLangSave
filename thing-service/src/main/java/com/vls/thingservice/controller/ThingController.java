@@ -1,6 +1,5 @@
 package com.vls.thingservice.controller;
 
-import com.netflix.ribbon.proxy.annotation.Http;
 import com.vls.thingservice.model.Thing;
 import com.vls.thingservice.service.ThingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ public class ThingController {
     public ResponseEntity<Thing> updateThing(@PathVariable String thingId, @RequestBody Thing thing) {
         Optional<Thing> thingData = thingService.getThingDetails(thingId);
         if(thingData.isPresent()) {
-            if(thingService.checkIsPosibleToUpdate(thingData.get())) {
+            if(thingService.checkIsPossibleToUpdateOrDelete(thingData.get())) {
                 Thing _thing = thingData.get();
                 _thing.setId(UUID.fromString(thingId));
                 _thing.setThing_name(thing.getThing_name());
@@ -72,12 +71,9 @@ public class ThingController {
     public ResponseEntity<Thing> deleteThing(@PathVariable("thingId") String thingId) {
         Optional<Thing> thing = thingService.getThingDetails(thingId);
         if(thing.isPresent()) {
-            if(thingService.checkIsPosibleToUpdate(thing.get())) {
-                boolean result = thingService.deleteThing(thingId);
-                if(result) {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-                }
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            if(thingService.checkIsPossibleToUpdateOrDelete(thing.get())) {
+                thingService.deleteThing(thingId);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }

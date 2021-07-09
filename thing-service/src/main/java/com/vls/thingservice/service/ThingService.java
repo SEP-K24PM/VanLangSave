@@ -2,7 +2,6 @@ package com.vls.thingservice.service;
 
 import com.vls.thingservice.model.Post;
 import com.vls.thingservice.model.Thing;
-import com.vls.thingservice.repository.PostRepository;
 import com.vls.thingservice.repository.ThingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +14,18 @@ import java.util.UUID;
 public class ThingService {
     private final ThingRepository thingRepository;
     private final PostService postService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ThingService(ThingRepository thingRepository, PostService postService) {
+    public ThingService(ThingRepository thingRepository, PostService postService, CategoryService categoryService) {
         this.thingRepository = thingRepository;
         this.postService = postService;
+        this.categoryService = categoryService;
     }
 
     public List<Thing> getListThings(UUID userId) {
-        return thingRepository.findByUserid(userId);
+        List<Thing> list = thingRepository.findByUserid(userId);
+        return categoryService.addCategoryNameToThing(list);
     }
 
     public Thing addThing(Thing thing) {
@@ -41,7 +43,7 @@ public class ThingService {
         return thingRepository.save(thing);
     }
 
-    public boolean checkIsPosibleToUpdate(Thing thing) {
+    public boolean checkIsPossibleToUpdateOrDelete(Thing thing) {
         if(thing.getPost_id() != null) {
             Optional<Post> post = postService.getPost(thing.getPost_id());
             if(post.isPresent()) {
@@ -55,12 +57,7 @@ public class ThingService {
         return true;
     }
 
-    public boolean deleteThing(String thingId) {
-        try {
-            thingRepository.deleteById(UUID.fromString(thingId));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void deleteThing(String thingId) {
+        thingRepository.deleteById(UUID.fromString(thingId));
     }
 }

@@ -2,37 +2,45 @@ package com.vls.postsearchservice;
 
 import com.vls.postsearchservice.controller.PostSearchController;
 import com.vls.postsearchservice.dto.postelastic;
-import com.vls.postsearchservice.repository.PostRepository;
+import com.vls.postsearchservice.repository.PostDAOImpl;
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.search.aggregations.Aggregations;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.TotalHitsRelation;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
+
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
-public class PostSearchControllerTest {
-    @InjectMocks
+public class PostSearchControllerTest  extends AbstractTest{
     private PostSearchController postSearchController;
-
     @Mock
-    private PostRepository postRepository;
+    private PostDAOImpl postDAOIml;
+
+    @Override
+    @Before
+    public void setUp() {
+        super.setUp();
+        postSearchController = new PostSearchController(postDAOIml);
+    }
 
     @Test
     public void testPostSearch() {
@@ -48,16 +56,12 @@ public class PostSearchControllerTest {
                 "category name");
         posts.add(post);
         posts.add(post);
-        posts.add(post);
-        posts.add(post);
-        posts.add(post);
+        String search = "name";
 
-        String name = "name";
+        Mockito.when(postDAOIml.search(search)).thenReturn(posts);
 
-        Mockito.when(postRepository.findBy(name)).thenReturn(posts);
-
-        List<postelastic> result = postSearchController.posts(name);
-
-        Assert.assertEquals(5, result.size());
+        ResponseEntity<List<postelastic>> response = postSearchController.posts(search);
+        Assert.assertEquals(200, response.getStatusCodeValue());
+        Assert.assertEquals(posts, response.getBody());
     }
 }

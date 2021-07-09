@@ -21,12 +21,6 @@ public class PostService {
         this.thingService = thingService;
     }
 
-    public List<Post> getAllPosts() {
-        List<Post> list = new ArrayList<Post>();
-        postRepository.findAll().forEach(list::add);
-        return list;
-    }
-
     public Post createPost(Post post) {
         return postRepository.save(post);
     }

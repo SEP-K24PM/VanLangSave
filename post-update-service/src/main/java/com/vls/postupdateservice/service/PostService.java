@@ -1,13 +1,10 @@
 package com.vls.postupdateservice.service;
 
 import com.vls.postupdateservice.model.Post;
-import com.vls.postupdateservice.model.Thing;
 import com.vls.postupdateservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,22 +12,10 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final ThingService thingService;
 
     @Autowired
-    public PostService(PostRepository postRepository, ThingService thingService) {
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.thingService = thingService;
-    }
-
-    public List<Post> getAllPosts() {
-        List<Post> list = new ArrayList<Post>();
-        postRepository.findAll().forEach(list::add);
-        return list;
-    }
-
-    public Post createPost(Post post) {
-        return postRepository.save(post);
     }
 
     public Optional<Post> getPostDetails(UUID id) {
