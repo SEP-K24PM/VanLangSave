@@ -53,11 +53,12 @@ public class AccountController {
     @RequestMapping(value = "/user/{email}")
     public ResponseEntity<Account> userProfile(@PathVariable String email) {
         Account info = accountRepository.giveAccountInfo(email);
-        if(info.getEmail().isEmpty()) {
+        if(info.getEmail() != email) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity( info.getEmail() ,HttpStatus.OK);
     }
+
     public boolean checked(String email){
         List<Account> checkList = accountRepository.ListAllUser();
         for (Account user:checkList) {

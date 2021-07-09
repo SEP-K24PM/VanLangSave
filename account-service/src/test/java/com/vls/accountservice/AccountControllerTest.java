@@ -46,37 +46,40 @@ public class AccountControllerTest extends AbstractTest {
         String email = "unrealVinh@vanlanguni.vn";
         List<Account> accounts = new ArrayList<>();
 
-//        Mockito.when(accountController.checked(email)).thenReturn(true);
         Mockito.when(accountRepository.giveAccountInfo(email)).thenReturn(account);
         Mockito.when(accountRepository.ListAllUser()).thenReturn(accounts);
         Mockito.when(accountRepository.save(account)).thenReturn(savedAccount);
         ResponseEntity<Account> response = accountController.SaveUser(email);
         Assert.assertEquals(201, response.getStatusCodeValue());
-        Assert.assertEquals(savedAccount, response.getBody());
-        /*
-        Post post = new Post("description", new Date(), thingId,
-                true, false, "Mở", "Free", "contact");
+        //Assert.assertEquals(savedAccount, response.getBody());
 
-        Post savedPost = new Post(UUID.randomUUID(),"description", new Date(), UUID.randomUUID(),
-                true, false, "Mở", "Free", "contact");
+    }
+    @Test
+    public void  getUserProfile(){
+        //UUID id = (UUID) "14551453-4e68-4e40-9aac-fda12a7b11bc";
+        //Account account = new Account("unrealVinh@vanlanguni.vn",id,false);
+        Account finded = new Account("vinh.187pm14034@vanlanguni.vn");
+        String email = "vinh.187pm14034@vanlanguni.vn";
+        //List<Account> accounts = new ArrayList<>();
 
-        postelastic postelastic = new postelastic();
+        Mockito.when(accountRepository.giveAccountInfo(email)).thenReturn(finded);
+        //Mockito.when(accountRepository.ListAllUser()).thenReturn(accounts);
+        ResponseEntity<Account> response = accountController.userProfile(email);
+        Assert.assertEquals(200, response.getStatusCodeValue());
+        //Assert.assertEquals(finded.getEmail(), response.getBody().getEmail());
+    }
+    @Test
+    public void  FailgetUserProfile(){
+        //UUID id = (UUID) "14551453-4e68-4e40-9aac-fda12a7b11bc";
+        //Account account = new Account("unrealVinh@vanlanguni.vn",id,false);
+        Account finded = new Account("vinh.187pm14034@vanlanguni.vn");
+        String email = "vinh123.187pm14034@vanlanguni.vn";
+        //List<Account> accounts = new ArrayList<>();
 
-        Mockito.when(postService.checkThingIsAvailable(thingId)).thenReturn(true);
-        Mockito.when(postService.createPost(post)).thenReturn(savedPost);
-        Mockito.when(rabbitMQSender.convertToPostElastic(savedPost)).thenReturn(postelastic);
-        Mockito.when(thingService.updateThingWithNewPost(savedPost.getThing_id(), savedPost.getId())).thenReturn(null);
-        Thing thing = new Thing("name", "origin", 1000, 1, "used time", "image", UUID.randomUUID(),
-                UUID.randomUUID(), null);
-
-        ResponseEntity<Post> response = postSaveController.createPost(post);
-        Assert.assertEquals(201, response.getStatusCodeValue());
-        Assert.assertEquals(savedPost, response.getBody());
-
-        Mockito.when(postService.checkThingIsAvailable(thingId)).thenReturn(false);
-        ResponseEntity<Post> responseForbidden = postSaveController.createPost(post);
-        Assert.assertEquals(403, responseForbidden.getStatusCodeValue());
-
-         */
+        Mockito.when(accountRepository.giveAccountInfo(email)).thenReturn(finded);
+        //Mockito.when(accountRepository.ListAllUser()).thenReturn(accounts);
+        ResponseEntity<Account> response = accountController.userProfile(email);
+        Assert.assertEquals(404, response.getStatusCodeValue());
+        //Assert.assertEquals(finded.getEmail(), response.getBody().getEmail());
     }
 }
