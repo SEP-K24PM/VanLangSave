@@ -1,29 +1,32 @@
 package com.vls.accountservice.controller;
 
-import com.vls.accountservice.module.Account;
-import com.vls.accountservice.repository.AccountRepository;
+import com.vls.accountservice.module.User_Account;
+import com.vls.accountservice.repository.UserAccountRepository;
+import com.vls.accountservice.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
 
-    private final AccountRepository accountRepository;
+    private final UserAccountRepository userAccountRepository;
+    private final UserAccountService userAccountService;
 
     @Autowired
-    public AccountController(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    public AccountController(UserAccountRepository userAccountRepository, UserAccountService userAccountService) {
+        this.userAccountRepository = userAccountRepository;
+        this.userAccountService = userAccountService;
     }
 
     @GetMapping("/show")
-    public ResponseEntity<List<Account>> getAllUser() {
+    public ResponseEntity<List<User_Account>> getAllUser() {
         try {
-            List<Account> users = accountRepository.ListAllUser();
-
+            List<User_Account> users = userAccountRepository.ListAllUser();
             if (users.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -33,18 +36,14 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Account> createTutorial(@RequestBody String email) {
-        Account user = new Account();
-        user.setEmail(email);
-        System.out.println(email);
-        try {
-            Account _user = accountRepository.save(user);
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
-//            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping("/login")
+    public ResponseEntity<User_Account> login(@RequestBody User_Account userAccount) {
+        Optional<User_Account> user = userAccountService.getAccount(userAccount.getEmail());
+        if(user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.FOUND);
+        } else {
+            User_Account user_account = new User_Account(userAccount.getEmail(), false);
+            return new ResponseEntity<>(userAccountService.saveAccount(user_account), HttpStatus.CREATED);
         }
     }
-
 }
