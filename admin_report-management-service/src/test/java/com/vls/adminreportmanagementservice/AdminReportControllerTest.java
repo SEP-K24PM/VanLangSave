@@ -1,30 +1,24 @@
-package com.vls.admin_reportmanagementservice;
+package com.vls.adminreportmanagementservice;
 
 import com.vls.adminreportmanagementservice.controller.AdminReportController;
 import com.vls.adminreportmanagementservice.model.Post_report;
 import com.vls.adminreportmanagementservice.repository.PostreportRepository;
 import com.vls.adminreportmanagementservice.repository.AdminreportRepository;
 import com.vls.adminreportmanagementservice.service.AdminReportService;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
