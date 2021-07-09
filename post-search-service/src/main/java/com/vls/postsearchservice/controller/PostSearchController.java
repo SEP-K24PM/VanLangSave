@@ -25,9 +25,7 @@ public class PostSearchController {
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
     public ResponseEntity<List<postelastic>> posts(@RequestBody String search) {
-        //postRepository.findBy(name).forEach(posts::add);
         List<postelastic> posts = postDAOIml.search(search);
-
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
