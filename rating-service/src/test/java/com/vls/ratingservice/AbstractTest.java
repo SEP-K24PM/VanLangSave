@@ -1,4 +1,4 @@
-package com.vls.postservice;
+package com.vls.ratingservice;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PostServiceApplication.class)
+@SpringBootTest(classes = RatingServiceApplication.class)
 @WebAppConfiguration
 public abstract class AbstractTest {
     protected MockMvc mvc;

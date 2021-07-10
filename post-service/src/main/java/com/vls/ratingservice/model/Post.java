@@ -1,4 +1,4 @@
-package com.vls.postservice.model;
+package com.vls.ratingservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

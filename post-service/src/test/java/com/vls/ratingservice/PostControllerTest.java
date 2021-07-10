@@ -1,7 +1,7 @@
-package com.vls.postservice;
+package com.vls.ratingservice;
 
-import com.vls.postservice.controller.PostController;
-import com.vls.postservice.model.Post;
+import com.vls.ratingservice.controller.PostController;
+import com.vls.ratingservice.model.Post;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

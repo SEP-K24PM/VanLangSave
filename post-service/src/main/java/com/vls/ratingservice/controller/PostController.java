@@ -1,13 +1,12 @@
-package com.vls.postservice.controller;
+package com.vls.ratingservice.controller;
 
-import com.vls.postservice.model.Post;
+import com.vls.ratingservice.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
