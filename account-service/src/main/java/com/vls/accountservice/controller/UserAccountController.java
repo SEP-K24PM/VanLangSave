@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class AccountController {
+public class UserAccountController {
 
     private final UserAccountRepository userAccountRepository;
     private final UserAccountService userAccountService;
 
     @Autowired
-    public AccountController(UserAccountRepository userAccountRepository, UserAccountService userAccountService) {
+    public UserAccountController(UserAccountRepository userAccountRepository, UserAccountService userAccountService) {
         this.userAccountRepository = userAccountRepository;
         this.userAccountService = userAccountService;
     }
@@ -43,7 +43,8 @@ public class AccountController {
             return new ResponseEntity<>(user.get(), HttpStatus.FOUND);
         } else {
             User_Account user_account = new User_Account(userAccount.getEmail(), false);
-            return new ResponseEntity<>(userAccountService.saveAccount(user_account), HttpStatus.CREATED);
+            User_Account savedUser = userAccountService.saveAccount(user_account);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         }
     }
 }
