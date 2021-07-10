@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Repository
 
-    public interface ThingRepository extends JpaRepository<Thing, UUID> {
-    List<Thing> findThingBy();
-  }
-
+public interface ThingRepository extends JpaRepository<Thing, UUID> {
+}
+//public Thing ThingRepository(UUID id);

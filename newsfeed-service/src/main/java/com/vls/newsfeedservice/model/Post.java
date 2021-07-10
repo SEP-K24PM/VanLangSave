@@ -1,6 +1,8 @@
 package com.vls.newsfeedservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -11,6 +13,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @Column(name = "id")
     private UUID id;
 
@@ -32,26 +35,40 @@ public class Post {
     @Column(name = "thing_id")
     private UUID thing_id;
 
-    @Column(name = "post_status_id")
-    private UUID post_status_id;
-
     @Column(name = "exchange_method")
     private String exchange_method;
+
+    @Column(name = "status")
+    private String status;
+
 
     public Post(){
 
     }
-    public Post(String description, Date created_time, boolean visible, boolean deletion, String contact, UUID thing_id, UUID post_status_id, String exchange_method) {
+    public Post(UUID id,String description, Date created_time, boolean visible, boolean deletion,
+                String contact, UUID thing_id, String exchange_method, String status) {
+        this.id = id;
         this.description = description;
         this.created_time = created_time;
         this.visible = visible;
         this.deletion = deletion;
         this.contact = contact;
         this.thing_id = thing_id;
-        this.post_status_id = post_status_id;
         this.exchange_method = exchange_method;
-
+        this.status = status;
     }
+    public Post(String description, Date created_time, boolean visible, boolean deletion,
+                String contact, UUID thing_id, String exchange_method, String status) {
+        this.description = description;
+        this.created_time = created_time;
+        this.visible = visible;
+        this.deletion = deletion;
+        this.contact = contact;
+        this.thing_id = thing_id;
+        this.exchange_method = exchange_method;
+        this.status = status;
+    }
+
 
     public UUID getId() {
         return id;
@@ -74,12 +91,10 @@ public class Post {
     public UUID getThing_id() {
         return thing_id;
     }
-    public UUID getPost_status_id() {
-        return post_status_id;
-    }
     public String getExchange_method() {
         return exchange_method;
     }
+    public String status() { return status;}
 
 
     public void setId(UUID id) {
@@ -110,14 +125,13 @@ public class Post {
         this.thing_id = thing_id;
     }
 
-    public void setPost_status_id(UUID post_status_id) {
-        this.post_status_id = post_status_id;
-    }
-
     public void setExchange_method(String exchange_method) {
         this.exchange_method = exchange_method;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
@@ -127,9 +141,9 @@ public class Post {
                 "visible=" + visible + ", " +
                 "deletion=" + deletion + "," +
                 "contact=" + contact + "," +
-                "thing_id" + thing_id + "," +
-                "post_status_id" + post_status_id + "," +
-                "exchange_method" + exchange_method + "]";
+                "thing_id=" + thing_id + "," +
+                "exchange_method=" + exchange_method + "," +
+                "status=" + status;
     }
 }
 
