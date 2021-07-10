@@ -20,7 +20,4 @@ public class AdminService {
         return adminAccountRepository.findAdmin_AccountByEmailEquals(email);
     }
 
-    public Admin_Account saveAccount(Admin_Account user_account) {
-        return adminAccountRepository.save(user_account);
-    }
 }

@@ -17,23 +17,19 @@ public class Admin_Account {
     @Column(name = "pwd")
     private String pwd;
 
-    @Column(name = "role")
-    private String role;
 
     public Admin_Account() {
     }
 
-    public Admin_Account(String email, String pwd, String role) {
+    public Admin_Account(String email, String pwd) {
         this.email = email;
         this.pwd = pwd;
-        this.role = role;
     }
 
-    public Admin_Account(UUID id, String email, String pwd, String role) {
+    public Admin_Account(UUID id, String email, String pwd) {
         this.id = id;
         this.email = email;
         this.pwd = pwd;
-        this.role = role;
     }
 
     public UUID getId() {
@@ -58,14 +54,6 @@ public class Admin_Account {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     @Override
