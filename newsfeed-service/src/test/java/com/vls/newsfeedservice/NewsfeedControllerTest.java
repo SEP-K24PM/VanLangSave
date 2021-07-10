@@ -1,6 +1,5 @@
 package com.vls.newsfeedservice;
 
-
 import com.vls.newsfeedservice.controller.NewsfeedController;
 import com.vls.newsfeedservice.dto.PostWithThing;
 import com.vls.newsfeedservice.model.Post;
@@ -20,11 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
-import java.util.List;
-
+import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
@@ -35,51 +30,54 @@ public class NewsfeedControllerTest extends AbstractTest {
 
     @Mock
     private PostRepository postRepository;
-    //private Object PostRepository;
-
     @Mock
     private ThingRepository thingRepository;
-    //private Object ThingRepository;
-
 
     @Override
     @Before
     public void setUp() {
         super.setUp();
-        postService = new PostService(postRepository, thingService);
         thingService = new ThingService(thingRepository);
-        newsfeedController = new NewsfeedController(postService, thingService);
+        postService = new PostService(postRepository, thingService);
+        newsfeedController = new NewsfeedController(postService);
     }
 
     @Test
     public void newsFeed() {
-        UUID thingId = UUID.randomUUID();
-        Thing thing = new Thing();
-
-        PostWithThing postWithThing = new PostWithThing(UUID.randomUUID(), "description",
-                new Date(), true, false, "contact", thingId, "Free", "Mở", thing);
+        Post post = new Post(UUID.randomUUID(), "description", new Date(), true, false,
+                "contact", UUID.randomUUID(), "Free", "Mở");
         List<Post> posts = new ArrayList<>();
-        posts.add(new Post(UUID.randomUUID(), "description", new Date(), true, false,
-                "contact", thingId, "Free", "Mở"));
+        posts.add(post);
+        posts.add(post);
+        posts.add(post);
 
         Mockito.when(postRepository.findAllNewPost()).thenReturn(posts);
-        Mockito.when(thingRepository.findById(thing.getId())).thenReturn(java.util.Optional.of(thing));
 
         ResponseEntity<List<Post>> response1 = newsfeedController.newsFeed();
         Assert.assertEquals(200, response1.getStatusCodeValue());
-        Assert.assertEquals(true, response1.getBody());
+        Assert.assertEquals(posts, response1.getBody());
+    }
 
-        ResponseEntity<PostWithThing> response = newsfeedController.postDetails(postWithThing.getId());
+    @Test
+    public void details() {
+        UUID postId = UUID.randomUUID();
+        Thing thing = new Thing(UUID.randomUUID(), "name", "origin", 100,
+                1, "used time", "iamge", UUID.randomUUID(), UUID.randomUUID(), postId);
+        Post post = new Post(postId, "description", new Date(), true, false,
+                "contact", thing.getId(), "Free", "Mở");
+        PostWithThing postWithThing = new PostWithThing(postId, post.getDescription(),
+                post.getCreated_time(), post.getVisible(), post.getDeletion(),
+                post.getContact(), thing.getId(), post.getExchange_method(), post.status(), thing);
+
+        Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
+        Mockito.when(thingRepository.findById(post.getThing_id())).thenReturn(Optional.of(thing));
+
+        ResponseEntity<PostWithThing> response = newsfeedController.postDetails(post.getId());
         Assert.assertEquals(200, response.getStatusCodeValue());
-        Assert.assertEquals(true, response.getBody());
 
-        Mockito.doNothing().when(postRepository).findAllNewPost();
-        ResponseEntity<List<Post>> responseNotFound = newsfeedController.newsFeed();
+        Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.empty());
+        ResponseEntity<PostWithThing> responseNotFound = newsfeedController.postDetails(post.getId());
         Assert.assertEquals(404, responseNotFound.getStatusCodeValue());
-
-        Mockito.doNothing().when(postRepository).findById(postWithThing.getId());
-        ResponseEntity<PostWithThing> responseNotFound1 = newsfeedController.postDetails(postWithThing.getId());
-        Assert.assertEquals(404, responseNotFound1.getStatusCodeValue());
     }
 }
 

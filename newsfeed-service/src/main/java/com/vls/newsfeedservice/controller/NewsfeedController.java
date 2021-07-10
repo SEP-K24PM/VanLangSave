@@ -20,12 +20,10 @@ import java.util.UUID;
 public class NewsfeedController {
 
     private final PostService postService;
-    private final ThingService thingService;
 
     @Autowired
-    public NewsfeedController(PostService postService, ThingService thingService) {
+    public NewsfeedController(PostService postService) {
         this.postService = postService;
-        this.thingService = thingService;
     }
 
     @RequestMapping("/")
@@ -34,12 +32,6 @@ public class NewsfeedController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-
-//    public ResponseEntity<Thing> postDetail (@PathVariable("id") UUID id) {
-//        Optional<Thing> postDetails = postDetailService.getPostDetail(id);
-//        return postDetails.map(thing -> new ResponseEntity<>(thing, HttpStatus.OK))
-//                        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
     @RequestMapping("/post/{id}")
     public ResponseEntity<PostWithThing> postDetails (@PathVariable("id") UUID id){
         Optional<Post> post = postService.getPost(id);

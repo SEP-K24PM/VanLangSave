@@ -24,8 +24,6 @@ public class PostService {
         this.thingService = thingService;
     }
 
-
-
     public List<Post> getAllPost() {
         List<Post> list = new ArrayList<>();
         postRepository.findAllNewPost().forEach(list::add);
