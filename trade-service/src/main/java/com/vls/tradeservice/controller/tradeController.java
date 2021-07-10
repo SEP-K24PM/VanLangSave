@@ -1,8 +1,6 @@
 package com.vls.tradeservice.controller;
 
-import com.vls.tradeservice.model.Post;
 import com.vls.tradeservice.model.PostRegistration;
-import com.vls.tradeservice.model.Thing;
 import com.vls.tradeservice.repository.PostRegistrationRepo;
 import com.vls.tradeservice.repository.PostRepo;
 import com.vls.tradeservice.repository.ThingRepo;
@@ -12,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,10 +19,6 @@ public class tradeController {
     private final PostRepo postRepo;
     private final UserRepo userRepo;
 
-    // user: uuid: "aaaaaaaaaaaaa"
-    // post: uuid  "bbbbbbbbbbbbb"
-
-
     @Autowired
     public tradeController(PostRegistrationRepo postRegistrationRepo,ThingRepo thingRepo,
                            PostRepo postRepo,UserRepo userRepo) {
@@ -34,6 +27,9 @@ public class tradeController {
         this.postRepo = postRepo;
         this.userRepo = userRepo;
     }
+
+
+
     /*
     @RequestMapping(value = "/PostRegist", method = RequestMethod.POST)
     public ResponseEntity<PostRegistration> GetInforPost(@RequestBody String currentUserID,@RequestBody String currentPostID){
@@ -45,8 +41,7 @@ public class tradeController {
     }
     */
 
-
-
+    //save với dữ liệu mẫu
     @RequestMapping(value = "/postRegist", method = RequestMethod.POST)
     public ResponseEntity<PostRegistration> SavePostRegistration(){
         try {
@@ -55,7 +50,7 @@ public class tradeController {
             UUID _postID = UUID.fromString("3f552bf8-0bb7-4d5d-b1e2-179844bcd338");
             PostRegistration _postRegistration = new PostRegistration(_thingID,_userID,_postID);
             var saved = postRegistrationRepo.save(_postRegistration);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(saved,HttpStatus.CREATED);
         }catch (Exception e){
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
