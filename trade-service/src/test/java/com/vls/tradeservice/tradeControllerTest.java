@@ -1,8 +1,8 @@
 package com.vls.tradeservice;
 
-import com.vls.tradeservice.controller.tradeController;
-import com.vls.tradeservice.model.PostRegistration;
+import com.vls.tradeservice.controller.TradeController;
 
+import com.vls.tradeservice.model.PostRegistration;
 import com.vls.tradeservice.repository.PostRegistrationRepo;
 import com.vls.tradeservice.repository.PostRepo;
 import com.vls.tradeservice.repository.ThingRepo;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @RunWith(SpringRunner.class)
 public class tradeControllerTest extends AbstractTest {
 
-    private tradeController _tradeController;
+    private TradeController _tradeController;
 
     @Mock
     private PostRegistrationRepo _postRegistrationRepo;
@@ -40,7 +40,7 @@ public class tradeControllerTest extends AbstractTest {
     @Before
     public void setUp() {
         super.setUp();
-        _tradeController = new tradeController(_postRegistrationRepo, _thingrepo,_postRepo,_userrepo);
+        _tradeController = new TradeController(_postRegistrationRepo, _thingrepo,_postRepo,_userrepo);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class tradeControllerTest extends AbstractTest {
         PostRegistration saved = new PostRegistration(_thingID,_userID,_postID);
 
         Mockito.when(_postRegistrationRepo.save(registration)).thenReturn(saved);
-        ResponseEntity response = _tradeController.SavePostRegistration();
+        ResponseEntity response = _tradeController.SavePostRegistration(registration);
         Assert.assertEquals(201, response.getStatusCodeValue());
         //Assert.assertEquals(saved, response.getBody());
     }

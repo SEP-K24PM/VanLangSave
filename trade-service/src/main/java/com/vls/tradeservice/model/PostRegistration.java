@@ -58,6 +58,54 @@ public class PostRegistration {
         this.description = description;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isChoosen() {
+        return choosen;
+    }
+
+    public void setChoosen(boolean choosen) {
+        this.choosen = choosen;
+    }
+
+    public UUID getThing_id() {
+        return thing_id;
+    }
+
+    public void setThing_id(UUID thing_id) {
+        this.thing_id = thing_id;
+    }
+
+    public UUID getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(UUID user_id) {
+        this.user_id = user_id;
+    }
+
+    public UUID getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(UUID post_id) {
+        this.post_id = post_id;
+    }
+
     @Override
     public String toString() {
         return "PostRegistration{" +
