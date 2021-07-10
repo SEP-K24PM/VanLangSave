@@ -1,6 +1,8 @@
 package com.vls.tradeservice.controller;
 
+import com.vls.tradeservice.model.Post;
 import com.vls.tradeservice.model.PostRegistration;
+import com.vls.tradeservice.model.Thing;
 import com.vls.tradeservice.repository.PostRegistrationRepo;
 import com.vls.tradeservice.repository.PostRepo;
 import com.vls.tradeservice.repository.ThingRepo;
@@ -8,9 +10,7 @@ import com.vls.tradeservice.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +22,10 @@ public class tradeController {
     private final PostRepo postRepo;
     private final UserRepo userRepo;
 
+    // user: uuid: "aaaaaaaaaaaaa"
+    // post: uuid  "bbbbbbbbbbbbb"
+
+
     @Autowired
     public tradeController(PostRegistrationRepo postRegistrationRepo,ThingRepo thingRepo,
                            PostRepo postRepo,UserRepo userRepo) {
@@ -30,11 +34,33 @@ public class tradeController {
         this.postRepo = postRepo;
         this.userRepo = userRepo;
     }
-    @RequestMapping(value = "/Registation/{email}")
-    public ResponseEntity<List<PostRegistration>> getAllPostRegist(@PathVariable("email") String email) {
-        //List<PostRegistration> listRegisted
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
+    /*
+    @RequestMapping(value = "/PostRegist", method = RequestMethod.POST)
+    public ResponseEntity<PostRegistration> GetInforPost(@RequestBody String currentUserID,@RequestBody String currentPostID){
+        UUID _currentPostID = UUID.fromString(currentPostID);
+        UUID _currentUserID = UUID.fromString(currentUserID);
+        PostRegistration _sendData = new PostRegistration(_currentUserID,_currentPostID);
 
+        return new ResponseEntity<>(_sendData, HttpStatus.OK);
+    }
+    */
+
+
+
+    @RequestMapping(value = "/postRegist", method = RequestMethod.POST)
+    public ResponseEntity<PostRegistration> SavePostRegistration(){
+        try {
+            UUID _userID = UUID.fromString("14551453-4e68-4e40-9aac-fda12a7b11bc");
+            UUID _thingID = UUID.fromString("5fad1a4e-e14f-4a7a-a85d-4c1c6547a9c7");
+            UUID _postID = UUID.fromString("3f552bf8-0bb7-4d5d-b1e2-179844bcd338");
+            PostRegistration _postRegistration = new PostRegistration(_thingID,_userID,_postID);
+            var saved = postRegistrationRepo.save(_postRegistration);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 }

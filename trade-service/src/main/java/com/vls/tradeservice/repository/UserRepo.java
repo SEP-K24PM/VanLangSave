@@ -10,6 +10,4 @@ import java.util.UUID;
 
 public interface UserRepo extends JpaRepository<user, UUID> {
 
-    @Query("SELECT all FROM PostRegistration as all")
-    List<PostRegistration> listtAllPostRegistration();
 }

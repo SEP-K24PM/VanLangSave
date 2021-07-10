@@ -40,7 +40,7 @@ public class ThingController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Thing> addThing(@RequestBody Thing thing) {
         Thing _thing = thingService.addThing(thing);
-        return new ResponseEntity<>(_thing, HttpStatus.CREATED);
+        return new ResponseEntity<>(_thi ng, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/update/{thingId}", method = RequestMethod.PUT)
