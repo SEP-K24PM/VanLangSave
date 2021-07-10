@@ -7,11 +7,9 @@ import com.vls.postsaveservice.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,31 +17,30 @@ public class PostSaveController {
 
     private final PostService postService;
     private final RabbitMQSender rabbitMQSender;
+    private final ThingService thingService;
 
     @Autowired
-    public PostSaveController(PostService postService, RabbitMQSender rabbitMQSender) {
+    public PostSaveController(PostService postService, RabbitMQSender rabbitMQSender, ThingService thingService) {
         this.postService = postService;
         this.rabbitMQSender = rabbitMQSender;
-    }
-
-    @RequestMapping("/posts")
-    public List<Post> getAllPosts() {
-        List<Post> list = postService.getAllPosts();
-        return list;
+        this.thingService = thingService;
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        try {
+        if(postService.checkThingIsAvailable(post.getThing_id())) {
+            post.setStatus("Mở");
+            post.setCreated_time(new Date());
+            post.setVisible(true);
             Post newPost = postService.createPost(post);
             new Thread(() -> {
                 postelastic postelastic = rabbitMQSender.convertToPostElastic(newPost);
                 rabbitMQSender.send(postelastic);
+                thingService.updateThingWithNewPost(post.getThing_id(), post.getId());
             }).start();
-
-            return new ResponseEntity<>(null, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(newPost, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 }

@@ -25,8 +25,14 @@ public class Post {
     @Column(name = "thing_id")
     private UUID thing_id;
 
-    @Column(name = "post_status_id")
-    private UUID post_status_id;
+    @Column(name = "visible")
+    private boolean visible;
+
+    @Column(name = "deletion")
+    private boolean deletion;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "exchange_method")
     private String exchange_method;
@@ -37,21 +43,25 @@ public class Post {
     public Post() {
     }
 
-    public Post(String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method, String contact) {
+    public Post(String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status, String exchange_method, String contact) {
         this.description = description;
         this.created_time = created_time;
         this.thing_id = thing_id;
-        this.post_status_id = post_status_id;
+        this.visible = visible;
+        this.deletion = deletion;
+        this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
     }
 
-    public Post(UUID id, String description, Date created_time, UUID thing_id, UUID post_status_id, String exchange_method, String contact) {
+    public Post(UUID id, String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status, String exchange_method, String contact) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
         this.thing_id = thing_id;
-        this.post_status_id = post_status_id;
+        this.visible = visible;
+        this.deletion = deletion;
+        this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
     }
@@ -88,12 +98,28 @@ public class Post {
         this.thing_id = thing_id;
     }
 
-    public UUID getPost_status_id() {
-        return post_status_id;
+    public boolean isVisible() {
+        return visible;
     }
 
-    public void setPost_status_id(UUID post_status_id) {
-        this.post_status_id = post_status_id;
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isDeletion() {
+        return deletion;
+    }
+
+    public void setDeletion(boolean deletion) {
+        this.deletion = deletion;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getExchange_method() {
@@ -114,13 +140,16 @@ public class Post {
 
     @Override
     public String toString() {
-        return "post{" +
+        return "Post{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", created_time=" + created_time +
                 ", thing_id=" + thing_id +
-                ", post_status_id=" + post_status_id +
+                ", visible=" + visible +
+                ", deletion=" + deletion +
+                ", status='" + status + '\'' +
                 ", exchange_method='" + exchange_method + '\'' +
+                ", contact='" + contact + '\'' +
                 '}';
     }
 }
