@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "post_report")
-public class Post_report {
+public class Post_Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,10 +32,10 @@ public class Post_report {
     @Column(name = "reason_by_admin")
     private String reason_by_admin;
 
-    public Post_report() {
+    public Post_Report() {
     }
 
-    public Post_report(String description, UUID post_id, UUID reporter_id, UUID admin_id, UUID handling_id, String reason_by_admin) {
+    public Post_Report(String description, UUID post_id, UUID reporter_id, UUID admin_id, UUID handling_id, String reason_by_admin) {
         this.description = description;
         this.post_id = post_id;
         this.reporter_id = reporter_id;
@@ -44,7 +44,7 @@ public class Post_report {
         this.reason_by_admin = reason_by_admin;
     }
 
-    public Post_report(UUID id, String description, UUID post_id, UUID reporter_id, UUID admin_id, UUID handling_id, String reason_by_admin) {
+    public Post_Report(UUID id, String description, UUID post_id, UUID reporter_id, UUID admin_id, UUID handling_id, String reason_by_admin) {
         this.id = id;
         this.description = description;
         this.post_id = post_id;

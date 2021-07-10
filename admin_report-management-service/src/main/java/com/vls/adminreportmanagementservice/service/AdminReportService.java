@@ -1,34 +1,32 @@
 package com.vls.adminreportmanagementservice.service;
 
-import com.vls.adminreportmanagementservice.model.Post_report;
-import com.vls.adminreportmanagementservice.repository.AdminreportRepository;
+import com.vls.adminreportmanagementservice.model.Post_Report;
 import com.vls.adminreportmanagementservice.repository.PostreportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class  AdminReportService {
 
-    private final AdminreportRepository adminreportRepository;
     private final PostreportRepository postreportRepository;
 
     @Autowired
-    public AdminReportService(AdminreportRepository adminreportRepository, PostreportRepository postreportRepository) {
-        this.adminreportRepository = adminreportRepository;
+    public AdminReportService(PostreportRepository postreportRepository) {
         this.postreportRepository = postreportRepository;
     }
 
-    public List<Post_report> getReports() {
-        List<Post_report> post_reports = new ArrayList<Post_report>();
-        adminreportRepository.findAll().forEach(post_reports::add);
+    public List<Post_Report> getReports() {
+        List<Post_Report> post_reports = new ArrayList<Post_Report>();
+        postreportRepository.findAll().forEach(post_reports::add);
         return post_reports;
     }
 
-    public Post_report findPost_reportById(UUID id) {
-        return postreportRepository.findPost_reportById(id);
+    public Optional<Post_Report> findPost_reportById(UUID id) {
+        return postreportRepository.findById(id);
     }
 }
