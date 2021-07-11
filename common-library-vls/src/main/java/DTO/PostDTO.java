@@ -12,21 +12,12 @@ public class PostDTO {
     private String contact;
     private String exchange_method;
     private String status;
+    private ThingDTO thing;
 
     public PostDTO() {
     }
 
-    public PostDTO(String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status) {
-        this.description = description;
-        this.created_time = created_time;
-        this.visible = visible;
-        this.deletion = deletion;
-        this.contact = contact;
-        this.exchange_method = exchange_method;
-        this.status = status;
-    }
-
-    public PostDTO(UUID id, String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status) {
+    public PostDTO(UUID id, String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status, ThingDTO thing) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
@@ -35,6 +26,18 @@ public class PostDTO {
         this.contact = contact;
         this.exchange_method = exchange_method;
         this.status = status;
+        this.thing = thing;
+    }
+
+    public PostDTO(String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status, ThingDTO thing) {
+        this.description = description;
+        this.created_time = created_time;
+        this.visible = visible;
+        this.deletion = deletion;
+        this.contact = contact;
+        this.exchange_method = exchange_method;
+        this.status = status;
+        this.thing = thing;
     }
 
     public UUID getId() {
@@ -99,6 +102,14 @@ public class PostDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ThingDTO getThing() {
+        return thing;
+    }
+
+    public void setThing(ThingDTO thing) {
+        this.thing = thing;
     }
 
     @Override
