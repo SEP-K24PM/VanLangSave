@@ -1,9 +1,8 @@
 package com.vls.newsfeedservice.controller;
 
-import com.vls.newsfeedservice.dto.PostWithThing;
+import DTO.PostDTO;
 import com.vls.newsfeedservice.model.Post;
 import com.vls.newsfeedservice.service.PostService;
-import com.vls.newsfeedservice.service.ThingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +26,17 @@ public class NewsfeedController {
     }
 
     @RequestMapping("/")
-    public ResponseEntity<List<Post>> newsFeed(){
+    public ResponseEntity<List<PostDTO>> newsFeed(){
         List<Post> list = postService.getAllPost();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        List<PostDTO> result = postService.convertToListPostDTO(list);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping("/post/{id}")
-    public ResponseEntity<PostWithThing> postDetails (@PathVariable("id") UUID id){
+    public ResponseEntity<PostDTO> postDetails (@PathVariable("id") UUID id){
         Optional<Post> post = postService.getPost(id);
         if(post.isPresent()) {
-            PostWithThing postDetails = postService.getPostDetailsWithThing(post.get());
+            PostDTO postDetails = postService.getPostDetailsDTO(post.get());
             return new ResponseEntity<>(postDetails, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -13,7 +13,6 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @Column(name = "id")
     private UUID id;
 
@@ -69,81 +68,76 @@ public class Post {
         this.status = status;
     }
 
-
     public UUID getId() {
         return id;
     }
-    public String getDescription() {
-        return description;
-    }
-    public Date getCreated_time() {
-        return created_time;
-    }
-    public boolean getVisible() {
-        return visible;
-    }
-    public boolean getDeletion() {
-        return deletion;
-    }
-    public String getContact() {
-        return contact;
-    }
-    public UUID getThing_id() {
-        return thing_id;
-    }
-    public String getExchange_method() {
-        return exchange_method;
-    }
-    public String status() { return status;}
-
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public Date getCreated_time() {
+        return created_time;
+    }
+
     public void setCreated_time(Date created_time) {
         this.created_time = created_time;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
+    public boolean isDeletion() {
+        return deletion;
+    }
+
     public void setDeletion(boolean deletion) {
         this.deletion = deletion;
+    }
+
+    public String getContact() {
+        return contact;
     }
 
     public void setContact(String contact) {
         this.contact = contact;
     }
 
+    public UUID getThing_id() {
+        return thing_id;
+    }
+
     public void setThing_id(UUID thing_id) {
         this.thing_id = thing_id;
+    }
+
+    public String getExchange_method() {
+        return exchange_method;
     }
 
     public void setExchange_method(String exchange_method) {
         this.exchange_method = exchange_method;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getStatus() {
+        return status;
     }
 
-    @Override
-    public String toString() {
-        return "post [id=" + id + ", " +
-                "description=" + description + ", " +
-                "created_time=" + created_time + ", " +
-                "visible=" + visible + ", " +
-                "deletion=" + deletion + "," +
-                "contact=" + contact + "," +
-                "thing_id=" + thing_id + "," +
-                "exchange_method=" + exchange_method + "," +
-                "status=" + status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
 

@@ -1,10 +1,13 @@
 package com.vls.newsfeedservice.service;
 
-import com.vls.newsfeedservice.dto.PostWithThing;
+import DTO.PostDTO;
+import DTO.ThingDTO;
+import com.vls.newsfeedservice.converter.Converter;
+import com.vls.newsfeedservice.model.Category;
 import com.vls.newsfeedservice.model.Post;
 import com.vls.newsfeedservice.model.Thing;
+import com.vls.newsfeedservice.model.UserAccount;
 import com.vls.newsfeedservice.repository.PostRepository;
-import com.vls.newsfeedservice.repository.ThingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +20,17 @@ import java.util.UUID;
 public class PostService {
     private final PostRepository postRepository;
     private final ThingService thingService;
+    private final CategoryService categoryService;
+    private final UserAccountService userAccountService;
+    private final Converter converter;
 
     @Autowired
-    public PostService(PostRepository postRepository, ThingService thingService) {
+    public PostService(PostRepository postRepository, ThingService thingService, CategoryService categoryService, UserAccountService userAccountService, Converter converter) {
         this.postRepository = postRepository;
         this.thingService = thingService;
+        this.categoryService = categoryService;
+        this.userAccountService = userAccountService;
+        this.converter = converter;
     }
 
     public List<Post> getAllPost() {
@@ -34,12 +43,23 @@ public class PostService {
         return postRepository.findById(postId);
     }
 
-    public PostWithThing getPostDetailsWithThing(Post post) {
+    public PostDTO getPostDetailsDTO(Post post) {
         Optional<Thing> thing = thingService.getThing(post.getThing_id());
-        PostWithThing postDetails = new PostWithThing(post.getId(), post.getDescription(), post.getCreated_time(),
-                post.getVisible(), post.getDeletion(),
-             post.getContact(), post.getThing_id(), post.getExchange_method(),
-                post.status(), thing.get());
+        Optional<Category> category = categoryService.getCategory(thing.get().getCategory_id());
+        Optional<UserAccount> userAccount = userAccountService.getUserAccount(thing.get().getUser_id());
+
+        ThingDTO thingDTO = converter.convertToThingDTO(thing.get(), category.get(), userAccount.get());
+        PostDTO postDetails = converter.convertToPostDTO(post);
+        postDetails.setThing(thingDTO);
+
         return postDetails;
+    }
+
+    public List<PostDTO> convertToListPostDTO(List<Post> list) {
+        List<PostDTO> postDTOList = new ArrayList<>();
+        for (Post post : list) {
+            postDTOList.add(getPostDetailsDTO(post));
+        }
+        return postDTOList;
     }
 }

@@ -12,12 +12,14 @@ public class PostDTO {
     private String contact;
     private String exchange_method;
     private String status;
+    private UUID thing_id;
     private ThingDTO thing;
 
     public PostDTO() {
     }
 
-    public PostDTO(UUID id, String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status, ThingDTO thing) {
+    public PostDTO(UUID id, String description, Date created_time, boolean visible, boolean deletion,
+                   String contact, String exchange_method, String status, UUID thing_id) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
@@ -26,10 +28,11 @@ public class PostDTO {
         this.contact = contact;
         this.exchange_method = exchange_method;
         this.status = status;
+        this.thing_id = thing_id;
         this.thing = thing;
     }
 
-    public PostDTO(String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status, ThingDTO thing) {
+    public PostDTO(String description, Date created_time, boolean visible, boolean deletion, String contact, String exchange_method, String status, UUID thing_id) {
         this.description = description;
         this.created_time = created_time;
         this.visible = visible;
@@ -37,6 +40,7 @@ public class PostDTO {
         this.contact = contact;
         this.exchange_method = exchange_method;
         this.status = status;
+        this.thing_id = thing_id;
         this.thing = thing;
     }
 
@@ -104,6 +108,14 @@ public class PostDTO {
         this.status = status;
     }
 
+    public UUID getThing_id() {
+        return thing_id;
+    }
+
+    public void setThing_id(UUID thing_id) {
+        this.thing_id = thing_id;
+    }
+
     public ThingDTO getThing() {
         return thing;
     }
@@ -114,7 +126,7 @@ public class PostDTO {
 
     @Override
     public String toString() {
-        return "Post{" +
+        return "PostDTO{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", created_time=" + created_time +
@@ -123,6 +135,8 @@ public class PostDTO {
                 ", contact='" + contact + '\'' +
                 ", exchange_method='" + exchange_method + '\'' +
                 ", status='" + status + '\'' +
+                ", thing_id=" + thing_id +
+                ", thing=" + thing +
                 '}';
     }
 }

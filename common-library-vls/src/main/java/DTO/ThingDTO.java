@@ -21,7 +21,7 @@ public class ThingDTO {
     public ThingDTO() {
     }
 
-    public ThingDTO(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id, CategoryDTO category, PostDTO post, UserAccountDTO user) {
+    public ThingDTO(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
         this.id = id;
         this.thing_name = thing_name;
         this.origin = origin;
@@ -37,7 +37,7 @@ public class ThingDTO {
         this.user = user;
     }
 
-    public ThingDTO(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id, CategoryDTO category, PostDTO post, UserAccountDTO user) {
+    public ThingDTO(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
         this.thing_name = thing_name;
         this.origin = origin;
         this.price = price;
