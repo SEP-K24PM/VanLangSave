@@ -15,7 +15,7 @@ public class User_Rating {
     @Column(name = "rating")
     private int rating;
     @Column(name = "rated_user_id")
-    private UUID rated_user_id;
+    private UUID ratedUserId;
     @Column(name = "rater_id")
     private UUID rater_id;
     @Column(name = "post_id")
@@ -24,19 +24,19 @@ public class User_Rating {
     public User_Rating() {
     }
 
-    public User_Rating(UUID id, String description, int rating, UUID rated_user_id, UUID rater_id, UUID post_id) {
+    public User_Rating(UUID id, String description, int rating, UUID ratedUserId, UUID rater_id, UUID post_id) {
         this.id = id;
         this.description = description;
         this.rating = rating;
-        this.rated_user_id = rated_user_id;
+        this.ratedUserId = ratedUserId;
         this.rater_id = rater_id;
         this.post_id = post_id;
     }
 
-    public User_Rating(String description, int rating, UUID rated_user_id, UUID rater_id, UUID post_id) {
+    public User_Rating(String description, int rating, UUID ratedUserId, UUID rater_id, UUID post_id) {
         this.description = description;
         this.rating = rating;
-        this.rated_user_id = rated_user_id;
+        this.ratedUserId = ratedUserId;
         this.rater_id = rater_id;
         this.post_id = post_id;
     }
@@ -65,12 +65,12 @@ public class User_Rating {
         this.rating = rating;
     }
 
-    public UUID getRated_user_id() {
-        return rated_user_id;
+    public UUID getRatedUserId() {
+        return ratedUserId;
     }
 
-    public void setRated_user_id(UUID rated_user_id) {
-        this.rated_user_id = rated_user_id;
+    public void setRatedUserId(UUID rated_user_id) {
+        this.ratedUserId = rated_user_id;
     }
 
     public UUID getRater_id() {
@@ -95,7 +95,7 @@ public class User_Rating {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
-                ", rated_user_id=" + rated_user_id +
+                ", rated_user_id=" + ratedUserId +
                 ", rater_id=" + rater_id +
                 ", post_id=" + post_id +
                 '}';
