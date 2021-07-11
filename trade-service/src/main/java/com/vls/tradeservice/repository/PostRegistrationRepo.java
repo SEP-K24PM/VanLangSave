@@ -10,11 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PostRegistrationRepo extends JpaRepository<PostRegistration, UUID> {
-    @Query("SELECT ele FROM PostRegistration as ele where ele.user_id = :userID")
-    List<PostRegistration> listPostUserRegist(@Param("userID") UUID userID);
-
-    @Query("SELECT info FROM user as info where info.email = :email")
-    user giveUserID(@Param("email") String email);
-
+   @Query("SELECT ele from PostRegistration as ele where ele.post_id = :postID")
+   List<PostRegistration> giveListRegister(@Param("postID") UUID postID);
 
 }

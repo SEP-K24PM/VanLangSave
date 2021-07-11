@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -27,16 +29,31 @@ public class TradeController {
         this.postRepo = postRepo;
         this.userRepo = userRepo;
     }
-
-
-    @RequestMapping(value = "/postRegist", method = RequestMethod.POST)
-    public ResponseEntity<PostRegistration> GetInforPost(@RequestBody PostRegistration postRegistration){
-        return new ResponseEntity<>( postRegistration, HttpStatus.OK);
+    //duyệt đăng ký
+    @RequestMapping(value = "/postRegist", method = RequestMethod.PUT)
+    public ResponseEntity<PostRegistration> choosenRegister(@RequestBody PostRegistration postRegistration){
+        PostRegistration temp = postRegistration;
+        try {
+            if (temp.getId() != null){
+                PostRegistration _getUpdate = temp;
+                _getUpdate.setPost_id(temp.getPost_id());
+                _getUpdate.setId(temp.getId());
+                _getUpdate.setChoosen(true);
+                _getUpdate.setDescription(temp.getDescription());
+                _getUpdate.setThing_id(temp.getThing_id());
+                _getUpdate.setUser_id(temp.getUser_id());
+                var saved = postRegistrationRepo.save(_getUpdate);
+                return new ResponseEntity<>(_getUpdate, HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-
-    //save với dữ liệu mẫu
-    @RequestMapping(value = "/postRegist/do", method = RequestMethod.POST)
+    // gửi yêu cầu đổi đồ
+    @RequestMapping(value = "/GivePostRegist", method = RequestMethod.POST)
     public ResponseEntity<PostRegistration> SavePostRegistration(@RequestBody PostRegistration postRegistration){
         try {
 
@@ -51,9 +68,22 @@ public class TradeController {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
-
     }
+    //show toàn bộ yêu cầu đổi đồ của 1 bài post
+    @RequestMapping(value = "/details/{postID}",method = RequestMethod.GET)
+    public ResponseEntity<PostRegistration> LoadListRegister(@PathVariable("postID") UUID postID) {
+        try {
+            //UUID _postID = UUID.fromString("5fad1a4e-e14f-4a7a-a85d-4c1c6547a9c7");
+            List<PostRegistration> ListRegister = postRegistrationRepo.giveListRegister(postID);
+            if (ListRegister.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity(ListRegister, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }
