@@ -10,7 +10,7 @@ public class PostRegistrationDTO {
     private UUID user_id;
     private UUID post_id;
     private ThingDTO thing;
-    private UserAccountDTO user;
+    private UserAccountDTO userAccount;
     private PostDTO post;
 
     public PostRegistrationDTO() {
@@ -90,11 +90,11 @@ public class PostRegistrationDTO {
     }
 
     public UserAccountDTO getUser() {
-        return user;
+        return userAccount;
     }
 
-    public void setUser(UserAccountDTO user) {
-        this.user = user;
+    public void setUser(UserAccountDTO userAccount) {
+        this.userAccount = userAccount;
     }
 
     public PostDTO getPost() {

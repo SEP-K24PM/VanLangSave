@@ -8,8 +8,8 @@ public class UserHandlingDTO {
     private String reason;
     private UUID user_id;
     private UUID admin_id;
-    private UserAccountDTO user;
-    private AdminAccountDTO admin;
+    private UserAccountDTO userAccount;
+    private AdminAccountDTO adminAccount;
 
     public UserHandlingDTO() {
     }
@@ -70,18 +70,18 @@ public class UserHandlingDTO {
     }
 
     public UserAccountDTO getUser() {
-        return user;
+        return userAccount;
     }
 
-    public void setUser(UserAccountDTO user) {
-        this.user = user;
+    public void setUser(UserAccountDTO userAccount) {
+        this.userAccount = userAccount;
     }
 
     public AdminAccountDTO getAdmin() {
-        return admin;
+        return adminAccount;
     }
 
-    public void setAdmin(AdminAccountDTO admin) {
-        this.admin = admin;
+    public void setAdmin(AdminAccountDTO adminAccount) {
+        this.adminAccount = adminAccount;
     }
 }

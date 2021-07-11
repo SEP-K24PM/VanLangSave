@@ -7,6 +7,7 @@ public class NotificationDTO {
     private String description;
     private String url;
     private UUID user_id;
+    private UserAccountDTO userAccountDTO;
 
     public NotificationDTO() {
     }
@@ -54,5 +55,13 @@ public class NotificationDTO {
 
     public void setUser_id(UUID user_id) {
         this.user_id = user_id;
+    }
+
+    public UserAccountDTO getUserAccountDTO() {
+        return userAccountDTO;
+    }
+
+    public void setUserAccountDTO(UserAccountDTO userAccountDTO) {
+        this.userAccountDTO = userAccountDTO;
     }
 }

@@ -12,15 +12,15 @@ public class ThingDTO {
     private String image;
     private UUID user_id;
     private UUID category_id;
-    private UUID post_id;
-    private UserAccountDTO user;
+    private UserAccountDTO userAccount;
     private CategoryDTO category;
     private PostDTO post;
 
     public ThingDTO() {
     }
 
-    public ThingDTO(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
+    public ThingDTO(String thing_name, String origin, int price, int quantity,
+                    String used_time, String image, UUID user_id, UUID category_id) {
         this.thing_name = thing_name;
         this.origin = origin;
         this.price = price;
@@ -29,10 +29,11 @@ public class ThingDTO {
         this.image = image;
         this.user_id = user_id;
         this.category_id = category_id;
-        this.post_id = post_id;
     }
 
-    public ThingDTO(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
+    public ThingDTO(UUID id, String thing_name, String origin,
+                    int price, int quantity, String used_time,
+                    String image, UUID user_id, UUID category_id) {
         this.id = id;
         this.thing_name = thing_name;
         this.origin = origin;
@@ -42,7 +43,6 @@ public class ThingDTO {
         this.image = image;
         this.user_id = user_id;
         this.category_id = category_id;
-        this.post_id = post_id;
     }
 
     public UUID getId() {
@@ -117,20 +117,12 @@ public class ThingDTO {
         this.category_id = category_id;
     }
 
-    public UUID getPost_id() {
-        return post_id;
+    public UserAccountDTO getUserAccount() {
+        return userAccount;
     }
 
-    public void setPost_id(UUID post_id) {
-        this.post_id = post_id;
-    }
-
-    public UserAccountDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserAccountDTO user) {
-        this.user = user;
+    public void setUserAccount(UserAccountDTO userAccount) {
+        this.userAccount = userAccount;
     }
 
     public CategoryDTO getCategory() {
