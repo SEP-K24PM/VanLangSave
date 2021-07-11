@@ -6,43 +6,36 @@ import java.util.UUID;
 @Entity
 @Table(name = "thing")
 public class Thing {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
-
     @Column(name = "thing_name")
     private String thing_name;
-
     @Column(name = "origin")
     private String origin;
-
     @Column(name = "price")
     private int price;
-
     @Column(name = "quantity")
     private int quantity;
-
     @Column(name = "used_time")
     private String used_time;
-
     @Column(name = "image")
     private String image;
 
-    @Column(name = "user_id")
-    private UUID user_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="category_id")
+    private Category category;
 
-    @Column(name = "category_id")
-    private UUID category_id;
-
-    @Column(name = "post_id")
-    private UUID post_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private UserAccount userAccount;
 
     public Thing(){
     }
 
-    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
+    public Thing(UUID id, String thing_name, String origin, int price,
+                 int quantity, String used_time, String image) {
         this.id = id;
         this.thing_name = thing_name;
         this.origin = origin;
@@ -50,21 +43,16 @@ public class Thing {
         this.quantity = quantity;
         this.used_time = used_time;
         this.image = image;
-        this.user_id = user_id;
-        this.category_id = category_id;
-        this.post_id = post_id;
     }
 
-    public Thing(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID user_id, UUID category_id, UUID post_id) {
+    public Thing(String thing_name, String origin, int price, int quantity,
+                 String used_time, String image) {
         this.thing_name = thing_name;
         this.origin = origin;
         this.price = price;
         this.quantity = quantity;
         this.used_time = used_time;
         this.image = image;
-        this.user_id = user_id;
-        this.category_id = category_id;
-        this.post_id = post_id;
     }
 
     public UUID getId() {
@@ -123,43 +111,19 @@ public class Thing {
         this.image = image;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public UUID getCategory_id() {
-        return category_id;
+    public UserAccount getUserAccount() {
+        return userAccount;
     }
 
-    public void setCategory_id(UUID category_id) {
-        this.category_id = category_id;
-    }
-
-    public UUID getPost_id() {
-        return post_id;
-    }
-
-    public void setPost_id(UUID post_id) {
-        this.post_id = post_id;
-    }
-
-    @Override
-    public String toString() {
-        return "Thing{" +
-                "id=" + id +
-                ", thing_name='" + thing_name + '\'' +
-                ", origin='" + origin + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", used_time='" + used_time + '\'' +
-                ", image='" + image + '\'' +
-                ", user_id=" + user_id +
-                ", category_id=" + category_id +
-                ", post_id=" + post_id +
-                '}';
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 }

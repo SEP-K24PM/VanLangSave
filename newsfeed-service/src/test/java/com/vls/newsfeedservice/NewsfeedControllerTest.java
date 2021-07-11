@@ -1,13 +1,12 @@
 package com.vls.newsfeedservice;
 
 import com.vls.newsfeedservice.controller.NewsfeedController;
-import com.vls.newsfeedservice.dto.PostWithThing;
+import com.vls.newsfeedservice.model.Category;
 import com.vls.newsfeedservice.model.Post;
 import com.vls.newsfeedservice.model.Thing;
+import com.vls.newsfeedservice.model.UserAccount;
 import com.vls.newsfeedservice.repository.PostRepository;
-import com.vls.newsfeedservice.repository.ThingRepository;
 import com.vls.newsfeedservice.service.PostService;
-import com.vls.newsfeedservice.service.ThingService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,19 +25,15 @@ import java.util.*;
 public class NewsfeedControllerTest extends AbstractTest {
     private NewsfeedController newsfeedController;
     private PostService postService;
-    private ThingService thingService;
 
     @Mock
     private PostRepository postRepository;
-    @Mock
-    private ThingRepository thingRepository;
 
     @Override
     @Before
     public void setUp() {
         super.setUp();
-        thingService = new ThingService(thingRepository);
-        postService = new PostService(postRepository, thingService);
+        postService = new PostService(postRepository);
         newsfeedController = new NewsfeedController(postService);
     }
 
@@ -61,22 +56,23 @@ public class NewsfeedControllerTest extends AbstractTest {
     @Test
     public void details() {
         UUID postId = UUID.randomUUID();
+        Category category = new Category(UUID.randomUUID(), "name");
+        UserAccount userAccount = new UserAccount(UUID.randomUUID(), "email", false);
         Thing thing = new Thing(UUID.randomUUID(), "name", "origin", 100,
-                1, "used time", "iamge", UUID.randomUUID(), UUID.randomUUID(), postId);
+                1, "used time", "image");
+        thing.setCategory(category);
+        thing.setUserAccount(userAccount);
         Post post = new Post(postId, "description", new Date(), true, false,
                 "contact", thing.getId(), "Free", "Mở");
-        PostWithThing postWithThing = new PostWithThing(postId, post.getDescription(),
-                post.getCreated_time(), post.getVisible(), post.getDeletion(),
-                post.getContact(), thing.getId(), post.getExchange_method(), post.status(), thing);
+        post.setThing(thing);
 
         Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
-        Mockito.when(thingRepository.findById(post.getThing_id())).thenReturn(Optional.of(thing));
 
-        ResponseEntity<PostWithThing> response = newsfeedController.postDetails(post.getId());
+        ResponseEntity<Post> response = newsfeedController.postDetails(post.getId());
         Assert.assertEquals(200, response.getStatusCodeValue());
 
         Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.empty());
-        ResponseEntity<PostWithThing> responseNotFound = newsfeedController.postDetails(post.getId());
+        ResponseEntity<Post> responseNotFound = newsfeedController.postDetails(post.getId());
         Assert.assertEquals(404, responseNotFound.getStatusCodeValue());
     }
 }
