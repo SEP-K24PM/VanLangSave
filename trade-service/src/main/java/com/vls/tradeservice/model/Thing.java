@@ -38,8 +38,6 @@ public class Thing {
     @Column(name = "post_id")
     private UUID post_id;
 
-    @Transient
-    private String category_name;
 
     public Thing() {
     }
@@ -147,14 +145,6 @@ public class Thing {
 
     public void setPost_id(UUID post_id) {
         this.post_id = post_id;
-    }
-
-    public String getCategory_name() {
-        return category_name;
-    }
-
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
     }
 
     @Override

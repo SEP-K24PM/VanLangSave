@@ -16,8 +16,8 @@ public class PostRegistration {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "choosen")
-    private  boolean choosen = false ;
+    @Column(name = "chosen")
+    private  boolean chosen = false ;
 
     @Column(name = "thing_id", nullable = true)
     private UUID thing_id;
@@ -32,30 +32,22 @@ public class PostRegistration {
 
     }
 
-    public PostRegistration( String description, boolean choosen, UUID thing_id, UUID user_id, UUID post_id) {
+
+    public PostRegistration(UUID id, String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
+        this.id = id;
         this.description = description;
-        this.choosen = choosen;
+        this.chosen = chosen;
         this.thing_id = thing_id;
         this.user_id = user_id;
         this.post_id = post_id;
     }
 
-    public PostRegistration(UUID thing_id, UUID user_id, UUID post_id) {
-        this.thing_id = thing_id;
-        this.user_id = user_id;
-        this.post_id = post_id;
-    }
-    public PostRegistration( UUID user_id, UUID post_id) {
-        this.thing_id = null;
-        this.user_id = user_id;
-        this.post_id = post_id;
-        this.description = null;
-    }
-    public PostRegistration(UUID thing_id, UUID user_id, UUID post_id, String description) {
-        this.thing_id = thing_id;
-        this.user_id = user_id;
-        this.post_id = post_id;
+    public PostRegistration(String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
         this.description = description;
+        this.chosen = chosen;
+        this.thing_id = thing_id;
+        this.user_id = user_id;
+        this.post_id = post_id;
     }
 
     public UUID getId() {
@@ -74,12 +66,12 @@ public class PostRegistration {
         this.description = description;
     }
 
-    public boolean isChoosen() {
-        return choosen;
+    public boolean isChosen() {
+        return chosen;
     }
 
-    public void setChoosen(boolean choosen) {
-        this.choosen = choosen;
+    public void setChosen(boolean choosen) {
+        this.chosen = choosen;
     }
 
     public UUID getThing_id() {
@@ -111,7 +103,7 @@ public class PostRegistration {
         return "PostRegistration{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", choosen=" + choosen +
+                ", choosen=" + chosen +
                 ", thing_id=" + thing_id +
                 ", user_id=" + user_id +
                 ", post_id=" + post_id +

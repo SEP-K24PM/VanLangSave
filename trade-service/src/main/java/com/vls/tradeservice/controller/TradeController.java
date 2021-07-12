@@ -1,10 +1,8 @@
 package com.vls.tradeservice.controller;
 
-import com.vls.tradeservice.model.PostRegistration;
-import com.vls.tradeservice.repository.PostRegistrationRepo;
-import com.vls.tradeservice.repository.PostRepo;
-import com.vls.tradeservice.repository.ThingRepo;
-import com.vls.tradeservice.repository.UserRepo;
+import com.vls.tradeservice.model.*;
+import com.vls.tradeservice.service.PostRegistrationService;
+import com.vls.tradeservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,73 +14,43 @@ import java.util.UUID;
 
 @RestController
 public class TradeController {
-    private final PostRegistrationRepo postRegistrationRepo;
-    private final ThingRepo thingRepo;
-    private final PostRepo postRepo;
-    private final UserRepo userRepo;
+    private final PostRegistrationService postRegistrationService;
+    private final PostService postService;
 
     @Autowired
-    public TradeController(PostRegistrationRepo postRegistrationRepo, ThingRepo thingRepo,
-                           PostRepo postRepo, UserRepo userRepo) {
-        this.postRegistrationRepo = postRegistrationRepo;
-        this.thingRepo = thingRepo;
-        this.postRepo = postRepo;
-        this.userRepo = userRepo;
+    public TradeController(PostRegistrationService postRegistrationService, PostService postService) {
+        this.postRegistrationService = postRegistrationService;
+        this.postService = postService;
     }
     //duyệt đăng ký
-    @RequestMapping(value = "/postRegist", method = RequestMethod.PUT)
-    public ResponseEntity<PostRegistration> choosenRegister(@RequestBody PostRegistration postRegistration){
-        PostRegistration temp = postRegistration;
-        try {
-            if (temp.getId() != null){
-                PostRegistration _getUpdate = temp;
-                _getUpdate.setPost_id(temp.getPost_id());
-                _getUpdate.setId(temp.getId());
-                _getUpdate.setChoosen(true);
-                _getUpdate.setDescription(temp.getDescription());
-                _getUpdate.setThing_id(temp.getThing_id());
-                _getUpdate.setUser_id(temp.getUser_id());
-                var saved = postRegistrationRepo.save(_getUpdate);
-                return new ResponseEntity<>(_getUpdate, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+    @RequestMapping(value = "/accept-register/{postRegisId}", method = RequestMethod.POST)
+    public ResponseEntity<PostRegistration> chooseRegister(@PathVariable("postRegisId") UUID postRegisId) {
+        Optional<PostRegistration> postRegistration = postRegistrationService.getPostRegis(postRegisId);
+        if(postRegistration.isPresent()) {
+            PostRegistration postRegistrationData = postRegistration.get();
+            Post post = postService.getPost(postRegistrationData.getPost_id());
+            if(post.getStatus().equalsIgnoreCase("Mở")) {
+                postRegistrationService.setChosen(postRegistrationData);
+                postService.closePost(post);
+                return new ResponseEntity<>(HttpStatus.OK);
             }
-        }catch (Exception e){
-            System.out.println(e);
-            return new ResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // gửi yêu cầu đổi đồ
-    @RequestMapping(value = "/GivePostRegist", method = RequestMethod.POST)
+    @RequestMapping(value = "/register-post", method = RequestMethod.POST)
     public ResponseEntity<PostRegistration> SavePostRegistration(@RequestBody PostRegistration postRegistration){
-        try {
-
-            //UUID _userID = UUID.fromString("14551453-4e68-4e40-9aac-fda12a7b11bc");
-            //UUID _thingID = UUID.fromString("5fad1a4e-e14f-4a7a-a85d-4c1c6547a9c7");
-            //UUID _postID = UUID.fromString("3f552bf8-0bb7-4d5d-b1e2-179844bcd338");
-            //PostRegistration _postRegistration = new PostRegistration(_thingID,_userID,_postID);
-
-            var saved = postRegistrationRepo.save(postRegistration);
-            return new ResponseEntity<>(saved,HttpStatus.CREATED);
-        }catch (Exception e){
-            System.out.println(e);
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        var savedPostRegis = postRegistrationService.register(postRegistration);
+        return new ResponseEntity<>(savedPostRegis, HttpStatus.CREATED);
     }
+
     //show toàn bộ yêu cầu đổi đồ của 1 bài post
-    @RequestMapping(value = "/details/{postID}",method = RequestMethod.GET)
-    public ResponseEntity<PostRegistration> LoadListRegister(@PathVariable("postID") UUID postID) {
-        try {
-            List<PostRegistration> ListRegister = postRegistrationRepo.giveListRegister(postID);
-            if (ListRegister.isEmpty()) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity(ListRegister, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @RequestMapping(value = "/list-regis/{postID}",method = RequestMethod.GET)
+    public ResponseEntity<PostRegistWithEntities> loadListRegister(@PathVariable("postID") UUID postID) {
+        List<PostRegistWithEntities> listRegister = postRegistrationService.getListPostRegis(postID);
+        return new ResponseEntity(listRegister, HttpStatus.OK);
     }
-
 
 }
