@@ -58,6 +58,7 @@ public class ThingController {
                 _thing.setUsed_time(thing.getUsed_time());
                 _thing.setCategory_id(thing.getCategory_id());
                 _thing.setPost_id(thing.getPost_id());
+
                 return new ResponseEntity<>(thingService.updateThing(_thing), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
