@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,8 +31,8 @@ public class NewsfeedController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @RequestMapping("/post/{postId}")
-    public ResponseEntity<Post> postDetails (@PathVariable("postId") String postId){
+    @RequestMapping("/post")
+    public ResponseEntity<Post> postDetails (@RequestBody String postId){
         Optional<Post> post = postService.getPost(UUID.fromString(postId));
         if(post.isPresent()) {
             return new ResponseEntity<>(post.get(), HttpStatus.OK);

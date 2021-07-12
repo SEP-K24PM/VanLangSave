@@ -23,7 +23,7 @@ public class RatingController {
         return new ResponseEntity<>(ratingService.getRatingList(userId), HttpStatus.OK);
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<UserRating> createRating(@RequestBody UserRating userRating) {
         return new ResponseEntity<>(ratingService.createRating(userRating), HttpStatus.CREATED);
     }

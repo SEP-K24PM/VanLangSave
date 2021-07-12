@@ -42,7 +42,7 @@ public class ThingController {
         return new ResponseEntity<>(_thing, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/update/{thingId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/{thingId}", method = RequestMethod.POST)
     public ResponseEntity<Thing> updateThing(@PathVariable String thingId, @RequestBody Thing thing) {
         Optional<Thing> thingData = thingService.getThingDetails(thingId);
         if(thingData.isPresent()) {
