@@ -32,25 +32,17 @@ public class PostReport {
     public PostReport() {
     }
 
-    public PostReport(String description, String reason_by_admin, String handling,
-                      UUID post_id, UUID reporter_id, UUID admin_id) {
+    public PostReport(String description, UUID reporter_id, UUID admin_id) {
         this.description = description;
-        this.reason_by_admin = reason_by_admin;
-        this.handling = handling;
-        this.post_id = post_id;
         this.reporter_id = reporter_id;
         this.admin_id = admin_id;
     }
 
-    public PostReport(UUID id, String description, String reason_by_admin,
-                      String handling, UUID post_id, UUID reporter_id, UUID admin_id) {
+    public PostReport(UUID id, String description, UUID post_id, UUID reporter_id) {
         this.id = id;
         this.description = description;
-        this.reason_by_admin = reason_by_admin;
-        this.handling = handling;
         this.post_id = post_id;
         this.reporter_id = reporter_id;
-        this.admin_id = admin_id;
     }
 
     public UUID getId() {
