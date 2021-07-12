@@ -12,4 +12,4 @@ import java.util.UUID;
 
 public interface ThingRepository extends JpaRepository<Thing, UUID> {
 }
-//public Thing ThingRepository(UUID id);
+

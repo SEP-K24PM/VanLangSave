@@ -67,7 +67,7 @@ public class NewsfeedControllerTest extends AbstractTest {
                 "contact", thing.getId(), "Free", "Mở");
         PostWithThing postWithThing = new PostWithThing(postId, post.getDescription(),
                 post.getCreated_time(), post.getVisible(), post.getDeletion(),
-                post.getContact(), thing.getId(), post.getExchange_method(), post.status(), thing);
+                post.getContact(), thing.getId(), post.getExchange_method(), post.getStatus(), thing);
 
         Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
         Mockito.when(thingRepository.findById(post.getThing_id())).thenReturn(Optional.of(thing));

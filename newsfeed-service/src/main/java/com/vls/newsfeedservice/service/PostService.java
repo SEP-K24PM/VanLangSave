@@ -39,7 +39,7 @@ public class PostService {
         PostWithThing postDetails = new PostWithThing(post.getId(), post.getDescription(), post.getCreated_time(),
                 post.getVisible(), post.getDeletion(),
              post.getContact(), post.getThing_id(), post.getExchange_method(),
-                post.status(), thing.get());
+                post.getStatus(), thing.get());
         return postDetails;
     }
 }

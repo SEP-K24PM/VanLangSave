@@ -1,5 +1,4 @@
-package com.vls.newsfeedservice.model;
-
+package com.vls.admin_postmanagementservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -146,5 +145,4 @@ public class Post {
                 "status=" + status;
     }
 }
-
 
