@@ -18,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,4 +59,21 @@ public class tradeControllerTest extends AbstractTest {
         Assert.assertEquals(201, response.getStatusCodeValue());
         //Assert.assertEquals(saved, response.getBody());
     }
+
+    @Test
+    public void getRegisterList() {
+        //UUID _userID = UUID.fromString("14551453-4e68-4e40-9aac-fda12a7b11bc");
+        //UUID _thingID = UUID.fromString("5fad1a4e-e14f-4a7a-a85d-4c1c6547a9c7");
+        UUID _postID = UUID.fromString("3f552bf8-0bb7-4d5d-b1e2-179844bcd338");
+        List<PostRegistration> listTemp =  new ArrayList<>();
+        //PostRegistration registration = new PostRegistration(_thingID,_userID,_postID);
+        //PostRegistration saved = new PostRegistration(_thingID,_userID,_postID);
+
+        Mockito.when(_postRegistrationRepo.giveListRegister(_postID)).thenReturn(listTemp);
+        ResponseEntity response = _tradeController.LoadListRegister(_postID);
+        Assert.assertEquals(200, response.getStatusCodeValue());
+        //Assert.assertEquals(saved, response.getBody());
+    }
+
+
 }

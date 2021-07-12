@@ -73,7 +73,6 @@ public class TradeController {
     @RequestMapping(value = "/details/{postID}",method = RequestMethod.GET)
     public ResponseEntity<PostRegistration> LoadListRegister(@PathVariable("postID") UUID postID) {
         try {
-            //UUID _postID = UUID.fromString("5fad1a4e-e14f-4a7a-a85d-4c1c6547a9c7");
             List<PostRegistration> ListRegister = postRegistrationRepo.giveListRegister(postID);
             if (ListRegister.isEmpty()) {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
