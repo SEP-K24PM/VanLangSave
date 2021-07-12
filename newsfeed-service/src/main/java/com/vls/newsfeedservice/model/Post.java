@@ -1,6 +1,7 @@
 package com.vls.newsfeedservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -38,7 +39,7 @@ public class Post {
     private String status;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="thing_id")
+    @JoinColumn(name="thing_id", referencedColumnName="id")
     private Thing thing;
 
     public Post(){

@@ -35,7 +35,7 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/details/{id}")
-    public ResponseEntity<PostDTO> postDetails(@PathVariable("id") UUID id) {
+    public ResponseEntity<PostDTO> postDetails(@PathVariable("id") String id) {
         PostDTO result = restTemplate.postForObject("http://newsfeed-service/post/", id, PostDTO.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

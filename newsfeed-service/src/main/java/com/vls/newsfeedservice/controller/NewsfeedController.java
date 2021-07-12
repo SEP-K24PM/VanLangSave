@@ -32,8 +32,8 @@ public class NewsfeedController {
     }
 
     @RequestMapping("/post/")
-    public ResponseEntity<Post> postDetails (@RequestBody UUID id){
-        Optional<Post> post = postService.getPost(id);
+    public ResponseEntity<Post> postDetails (@RequestBody String id){
+        Optional<Post> post = postService.getPost(UUID.fromString(id));
         if(post.isPresent()) {
             return new ResponseEntity<>(post.get(), HttpStatus.OK);
         }

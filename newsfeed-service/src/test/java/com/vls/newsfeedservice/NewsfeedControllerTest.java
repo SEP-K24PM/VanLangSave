@@ -68,11 +68,11 @@ public class NewsfeedControllerTest extends AbstractTest {
 
         Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
 
-        ResponseEntity<Post> response = newsfeedController.postDetails(post.getId());
+        ResponseEntity<Post> response = newsfeedController.postDetails(post.getId().toString());
         Assert.assertEquals(200, response.getStatusCodeValue());
 
         Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.empty());
-        ResponseEntity<Post> responseNotFound = newsfeedController.postDetails(post.getId());
+        ResponseEntity<Post> responseNotFound = newsfeedController.postDetails(post.getId().toString());
         Assert.assertEquals(404, responseNotFound.getStatusCodeValue());
     }
 }

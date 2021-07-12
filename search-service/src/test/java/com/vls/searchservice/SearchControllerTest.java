@@ -88,7 +88,7 @@ public class SearchControllerTest extends AbstractTest {
                 "contact", "method exchange", "Mở", thing.getId());
 
         Mockito.when(restTemplate.postForObject("http://newsfeed-service/post/", post.getId(), PostDTO.class)).thenReturn(post);
-        ResponseEntity<PostDTO> response = searchController.postDetails(post.getId());
+        ResponseEntity<PostDTO> response = searchController.postDetails(post.getId().toString());
         Assert.assertEquals(200, response.getStatusCodeValue());
         Assert.assertEquals(post, response.getBody());
     }

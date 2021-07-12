@@ -1,6 +1,7 @@
 package DTO;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PostDTO {
@@ -14,6 +15,7 @@ public class PostDTO {
     private String status;
     private UUID thing_id;
     private ThingDTO thing;
+    private List<PostRegistrationDTO> postRegistrationList;
 
     public PostDTO() {
     }
@@ -123,5 +125,13 @@ public class PostDTO {
 
     public void setThing(ThingDTO thing) {
         this.thing = thing;
+    }
+
+    public List<PostRegistrationDTO> getPostRegistrationList() {
+        return postRegistrationList;
+    }
+
+    public void setPostRegistrationList(List<PostRegistrationDTO> postRegistrationList) {
+        this.postRegistrationList = postRegistrationList;
     }
 }

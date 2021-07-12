@@ -16,8 +16,7 @@ public class PostRegistrationDTO {
     public PostRegistrationDTO() {
     }
 
-    public PostRegistrationDTO(UUID id, String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
-        this.id = id;
+    public PostRegistrationDTO(String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
         this.description = description;
         this.chosen = chosen;
         this.thing_id = thing_id;
@@ -25,12 +24,16 @@ public class PostRegistrationDTO {
         this.post_id = post_id;
     }
 
-    public PostRegistrationDTO(String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
+    public PostRegistrationDTO(UUID id, String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
+        this.id = id;
         this.description = description;
         this.chosen = chosen;
         this.thing_id = thing_id;
         this.user_id = user_id;
         this.post_id = post_id;
+        this.thing = thing;
+        this.userAccount = userAccount;
+        this.post = post;
     }
 
     public UUID getId() {
@@ -89,11 +92,11 @@ public class PostRegistrationDTO {
         this.thing = thing;
     }
 
-    public UserAccountDTO getUser() {
+    public UserAccountDTO getUserAccount() {
         return userAccount;
     }
 
-    public void setUser(UserAccountDTO userAccount) {
+    public void setUserAccount(UserAccountDTO userAccount) {
         this.userAccount = userAccount;
     }
 
