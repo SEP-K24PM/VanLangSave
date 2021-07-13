@@ -1,13 +1,12 @@
 package com.vls.newsfeedservice.controller;
 
-import com.vls.newsfeedservice.dto.PostWithThing;
 import com.vls.newsfeedservice.model.Post;
 import com.vls.newsfeedservice.service.PostService;
-import com.vls.newsfeedservice.service.ThingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,12 +31,11 @@ public class NewsfeedController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @RequestMapping("/post/{id}")
-    public ResponseEntity<PostWithThing> postDetails (@PathVariable("id") UUID id){
-        Optional<Post> post = postService.getPost(id);
+    @RequestMapping("/post")
+    public ResponseEntity<Post> postDetails (@RequestBody String postId){
+        Optional<Post> post = postService.getPost(UUID.fromString(postId));
         if(post.isPresent()) {
-            PostWithThing postDetails = postService.getPostDetailsWithThing(post.get());
-            return new ResponseEntity<>(postDetails, HttpStatus.OK);
+            return new ResponseEntity<>(post.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

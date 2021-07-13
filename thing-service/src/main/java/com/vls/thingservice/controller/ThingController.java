@@ -42,7 +42,7 @@ public class ThingController {
         return new ResponseEntity<>(_thing, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/update/{thingId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/{thingId}", method = RequestMethod.POST)
     public ResponseEntity<Thing> updateThing(@PathVariable String thingId, @RequestBody Thing thing) {
         Optional<Thing> thingData = thingService.getThingDetails(thingId);
         if(thingData.isPresent()) {
@@ -58,6 +58,7 @@ public class ThingController {
                 _thing.setUsed_time(thing.getUsed_time());
                 _thing.setCategory_id(thing.getCategory_id());
                 _thing.setPost_id(thing.getPost_id());
+
                 return new ResponseEntity<>(thingService.updateThing(_thing), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);

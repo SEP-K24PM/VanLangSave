@@ -1,37 +1,52 @@
-package com.vls.searchservice.model;
+package com.vls.accountservice.model;
 
+import javax.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name = "thing")
 public class Thing {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private UUID id;
+    @Column(name = "thing_name")
     private String thing_name;
+    @Column(name = "origin")
     private String origin;
+    @Column(name = "price")
     private int price;
+    @Column(name = "quantity")
     private int quantity;
+    @Column(name = "used_time")
     private String used_time;
-    private Category category;
+    @Column(name = "image")
+    private String image;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Account user;
 
     public Thing() {
     }
 
-    public Thing(String thing_name, String origin, int price, int quantity, String used_time, Category category) {
-        this.thing_name = thing_name;
-        this.origin = origin;
-        this.price = price;
-        this.quantity = quantity;
-        this.used_time = used_time;
-        this.category = category;
-    }
-
-    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, Category category) {
+    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image) {
         this.id = id;
         this.thing_name = thing_name;
         this.origin = origin;
         this.price = price;
         this.quantity = quantity;
         this.used_time = used_time;
-        this.category = category;
+        this.image = image;
+    }
+
+    public Thing(String thing_name, String origin, int price, int quantity, String used_time, String image) {
+        this.thing_name = thing_name;
+        this.origin = origin;
+        this.price = price;
+        this.quantity = quantity;
+        this.used_time = used_time;
+        this.image = image;
     }
 
     public UUID getId() {
@@ -82,24 +97,13 @@ public class Thing {
         this.used_time = used_time;
     }
 
-    public Category getCategoryObject() {
-        return category;
+    public String getImage() {
+        return image;
     }
 
-    public void setCategoryObject(Category category) {
-        this.category = category;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    @Override
-    public String toString() {
-        return "ThingObject{" +
-                "id=" + id +
-                ", thing_name='" + thing_name + '\'' +
-                ", origin='" + origin + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", used_time='" + used_time + '\'' +
-                ", categoryObject=" + category +
-                '}';
-    }
+
 }
