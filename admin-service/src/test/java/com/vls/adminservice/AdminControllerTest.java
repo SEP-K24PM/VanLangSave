@@ -32,7 +32,7 @@ public class AdminControllerTest extends AbstractTest {
     public void setUp() {
         super.setUp();
         adminService = new AdminService(adminAccountRepository);
-        adminController = new AdminController(adminService);
+//        adminController = new AdminController(adminService, restTemplate);
     }
 
     @Test

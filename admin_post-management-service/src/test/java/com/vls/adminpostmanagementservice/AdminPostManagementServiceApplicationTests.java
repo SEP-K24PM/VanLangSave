@@ -1,4 +1,4 @@
-package com.vls.admin_postmanagementservice;
+package com.vls.adminpostmanagementservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
