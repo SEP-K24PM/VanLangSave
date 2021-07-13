@@ -16,8 +16,8 @@ public class PostRegistration {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "chosen")
-    private  boolean chosen = false ;
+    @Column(name = "choosen")
+    private  boolean choosen = false ;
 
     @Column(name = "thing_id", nullable = true)
     private UUID thing_id;
@@ -36,7 +36,7 @@ public class PostRegistration {
     public PostRegistration(UUID id, String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
         this.id = id;
         this.description = description;
-        this.chosen = chosen;
+        this.choosen = chosen;
         this.thing_id = thing_id;
         this.user_id = user_id;
         this.post_id = post_id;
@@ -44,7 +44,7 @@ public class PostRegistration {
 
     public PostRegistration(String description, boolean chosen, UUID thing_id, UUID user_id, UUID post_id) {
         this.description = description;
-        this.chosen = chosen;
+        this.choosen = chosen;
         this.thing_id = thing_id;
         this.user_id = user_id;
         this.post_id = post_id;
@@ -66,12 +66,12 @@ public class PostRegistration {
         this.description = description;
     }
 
-    public boolean isChosen() {
-        return chosen;
+    public boolean isChoosen() {
+        return choosen;
     }
 
-    public void setChosen(boolean choosen) {
-        this.chosen = choosen;
+    public void setChoosen(boolean choosen) {
+        this.choosen = choosen;
     }
 
     public UUID getThing_id() {
@@ -103,7 +103,7 @@ public class PostRegistration {
         return "PostRegistration{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", choosen=" + chosen +
+                ", choosen=" + choosen +
                 ", thing_id=" + thing_id +
                 ", user_id=" + user_id +
                 ", post_id=" + post_id +

@@ -35,7 +35,7 @@ public class PostRegistrationService {
     }
 
     public void setChosen(PostRegistration postRegistration) {
-        postRegistration.setChosen(true);
+        postRegistration.setChoosen(true);
         postRegistrationRepo.save(postRegistration);
     }
 }
