@@ -29,7 +29,7 @@ public class HidePostController {
             Post post = postData.get();
             if(postService.checkIfHidePossible(post)) {
                 postService.hidePost(post.getId());
-                return new ResponseEntity<>(true, HttpStatus.OK);
+                return new ResponseEntity<>(false, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }

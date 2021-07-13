@@ -27,6 +27,7 @@ public class PostService {
         Post post = postRepository.findPostById(id);
         post.setVisible(false);
         postRepository.save(post);
+
     }
     public boolean checkIfHidePossible(Post post) {
         return post.getStatus().equalsIgnoreCase("Mở");
