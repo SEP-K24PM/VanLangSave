@@ -51,7 +51,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/user/{id}")
+    @RequestMapping(value = "/profile/{id}")
     public ResponseEntity<Account> userProfile(@PathVariable String id) {
         var uid = UUID.fromString(id);
         Account info = accountRepository.giveAccountInfo(uid);
