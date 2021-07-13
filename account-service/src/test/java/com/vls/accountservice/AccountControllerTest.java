@@ -38,48 +38,46 @@ public class AccountControllerTest extends AbstractTest {
 //    @InjectMocks
 //    private AccountController accountController;
 
+    //save thành công
     @Test
     public void saveUserToDB() {
         UUID id = UUID.randomUUID();
-        Account account = new Account("unrealVinh@vanlanguni.vn");
-        Account savedAccount = new Account("unrealVinh@vanlanguni.vn");
+        Account account = new Account("unrealVinh@vanlanguni.vn",id,false);
+        Account savedAccount = new Account("unrealVinh@vanlanguni.vn",id,false);
         String email = "unrealVinh@vanlanguni.vn";
         List<Account> accounts = new ArrayList<>();
 
-        Mockito.when(accountRepository.giveAccountInfo(email)).thenReturn(account);
+        Mockito.when(accountRepository.giveAccountInfo(id)).thenReturn(savedAccount);
         Mockito.when(accountRepository.ListAllUser()).thenReturn(accounts);
         Mockito.when(accountRepository.save(account)).thenReturn(savedAccount);
         ResponseEntity<Account> response = accountController.SaveUser(email);
         Assert.assertEquals(201, response.getStatusCodeValue());
-        //Assert.assertEquals(savedAccount, response.getBody());
 
     }
+    // lấy thông tin thành công
     @Test
     public void  getUserProfile(){
-        //UUID id = (UUID) "14551453-4e68-4e40-9aac-fda12a7b11bc";
-        //Account account = new Account("unrealVinh@vanlanguni.vn",id,false);
-        Account finded = new Account("vinh.187pm14034@vanlanguni.vn");
-        String email = "vinh.187pm14034@vanlanguni.vn";
-        //List<Account> accounts = new ArrayList<>();
+        UUID id = UUID.fromString("14551453-4e68-4e40-9aac-fda12a7b11bc");
+        Account finded = new Account("vinh.187pm14034@vanlanguni.vn",id,false);
 
-        Mockito.when(accountRepository.giveAccountInfo(email)).thenReturn(finded);
-        //Mockito.when(accountRepository.ListAllUser()).thenReturn(accounts);
-        ResponseEntity<Account> response = accountController.userProfile(email);
+        Mockito.when(accountRepository.giveAccountInfo(id)).thenReturn(finded);
+        ResponseEntity<Account> response = accountController.userProfile(id.toString());
         Assert.assertEquals(200, response.getStatusCodeValue());
-        //Assert.assertEquals(finded.getEmail(), response.getBody().getEmail());
+        Assert.assertEquals(finded.getEmail(), response.getBody());
+
     }
+    /*
+    // lay user profile sai do sai id
     @Test
     public void  FailgetUserProfile(){
-        //UUID id = (UUID) "14551453-4e68-4e40-9aac-fda12a7b11bc";
-        //Account account = new Account("unrealVinh@vanlanguni.vn",id,false);
-        Account finded = new Account("vinh.187pm14034@vanlanguni.vn");
-        String email = "vinh123.187pm14034@vanlanguni.vn";
-        //List<Account> accounts = new ArrayList<>();
+        UUID id = UUID.randomUUID();
+        UUID id_failed = UUID.randomUUID();
+        Account finded = new Account("unrealVinh@vanlanguni.vn",id_failed,false);
 
-        Mockito.when(accountRepository.giveAccountInfo(email)).thenReturn(finded);
-        //Mockito.when(accountRepository.ListAllUser()).thenReturn(accounts);
-        ResponseEntity<Account> response = accountController.userProfile(email);
+        Mockito.when(accountRepository.giveAccountInfo(id)).thenReturn(null);
+        ResponseEntity<Account> response = accountController.userProfile(id_failed.toString());
         Assert.assertEquals(404, response.getStatusCodeValue());
-        //Assert.assertEquals(finded.getEmail(), response.getBody().getEmail());
     }
+     */
+
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class AccountController {
@@ -50,13 +51,14 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/user/{email}")
-    public ResponseEntity<Account> userProfile(@PathVariable String email) {
-        Account info = accountRepository.giveAccountInfo(email);
-        if(info.getEmail() != email) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @RequestMapping(value = "/user/{id}")
+    public ResponseEntity<Account> userProfile(@PathVariable String id) {
+        var uid = UUID.fromString(id);
+        Account info = accountRepository.giveAccountInfo(uid);
+        if(info.getEmail() != null) {
+            return new ResponseEntity( info.getEmail() ,HttpStatus.OK);
         }
-        return new ResponseEntity( info.getEmail() ,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public boolean checked(String email){
