@@ -3,6 +3,7 @@ package com.vls.accountservice.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -20,6 +21,12 @@ public class Account {
 
     @Column(name = "block")
     private boolean block = false;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Thing> things;
+
+    @OneToMany(mappedBy = "rated_user", cascade = CascadeType.ALL)
+    private List<UserRating> ratings;
 
     public Account()
     {
@@ -41,6 +48,11 @@ public class Account {
         this.id = id;
         this.block =block;
     }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getEmail()
     {
         return email;
@@ -61,8 +73,20 @@ public class Account {
     {
         this.block = block;
     }
-    @Override
-    public String toString() {
-        return "Tutorial [id=" + id + ", name=" + email + ", block=" + block +  "]";
+
+    public List<Thing> getThings() {
+        return things;
+    }
+
+    public void setThings(List<Thing> things) {
+        this.things = things;
+    }
+
+    public List<UserRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<UserRating> ratings) {
+        this.ratings = ratings;
     }
 }
