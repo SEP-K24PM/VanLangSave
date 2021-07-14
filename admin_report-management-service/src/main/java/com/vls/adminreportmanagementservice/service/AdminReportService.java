@@ -26,7 +26,11 @@ public class  AdminReportService {
         return post_reports;
     }
 
-    public Optional<Post_Report> findPost_reportById(UUID id) {
+    public Optional<Post_Report> findPostReportById(UUID id) {
         return postreportRepository.findById(id);
+    }
+
+    public Post_Report updatePostReport(Post_Report postReport) {
+        return postreportRepository.save(postReport);
     }
 }

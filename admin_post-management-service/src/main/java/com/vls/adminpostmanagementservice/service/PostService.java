@@ -1,11 +1,9 @@
-package com.vls.admin_postmanagementservice.service;
+package com.vls.adminpostmanagementservice.service;
 
-import com.vls.admin_postmanagementservice.model.Post;
-import com.vls.admin_postmanagementservice.repository.PostRepository;
+import com.vls.adminpostmanagementservice.model.Post;
+import com.vls.adminpostmanagementservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,20 +16,17 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Optional<Post> getPost(UUID postId) {
-        return java.util.Optional.of(postRepository.findPostById(postId));
+    public Optional<Post> getPost(UUID id){
+        return postRepository.findById(id);
     }
 
-    public void deletePost(UUID postId) {
-        Post post = postRepository.findPostById(postId);
+    public Post deletePost(Post post) {
         post.setDeletion(true);
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 
-    public boolean checkIfDeletePossible(Post post) {
-        if(post.getStatus().equalsIgnoreCase("Mở")) {
-            return true;
-        }
-        return false;
+    public Post hidePost(Post post){
+        post.setVisible(!post.isVisible());
+        return postRepository.save(post);
     }
 }

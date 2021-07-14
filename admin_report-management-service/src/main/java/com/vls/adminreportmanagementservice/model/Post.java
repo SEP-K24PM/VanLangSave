@@ -1,4 +1,4 @@
-package com.vls.adminpostmanagementservice.model;
+package com.vls.adminreportmanagementservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

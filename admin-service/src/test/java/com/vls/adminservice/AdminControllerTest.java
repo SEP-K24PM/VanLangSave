@@ -1,7 +1,5 @@
 package com.vls.adminservice;
 
-import Constants.AdminApiConstants;
-import DTO.PostDTO;
 import com.vls.adminservice.controller.AdminController;
 import com.vls.adminservice.model.Admin_Account;
 import com.vls.adminservice.repository.AdminAccountRepository;
@@ -11,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -62,14 +58,4 @@ public class AdminControllerTest extends AbstractTest {
         Assert.assertEquals(result, response.getBody());
     }
 
-    @Test
-    public void hidePost() {
-        UUID postId = UUID.randomUUID();
-        PostDTO postDTO = new PostDTO(postId, "description", new Date(),
-                false, false, "contact", "Free", "Đóng");
-        Mockito.when(restTemplate.postForObject(AdminApiConstants.PostManage.HIDE_POST, postId, PostDTO.class)).thenReturn(postDTO);
-
-        ResponseEntity<PostDTO> response = adminController.hidePost(postId.toString());
-        Assert.assertEquals(200, response.getStatusCodeValue());
-    }
 }

@@ -1,4 +1,4 @@
-package com.vls.adminpostmanagementservice;
+package com.vls.admin_usermanagementservice;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,9 +16,9 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AdminPostManagementServiceApplication.class)
+@SpringBootTest(classes = AdminUserManagementServiceApplication.class)
 @WebAppConfiguration
-public class AbstractTest {
+public abstract class AbstractTest {
     protected MockMvc mvc;
     @Autowired
     WebApplicationContext webApplicationContext;

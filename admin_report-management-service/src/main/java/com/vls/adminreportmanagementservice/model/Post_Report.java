@@ -1,7 +1,5 @@
 package com.vls.adminreportmanagementservice.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -17,17 +15,20 @@ public class Post_Report {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "post_id")
-    private UUID post_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="post_id")
+    private Post post;
 
-    @Column(name = "reporter_id")
-    private UUID reporter_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="reporter_id")
+    private User_Account reporter;
 
-    @Column(name = "admin_id")
-    private UUID admin_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="admin_id")
+    private Admin_Account admin;
 
-    @Column(name = "handling_id")
-    private UUID handling_id;
+    @Column(name = "handling")
+    private String handling;
 
     @Column(name = "reason_by_admin")
     private String reason_by_admin;
@@ -35,22 +36,16 @@ public class Post_Report {
     public Post_Report() {
     }
 
-    public Post_Report(String description, UUID post_id, UUID reporter_id, UUID admin_id, UUID handling_id, String reason_by_admin) {
+    public Post_Report(String description, String handling, String reason_by_admin) {
         this.description = description;
-        this.post_id = post_id;
-        this.reporter_id = reporter_id;
-        this.admin_id = admin_id;
-        this.handling_id = handling_id;
+        this.handling = handling;
         this.reason_by_admin = reason_by_admin;
     }
 
-    public Post_Report(UUID id, String description, UUID post_id, UUID reporter_id, UUID admin_id, UUID handling_id, String reason_by_admin) {
+    public Post_Report(UUID id, String description, String handling, String reason_by_admin) {
         this.id = id;
         this.description = description;
-        this.post_id = post_id;
-        this.reporter_id = reporter_id;
-        this.admin_id = admin_id;
-        this.handling_id = handling_id;
+        this.handling = handling;
         this.reason_by_admin = reason_by_admin;
     }
 
@@ -70,36 +65,12 @@ public class Post_Report {
         this.description = description;
     }
 
-    public UUID getPost_id() {
-        return post_id;
+    public String getHandling() {
+        return handling;
     }
 
-    public void setPost_id(UUID post_id) {
-        this.post_id = post_id;
-    }
-
-    public UUID getReporter_id_id() {
-        return reporter_id;
-    }
-
-    public void setReporter_id(UUID reporter_id) {
-        this.reporter_id = reporter_id;
-    }
-
-    public UUID getAdmin_id() {
-        return admin_id;
-    }
-
-    public void setAdmin_id(UUID admin_id) {
-        this.admin_id = admin_id;
-    }
-
-    public UUID getHandling_id() {
-        return handling_id;
-    }
-
-    public void setHandling_id(UUID handling_id) {
-        this.handling_id = handling_id;
+    public void setHandling(String handling) {
+        this.handling = handling;
     }
 
     public String getReason_by_admin() {
@@ -110,16 +81,27 @@ public class Post_Report {
         this.reason_by_admin = reason_by_admin;
     }
 
-    @Override
-    public String toString() {
-        return "post_report{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", post_id=" + post_id +
-                ", reporter_id=" + reporter_id +
-                ", admin_id=" + admin_id +
-                ", handling_id=" + handling_id +
-                ", reason_by_admin='" + reason_by_admin + '\'' +
-                '}';
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public User_Account getReporter() {
+        return reporter;
+    }
+
+    public void setReporter(User_Account reporter) {
+        this.reporter = reporter;
+    }
+
+    public Admin_Account getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin_Account admin) {
+        this.admin = admin;
     }
 }

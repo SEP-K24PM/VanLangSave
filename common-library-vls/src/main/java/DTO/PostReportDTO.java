@@ -12,7 +12,7 @@ public class PostReportDTO {
     private UUID admin_id;
     private PostDTO post;
     private UserAccountDTO reporter;
-    private AdminAccountDTO adminAccount;
+    private AdminAccountDTO admin;
 
     public PostReportDTO() {
     }
@@ -108,11 +108,11 @@ public class PostReportDTO {
         this.reporter = reporter;
     }
 
-    public AdminAccountDTO getAdminAccount() {
-        return adminAccount;
+    public AdminAccountDTO getAdmin() {
+        return admin;
     }
 
-    public void setAdminAccount(AdminAccountDTO adminAccount) {
-        this.adminAccount = adminAccount;
+    public void setAdmin(AdminAccountDTO admin) {
+        this.admin = admin;
     }
 }

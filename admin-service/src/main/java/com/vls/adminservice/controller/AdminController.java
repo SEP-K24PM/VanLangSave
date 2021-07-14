@@ -1,7 +1,8 @@
 package com.vls.adminservice.controller;
 
 import Constants.AdminApiConstants;
-import DTO.PostDTO;
+import DTO.PostReportDTO;
+import DTO.UserAccountDTO;
 import com.vls.adminservice.model.Admin_Account;
 import com.vls.adminservice.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
 @RestController
 public class AdminController {
     private final AdminService adminService;
@@ -33,9 +33,33 @@ public class AdminController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/hidepost/{postId}", method = RequestMethod.POST)
-    public ResponseEntity<PostDTO> hidePost(@PathVariable("postId") String postId) {
-        PostDTO result = restTemplate.postForObject(AdminApiConstants.PostManage.HIDE_POST, postId, PostDTO.class);
+    @RequestMapping(value = "/list-report")
+    public ResponseEntity<List<PostReportDTO>> hidePost() {
+        List<PostReportDTO> result = restTemplate.getForObject(AdminApiConstants.ReportManage.LIST_REPORT, List.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/details-report/{reportId}")
+    public ResponseEntity<PostReportDTO> hidePost(@PathVariable("reportId") String reportId) {
+        PostReportDTO result = restTemplate.postForObject(AdminApiConstants.ReportManage.DETAILS, reportId, PostReportDTO.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/handle-report")
+    public ResponseEntity<PostReportDTO> hidePost(@RequestBody PostReportDTO postReportDTO) {
+        PostReportDTO result = restTemplate.postForObject(AdminApiConstants.ReportManage.HANDLE, postReportDTO, PostReportDTO.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/list-user")
+    public ResponseEntity<List<UserAccountDTO>> listUser() {
+        List<UserAccountDTO> result = restTemplate.getForObject(AdminApiConstants.UserManage.LIST_USER, List.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/block-user")
+    public ResponseEntity<UserAccountDTO> blockUser(@RequestBody UserAccountDTO userAccountDTO) {
+        UserAccountDTO result = restTemplate.postForObject(AdminApiConstants.UserManage.BLOCK_USER, userAccountDTO, UserAccountDTO.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
