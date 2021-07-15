@@ -38,13 +38,16 @@ public class UserAccountController {
 
     @PostMapping("/login")
     public ResponseEntity<User_Account> login(@RequestBody User_Account userAccount) {
-        Optional<User_Account> user = userAccountService.getAccount(userAccount.getEmail());
-        if(user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.FOUND);
-        } else {
-            User_Account user_account = new User_Account(userAccount.getEmail(), false);
-            User_Account savedUser = userAccountService.saveAccount(user_account);
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        if(userAccount.getEmail().endsWith("@vanlanguni.vn")) {
+            Optional<User_Account> user = userAccountService.getAccount(userAccount.getEmail());
+            if(user.isPresent()) {
+                return new ResponseEntity<>(user.get(), HttpStatus.FOUND);
+            } else {
+                User_Account user_account = new User_Account(userAccount.getEmail(), false);
+                User_Account savedUser = userAccountService.saveAccount(user_account);
+                return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
