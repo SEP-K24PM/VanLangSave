@@ -82,4 +82,10 @@ public class ThingController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping("/list-available/{userId}")
+    public ResponseEntity<List<Thing>> getListAvaialbe(@PathVariable("userId") String userId) {
+        List<Thing> things = thingService.getListThingsAvailable(UUID.fromString(userId));
+        return new ResponseEntity<>(things, HttpStatus.OK);
+    }
 }

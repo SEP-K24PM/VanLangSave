@@ -21,7 +21,7 @@ public class PostService {
 
     public List<Post> getAllPost() {
         List<Post> list = new ArrayList<>();
-        postRepository.findAllNewPost().forEach(list::add);
+        postRepository.findAllNewPost("Mở").forEach(list::add);
         return list;
     }
 

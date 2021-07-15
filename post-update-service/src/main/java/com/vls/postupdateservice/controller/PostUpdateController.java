@@ -33,6 +33,7 @@ public class PostUpdateController {
                 _post.setDescription(post.getDescription());
                 _post.setContact(post.getContact());
                 _post.setExchange_method(post.getExchange_method());
+                _post.setStatus(post.getStatus());
                 new Thread(() -> {
                     postElasticService.update(_post);
                 }).start();

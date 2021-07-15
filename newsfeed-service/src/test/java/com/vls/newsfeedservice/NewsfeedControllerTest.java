@@ -46,7 +46,7 @@ public class NewsfeedControllerTest extends AbstractTest {
         posts.add(post);
         posts.add(post);
 
-        Mockito.when(postRepository.findAllNewPost()).thenReturn(posts);
+        Mockito.when(postRepository.findAllNewPost("Mở")).thenReturn(posts);
 
         ResponseEntity<List<Post>> response1 = newsfeedController.newsFeed();
         Assert.assertEquals(200, response1.getStatusCodeValue());

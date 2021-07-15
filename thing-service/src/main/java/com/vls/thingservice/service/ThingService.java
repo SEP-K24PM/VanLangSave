@@ -60,4 +60,9 @@ public class ThingService {
     public void deleteThing(String thingId) {
         thingRepository.deleteById(UUID.fromString(thingId));
     }
+
+    public List<Thing> getListThingsAvailable(UUID userId) {
+        List<Thing> list = thingRepository.findAvailableThing(userId);
+        return categoryService.addCategoryNameToThing(list);
+    }
 }
