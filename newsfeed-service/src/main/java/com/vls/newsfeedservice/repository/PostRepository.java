@@ -10,8 +10,8 @@ import java.util.UUID;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> {
-    @Query("SELECT p FROM Post p ORDER BY p.created_time DESC")
-    List<Post> findAllNewPost();
+    @Query("SELECT p FROM Post p where p.status = :status ORDER BY p.created_time DESC")
+    List<Post> findAllNewPost(String status);
 }
 
 
