@@ -1,5 +1,6 @@
 package com.vls.managerservice.controller;
 
+import Constants.ManagerApiConstants;
 import com.vls.managerservice.model.Post;
 import com.vls.managerservice.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import DTO.PostDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,9 +29,19 @@ public class ManagerController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/category", method = RequestMethod.GET)
-    public ResponseEntity<Category> category(@RequestBody Category category) {
-        Category result = restTemplate.getForObject("http://manager-statistic-service/category/",  Category.class, category);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+//    @RequestMapping(value = "/category", method = RequestMethod.GET)
+//    public ResponseEntity<Category> category(@RequestBody Category category) {
+//        Category result = restTemplate.getForObject("http://manager-statistic-service/category/",  Category.class, category);
+//        return new ResponseEntity<>(result, HttpStatus.CREATED);
+//    }
+//
+    @RequestMapping(value = "/details-report/")
+    public ResponseEntity<PostDTO> hidePost(@RequestBody PostDTO postDTO) {
+        PostDTO result = restTemplate.getForObject(ManagerApiConstants.Statistic.LIST_POST, PostDTO.class, postDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }
+
+

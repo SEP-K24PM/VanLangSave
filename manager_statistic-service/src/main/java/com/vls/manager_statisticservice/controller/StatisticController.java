@@ -25,21 +25,9 @@ public class StatisticController {
 
     @RequestMapping("/post")
     public ResponseEntity<List<Post>> getSucessPost() {
-        Post post = new Post();
-        Date date = new Date();
-        Calendar currentMonth = Calendar.getInstance();
-        currentMonth.setTime(date);
-        int month = currentMonth.get(Calendar.MONTH);
-        Calendar postMonth = Calendar.getInstance();
-        postMonth.setTime(post.getCreated_time());
-        int postTime = postMonth.get(Calendar.MONTH);
-
-        if (month == postTime) {
-            List<Post> posts = postService.findByStatus();
-            return new ResponseEntity<>(posts, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        List<Post> posts = postService.findByStatusAndMonth();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    
     }
 
 
