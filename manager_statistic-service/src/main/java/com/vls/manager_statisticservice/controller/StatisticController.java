@@ -25,9 +25,9 @@ public class StatisticController {
 
     @RequestMapping("/post")
     public ResponseEntity<List<Post>> getSucessPost() {
-        List<Post> posts = postService.findByStatusAndMonth();
+        List<Post> posts = postService.findByStatus();
         return new ResponseEntity<>(posts, HttpStatus.OK);
-    
+
     }
 
 
