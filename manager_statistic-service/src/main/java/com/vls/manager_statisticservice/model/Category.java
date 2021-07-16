@@ -1,4 +1,65 @@
 package com.vls.manager_statisticservice.model;
 
+
+import javax.persistence.*;
+import java.util.UUID;
+import java.util.List;
+
+@Entity
+@Table(name = "category")
 public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private UUID id;
+
+    @Column(name = "category_name")
+    private String category_name;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Thing> things;
+
+    public Category() {
+    }
+
+    public Category(UUID id, String category_name) {
+        this.id = id;
+        this.category_name = category_name;
+    }
+
+    public Category(String category_name) {
+        this.category_name = category_name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getCategory_name() {
+        return category_name;
+    }
+
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
+
+    public int getThings() {
+        return things.size();
+    }
+
+    public void setThings(List<Thing> things) {
+        this.things = things;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", category_name='" + category_name + '\'' +
+                '}';
+    }
 }
