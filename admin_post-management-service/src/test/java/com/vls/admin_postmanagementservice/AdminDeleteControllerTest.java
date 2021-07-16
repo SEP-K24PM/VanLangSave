@@ -51,7 +51,7 @@ public class AdminDeleteControllerTest extends AbstractTest {
                 true, false, "Mở", "Free", "contact");
 
         Mockito.when(postRepository.findById(post.getId())).thenReturn(java.util.Optional.of(post));
-        Mockito.doNothing().when(postRepository).delete(post);
+        Mockito.doNothing().when(postRepository).save(post);
 
         ResponseEntity<Boolean> response = adminDeleteController.delete(post.getId());
         Assert.assertEquals(200, response.getStatusCodeValue());
