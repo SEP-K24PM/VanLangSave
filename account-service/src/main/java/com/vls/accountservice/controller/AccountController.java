@@ -2,6 +2,7 @@ package com.vls.accountservice.controller;
 
 import com.vls.accountservice.model.Account;
 import com.vls.accountservice.model.Post;
+import com.vls.accountservice.model.UserRating;
 import com.vls.accountservice.repository.AccountRepository;
 import com.vls.accountservice.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -48,4 +49,15 @@ public class AccountController {
 
         return new ResponseEntity<>(listUserPost, HttpStatus.OK);
     }
+    @RequestMapping(value = "/profile/{id}/rate")
+    public ResponseEntity<List<UserRating>> getUserRated(@PathVariable String id){
+        var uid = UUID.fromString(id);
+        Account info = accountRepository.giveAccountInfo(uid);
+
+        var listUserRated = userService.getListRated(info);
+
+        return new ResponseEntity<>(listUserRated, HttpStatus.OK);
+    }
+
+
 }

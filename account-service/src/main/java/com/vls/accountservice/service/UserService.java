@@ -3,6 +3,7 @@ package com.vls.accountservice.service;
 import com.vls.accountservice.model.Account;
 import com.vls.accountservice.model.Post;
 import com.vls.accountservice.model.Thing;
+import com.vls.accountservice.model.UserRating;
 import com.vls.accountservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,9 @@ public class UserService {
             posts.add(getPost(things.get(i).getId()));
         }
         return posts;
+    }
+    public List<UserRating> getListRated(Account user) {
+        List<UserRating> ratingList = user.getRatings();
+        return ratingList;
     }
 }
