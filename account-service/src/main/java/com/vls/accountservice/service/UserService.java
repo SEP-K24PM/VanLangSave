@@ -20,11 +20,11 @@ public class UserService {
         this.postRepository = postRepository;
     }
 
-    public Post getPost(UUID thingId) {
-        return postRepository.findByThingIdEquals(thingId);
+    public Post getPost(UUID thing_id) {
+        return postRepository.findByThingIdEquals(thing_id);
     }
 
-    public List<Post> getListPostByUser(UUID userId, Account user) {
+    public List<Post> getListPostByUser(Account user) {
         List<Post> posts = new ArrayList<>();
         List<Thing> things = user.getThings();
         for (int i = 0; i < things.size(); i++) {

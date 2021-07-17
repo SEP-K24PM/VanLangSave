@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> {
-    public Post findByThingIdEquals(UUID thingId);
+    public Post findByThingIdEquals(UUID thing_id);
 }
