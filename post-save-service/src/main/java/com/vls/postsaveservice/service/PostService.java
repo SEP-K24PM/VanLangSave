@@ -5,6 +5,9 @@ import com.vls.postsaveservice.model.Thing;
 import com.vls.postsaveservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import Constants.ActionConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +34,19 @@ public class PostService {
     }
 
     public boolean checkIfAllowUpdate(Post post) {
-        if(post.getStatus().equalsIgnoreCase("Mở"))
+        if(post.getStatus().equalsIgnoreCase(ActionConstants.PostStatus.OPEN))
             return true;
         return false;
     }
 
     public Post updatePost(Post post) {
         return postRepository.save(post);
+    }
+
+    public boolean checkIfDeletePossible(Post post) {
+        if(post.getStatus().equalsIgnoreCase(ActionConstants.PostStatus.OPEN)) {
+            return true;
+        }
+        return false;
     }
 }

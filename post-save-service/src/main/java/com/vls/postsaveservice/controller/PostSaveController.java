@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class PostSaveController {
@@ -36,9 +37,9 @@ public class PostSaveController {
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
     }
 
-    @RequestMapping("/update")
-    public ResponseEntity<Post> updatePost(@RequestBody Post post) {
-        Optional<Post> postData = postService.getPostDetails(post.getId());
+    @RequestMapping(value = "/update/{postId}")
+    public ResponseEntity<Post> updatePost(@PathVariable("postId") String postId, @RequestBody Post post) {
+        Optional<Post> postData = postService.getPostDetails(UUID.fromString(postId));
         if(postData.isPresent()) {
             if(postService.checkIfAllowUpdate(postData.get())) {
                 Post _post = postData.get();
@@ -56,4 +57,24 @@ public class PostSaveController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+//    @RequestMapping(value = "/delete/{postId}")
+//    public ResponseEntity<Boolean> delete(@PathVariable("postId") UUID postId) {
+//        Optional<Post> postData = postService.getPost(postId);
+//        if(postData.isPresent()) {
+//            Post post = postData.get();
+//            if(postService.checkIfDeletePossible(post)) {
+//                thingService.removePostIdFromThing(post.getThing_id());
+//                postService.deletePost(post);
+//                new Thread(() -> {
+//                    postElasticService.delete(post);
+//                }).start();
+//                return new ResponseEntity<>(true, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//            }
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
