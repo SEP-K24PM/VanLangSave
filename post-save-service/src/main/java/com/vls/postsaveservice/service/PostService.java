@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,10 +26,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public boolean checkThingIsAvailable(UUID thingId) {
-        Thing thing = thingService.findThingById(thingId);
-        if(thing.getPost_id() == null)
+    public Optional<Post> getPostDetails(UUID id) {
+        return postRepository.findById(id);
+    }
+
+    public boolean checkIfAllowUpdate(Post post) {
+        if(post.getStatus().equalsIgnoreCase("Mở"))
             return true;
         return false;
+    }
+
+    public Post updatePost(Post post) {
+        return postRepository.save(post);
     }
 }

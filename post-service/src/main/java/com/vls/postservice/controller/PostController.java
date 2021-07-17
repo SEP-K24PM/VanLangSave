@@ -22,20 +22,20 @@ public class PostController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<Post> post(@RequestBody Post post) {
-        Post result = restTemplate.postForObject("http://post-save-service/post/", post, Post.class);
+        Post result = restTemplate.postForObject("http://post-save-service/save/", post, Post.class);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/update/{postId}")
     public ResponseEntity<Post> update(@PathVariable("postId") String postId, @RequestBody Post post) {
         post.setId(UUID.fromString(postId));
-        Post result = restTemplate.postForObject("http://post-update-service/post/", post, Post.class);
+        Post result = restTemplate.postForObject("http://post-save-service/update/", post, Post.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete/{postId}")
     public ResponseEntity<Boolean> delete(@PathVariable("postId") UUID postId) {
-        boolean result = restTemplate.postForObject("http://post-delete-service/", postId, Boolean.class);
+        boolean result = restTemplate.postForObject("http://post-save-service/delete", postId, Boolean.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

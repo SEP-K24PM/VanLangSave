@@ -1,30 +1,35 @@
-package com.vls.postupdateservice.dto;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.springframework.stereotype.Component;
+package DTO;
 
 import java.util.Date;
 
-@Component
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = postelastic.class)
-public class postelastic {
-
+public class PostElastic {
     private String id;
     private String description;
     private String exchange_methods;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date created_time;
     private boolean visible;
     private String thing_name;
     private String origin;
     private String category_name;
+    private String image;
 
-    public postelastic() {
+    public PostElastic() {
     }
 
-    public postelastic(String id, String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
+    public PostElastic(String description, String exchange_methods, Date created_time, boolean visible,
+                       String thing_name, String origin, String category_name, String image) {
+        this.description = description;
+        this.exchange_methods = exchange_methods;
+        this.created_time = created_time;
+        this.visible = visible;
+        this.thing_name = thing_name;
+        this.origin = origin;
+        this.category_name = category_name;
+        this.image = image;
+    }
+
+    public PostElastic(String id, String description, String exchange_methods, Date created_time,
+                       boolean visible, String thing_name, String origin, String category_name, String image) {
         this.id = id;
         this.description = description;
         this.exchange_methods = exchange_methods;
@@ -33,16 +38,7 @@ public class postelastic {
         this.thing_name = thing_name;
         this.origin = origin;
         this.category_name = category_name;
-    }
-
-    public postelastic(String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
-        this.description = description;
-        this.exchange_methods = exchange_methods;
-        this.created_time = created_time;
-        this.visible = visible;
-        this.thing_name = thing_name;
-        this.origin = origin;
-        this.category_name = category_name;
+        this.image = image;
     }
 
     public String getId() {
@@ -109,17 +105,11 @@ public class postelastic {
         this.category_name = category_name;
     }
 
-    @Override
-    public String toString() {
-        return "Postelastic{" +
-                "id='" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", exchange_methods='" + exchange_methods + '\'' +
-                ", created_time=" + created_time +
-                ", visible=" + visible +
-                ", thing_name='" + thing_name + '\'' +
-                ", origin='" + origin + '\'' +
-                ", category_name='" + category_name + '\'' +
-                '}';
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

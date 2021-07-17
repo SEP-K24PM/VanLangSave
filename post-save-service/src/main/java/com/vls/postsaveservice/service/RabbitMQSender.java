@@ -1,6 +1,6 @@
 package com.vls.postsaveservice.service;
 
-import com.vls.postsaveservice.dto.postelastic;
+import DTO.PostElastic;
 import com.vls.postsaveservice.model.Category;
 import com.vls.postsaveservice.model.Post;
 import com.vls.postsaveservice.model.Thing;
@@ -31,15 +31,15 @@ public class RabbitMQSender {
     @Value("${spring.rabbitmq.routingkey}")
     private String routingkey;
 
-    public void send(postelastic postElastic){
+    public void send(PostElastic postElastic){
         rabbitTemplate.convertAndSend(exchange,routingkey, postElastic);
     }
 
-    public postelastic convertToPostElastic(Post post) {
+    public PostElastic convertToPostElastic(Post post) {
         Thing thing = thingService.findThingById(post.getThing_id());
         Category category = categoryService.findCategoryById(thing.getCategory_id());
 
-        postelastic postElastic = new postelastic(
+        PostElastic postElastic = new PostElastic(
                 post.getId().toString(),
                 post.getDescription(),
                 post.getExchange_method(),
@@ -47,7 +47,8 @@ public class RabbitMQSender {
                 true,
                 thing.getThing_name(),
                 thing.getOrigin(),
-                category.getCategory_name()
+                category.getCategory_name(),
+                thing.getImage()
         );
         return postElastic;
     }
