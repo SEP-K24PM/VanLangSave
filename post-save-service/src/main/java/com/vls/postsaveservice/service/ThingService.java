@@ -19,6 +19,4 @@ public class ThingService {
     public Thing findThingById(UUID id) {
         return thingRepository.findThingById(id);
     }
-
-
 }
