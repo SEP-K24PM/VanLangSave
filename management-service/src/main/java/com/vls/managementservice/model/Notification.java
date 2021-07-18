@@ -1,28 +1,43 @@
-package DTO;
+package com.vls.managementservice.model;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class NotificationDTO {
-    private UUID id;
-    private String description;
-    private String url;
-    private Date time;
-    private UUID user_id;
-    private UserAccountDTO userAccountDTO;
+import javax.persistence.*;
 
-    public NotificationDTO() {
+@Entity
+@Table(name = "notification")
+public class Notification {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private UUID id;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "url")
+    private String url;
+
+    @Column(name = "time")
+    private Date time;
+
+    @Column(name = "user_id")
+    private UUID user_id;
+
+    public Notification() {
     }
 
-    public NotificationDTO(String description, String url, Date time, UUID user_id) {
+    public Notification(UUID id, String description, String url, Date time, UUID user_id) {
+        this.id = id;
         this.description = description;
         this.url = url;
         this.time = time;
         this.user_id = user_id;
     }
 
-    public NotificationDTO(UUID id, String description, String url, Date time, UUID user_id) {
-        this.id = id;
+    public Notification(String description, String url, Date time, UUID user_id) {
         this.description = description;
         this.url = url;
         this.time = time;
@@ -69,11 +84,4 @@ public class NotificationDTO {
         this.user_id = user_id;
     }
 
-    public UserAccountDTO getUserAccountDTO() {
-        return userAccountDTO;
-    }
-
-    public void setUserAccountDTO(UserAccountDTO userAccountDTO) {
-        this.userAccountDTO = userAccountDTO;
-    }
 }
