@@ -12,6 +12,7 @@ public class UserAccountDTO {
     private List<ThingDTO> thingList;
     private List<NotificationDTO> notificationList;
     private List<UserHandlingDTO> userHandlingList;
+    private List<PostDTO> postList;
 
     public UserAccountDTO() {
     }
@@ -81,5 +82,13 @@ public class UserAccountDTO {
 
     public void setUserHandlingList(List<UserHandlingDTO> userHandlingList) {
         this.userHandlingList = userHandlingList;
+    }
+
+    public List<PostDTO> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<PostDTO> postList) {
+        this.postList = postList;
     }
 }

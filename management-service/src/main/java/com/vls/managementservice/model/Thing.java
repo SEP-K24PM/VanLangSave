@@ -1,4 +1,4 @@
-package com.vls.accountservice.model;
+package com.vls.managementservice.model;
 
 import javax.persistence.*;
 import java.util.UUID;

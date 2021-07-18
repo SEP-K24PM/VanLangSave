@@ -1,18 +1,18 @@
-package com.vls.accountservice.service;
+package com.vls.managementservice.service;
 
-import com.vls.accountservice.model.User_Account;
-import com.vls.accountservice.repository.UserAccountRepository;
+import com.vls.managementservice.model.User_Account;
+import com.vls.managementservice.repository.User_AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserAccountService {
-    private final UserAccountRepository userAccountRepository;
+public class User_AccountService {
+    private final User_AccountRepository userAccountRepository;
 
     @Autowired
-    public UserAccountService(UserAccountRepository userAccountRepository) {
+    public User_AccountService(User_AccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 

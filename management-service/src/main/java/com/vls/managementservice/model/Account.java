@@ -1,4 +1,7 @@
-package com.vls.accountservice.model;
+package com.vls.managementservice.model;
+
+import com.vls.managementservice.model.Thing;
+import com.vls.managementservice.model.UserRating;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,49 +31,41 @@ public class Account {
     @OneToMany(mappedBy = "rated_user", cascade = CascadeType.ALL)
     private List<UserRating> ratings;
 
-    public Account()
-    {
+    public Account() {
     }
 
-    public Account(String email)
-    {
-        this.email = email;
-        this.block  =false;
-    }
-    public Account(Account account){
-        this.id = account.id;
-        this.email = account.email;
-        this.block = account.block;
-    }
-    public Account(String email, UUID id,boolean block)
-    {
-        this.email = email;
+    public Account(UUID id, String email, boolean block) {
         this.id = id;
-        this.block =block;
+        this.email = email;
+        this.block = block;
+    }
+
+    public Account(String email, boolean block) {
+        this.email = email;
+        this.block = block;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
-    public UUID getId()
-    {
-        return id;
+
+    public void setEmail(String email) {
+        this.email = email;
     }
-    public boolean isBlock()
-    {
+
+    public boolean isBlock() {
         return block;
     }
-    public void setEmail(String user_name)
-    {
-        this.email = user_name;
-    }
-    public void setBlock(boolean block)
-    {
+
+    public void setBlock(boolean block) {
         this.block = block;
     }
 
