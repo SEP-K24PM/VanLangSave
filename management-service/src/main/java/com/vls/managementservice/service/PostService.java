@@ -1,5 +1,7 @@
 package com.vls.managementservice.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +30,11 @@ public class PostService {
     public void hidePost(Post post){
         post.setVisible(!post.isVisible());
         postRepository.save(post);
+    }
+
+    public List<Post> findByStatus() {
+        List<Post> list = new ArrayList<>();
+        postRepository.findByStatus("Hoàn tất").forEach(list::add);
+        return list;
     }
 }

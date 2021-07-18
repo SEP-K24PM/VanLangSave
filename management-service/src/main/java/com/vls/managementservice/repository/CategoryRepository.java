@@ -1,6 +1,6 @@
-package com.vls.manager_statisticservice.repository;
+package com.vls.managementservice.repository;
 
-import com.vls.manager_statisticservice.model.Category;
+import com.vls.managementservice.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

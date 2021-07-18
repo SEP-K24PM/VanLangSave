@@ -1,5 +1,7 @@
 package com.vls.managementservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -26,6 +28,11 @@ public class Thing {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Account user;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Thing() {
     }
@@ -105,5 +112,11 @@ public class Thing {
         this.image = image;
     }
 
+    public Category getCategory() {
+        return category;
+    }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

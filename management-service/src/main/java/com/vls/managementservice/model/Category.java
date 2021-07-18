@@ -1,4 +1,4 @@
-package com.vls.manager_statisticservice.model;
+package com.vls.managementservice.model;
 
 
 import javax.persistence.*;
