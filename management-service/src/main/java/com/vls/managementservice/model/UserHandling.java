@@ -1,29 +1,42 @@
-package DTO;
+package com.vls.managementservice.model;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class UserHandlingDTO {
-    private UUID id;
-    private String reason;
-    private UUID user_id;
-    private UUID admin_id;
-    private Date time;
-    private UserAccountDTO userAccount;
-    private AdminAccountDTO adminAccount;
+import javax.persistence.*;
 
-    public UserHandlingDTO() {
+@Entity
+@Table(name = "user_handling")
+public class UserHandling {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private UUID id;
+
+    @Column(name = "reason")
+    private String reason;
+
+    @Column(name = "user_id")
+    private UUID user_id;
+
+    @Column(name = "admin_id")
+    private UUID admin_id;
+
+    @Column(name = "time")
+    private Date time;
+
+    public UserHandling() {
     }
 
-    public UserHandlingDTO(String reason, UUID user_id, UUID admin_id, Date time) {
+    public UserHandling(UUID id, String reason, UUID user_id, UUID admin_id, Date time) {
+        this.id = id;
         this.reason = reason;
         this.user_id = user_id;
         this.admin_id = admin_id;
         this.time = time;
     }
 
-    public UserHandlingDTO(UUID id, String reason, UUID user_id, UUID admin_id, Date time) {
-        this.id = id;
+    public UserHandling(String reason, UUID user_id, UUID admin_id, Date time) {
         this.reason = reason;
         this.user_id = user_id;
         this.admin_id = admin_id;
@@ -68,21 +81,5 @@ public class UserHandlingDTO {
 
     public void setTime(Date time) {
         this.time = time;
-    }
-
-    public UserAccountDTO getUser() {
-        return userAccount;
-    }
-
-    public void setUser(UserAccountDTO userAccount) {
-        this.userAccount = userAccount;
-    }
-
-    public AdminAccountDTO getAdmin() {
-        return adminAccount;
-    }
-
-    public void setAdmin(AdminAccountDTO adminAccount) {
-        this.adminAccount = adminAccount;
     }
 }

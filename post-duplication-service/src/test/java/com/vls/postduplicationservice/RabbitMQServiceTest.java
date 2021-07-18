@@ -1,9 +1,8 @@
 package com.vls.postduplicationservice;
 
-import com.vls.postduplicationservice.dto.postelastic;
+import com.vls.postduplicationservice.Model.postelastic;
 import com.vls.postduplicationservice.repository.PostRepository;
 import com.vls.postduplicationservice.service.RabbitMQService;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +33,7 @@ public class RabbitMQServiceTest extends AbstractTest {
     @Test
     public void RabbitMQServiceTest() {
         postelastic postelastic = new postelastic(UUID.randomUUID().toString(), "description",
-                "exchange method", new Date(), true, "thing name", "origin", "category name");
+                "exchange method", new Date(), true, "thing name", "origin", "category name", "image");
 
         Mockito.when(postRepository.save(postelastic)).thenReturn(postelastic);
         rabbitMQService.receivedMessage(postelastic);

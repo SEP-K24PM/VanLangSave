@@ -19,10 +19,4 @@ public class ThingService {
     public Thing findThingById(UUID id) {
         return thingRepository.findThingById(id);
     }
-
-    public void updateThingWithNewPost(UUID thingId, UUID postId) {
-        Thing thing = findThingById(thingId);
-        thing.setPost_id(postId);
-        thingRepository.save(thing);
-    }
 }

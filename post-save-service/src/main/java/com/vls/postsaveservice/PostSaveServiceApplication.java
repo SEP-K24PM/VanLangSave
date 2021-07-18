@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.modelmapper.ModelMapper;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -32,14 +33,21 @@ public class PostSaveServiceApplication {
         cachingConnectionFactory.setPassword(password);
         return cachingConnectionFactory;
     }
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
+    }    
+    
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }
