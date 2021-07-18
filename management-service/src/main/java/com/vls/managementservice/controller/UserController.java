@@ -54,7 +54,7 @@ public class UserController {
         userAccountDTO.setUserRatingList(userService.setRatingList(info.getRatings()));
         userAccountDTO.setPostList(userService.getListPostByUser(info));
         if(info.getEmail() != null) {
-            return new ResponseEntity(userAccountDTO,HttpStatus.OK);
+            return new ResponseEntity<>(userAccountDTO,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

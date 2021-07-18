@@ -11,7 +11,6 @@ public class PostRegistrationDTO {
     private UUID post_id;
     private ThingDTO thing;
     private UserAccountDTO userAccount;
-    private PostDTO post;
 
     public PostRegistrationDTO() {
     }
@@ -31,9 +30,6 @@ public class PostRegistrationDTO {
         this.thing_id = thing_id;
         this.user_id = user_id;
         this.post_id = post_id;
-        this.thing = thing;
-        this.userAccount = userAccount;
-        this.post = post;
     }
 
     public UUID getId() {
@@ -100,11 +96,4 @@ public class PostRegistrationDTO {
         this.userAccount = userAccount;
     }
 
-    public PostDTO getPost() {
-        return post;
-    }
-
-    public void setPost(PostDTO post) {
-        this.post = post;
-    }
 }

@@ -48,9 +48,9 @@ public class TradeController {
 
     //show toàn bộ yêu cầu đổi đồ của 1 bài post
     @RequestMapping(value = "/list-regis/{postID}",method = RequestMethod.GET)
-    public ResponseEntity<PostRegistWithEntities> loadListRegister(@PathVariable("postID") UUID postID) {
+    public ResponseEntity<List<PostRegistWithEntities>> loadListRegister(@PathVariable("postID") UUID postID) {
         List<PostRegistWithEntities> listRegister = postRegistrationService.getListPostRegis(postID);
-        return new ResponseEntity(listRegister, HttpStatus.OK);
+        return new ResponseEntity<>(listRegister, HttpStatus.OK);
     }
 
 }

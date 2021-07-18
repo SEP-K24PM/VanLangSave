@@ -120,7 +120,7 @@ public class TradeControllerTest extends AbstractTest {
 
         Mockito.when(_postRegistrationWithRelatedEntityRepository.getListRegis(_postID)).thenReturn(list);
 
-        ResponseEntity response = _tradeController.loadListRegister(_postID);
+        ResponseEntity<List<PostRegistWithEntities>> response = _tradeController.loadListRegister(_postID);
         Assert.assertEquals(200, response.getStatusCodeValue());
         Assert.assertEquals(list, response.getBody());
     }
