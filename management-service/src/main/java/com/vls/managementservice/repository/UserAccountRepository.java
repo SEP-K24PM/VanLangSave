@@ -1,6 +1,6 @@
-package com.vls.admin_usermanagementservice.repository;
+package com.vls.managementservice.repository;
 
-import com.vls.admin_usermanagementservice.model.UserAccount;
+import com.vls.managementservice.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

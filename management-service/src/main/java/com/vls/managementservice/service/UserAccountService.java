@@ -1,7 +1,7 @@
-package com.vls.admin_usermanagementservice.service;
+package com.vls.managementservice.service;
 
-import com.vls.admin_usermanagementservice.model.UserAccount;
-import com.vls.admin_usermanagementservice.repository.UserAccountRepository;
+import com.vls.managementservice.model.UserAccount;
+import com.vls.managementservice.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +26,10 @@ public class UserAccountService {
         return userAccountRepository.findAll();
     }
 
-    public UserAccount block(UserAccount user) {
-        Optional<UserAccount> findedUser = findUser(user.getId());
-        user.setBlock(!findedUser.get().isBlock());
+    public UserAccount block(UUID userId) {
+        Optional<UserAccount> foundUser = findUser(userId);
+        UserAccount user = foundUser.get();
+        user.setBlock(!user.isBlock());
         return userAccountRepository.save(user);
     }
 }

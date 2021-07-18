@@ -11,6 +11,7 @@ public class UserAccountDTO {
     private List<UserRatingDTO> userRatingList;
     private List<ThingDTO> thingList;
     private List<NotificationDTO> notificationList;
+    private List<UserHandlingDTO> userHandlingList;
 
     public UserAccountDTO() {
     }
@@ -72,5 +73,13 @@ public class UserAccountDTO {
 
     public void setNotificationList(List<NotificationDTO> notificationList) {
         this.notificationList = notificationList;
+    }
+
+    public List<UserHandlingDTO> getUserHandlingList() {
+        return userHandlingList;
+    }
+
+    public void setUserHandlingList(List<UserHandlingDTO> userHandlingList) {
+        this.userHandlingList = userHandlingList;
     }
 }

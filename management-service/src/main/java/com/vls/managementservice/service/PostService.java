@@ -20,13 +20,13 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public Post deletePost(Post post) {
+    public void deletePost(Post post) {
         post.setDeletion(true);
-        return postRepository.save(post);
+        postRepository.save(post);
     }
 
-    public Post hidePost(Post post){
+    public void hidePost(Post post){
         post.setVisible(!post.isVisible());
-        return postRepository.save(post);
+        postRepository.save(post);
     }
 }

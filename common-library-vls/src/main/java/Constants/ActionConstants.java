@@ -20,6 +20,7 @@ public class ActionConstants {
 
     public static class UserHandling {
         public static String BLOCK_USER = "Khoá tài khoản";
+        public static String UNBLOCK_USER = "Mở khoá";
     }
 
     public static class PostHandling {
