@@ -18,4 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     @Query("SELECT info FROM Account as info where info.id = :id")
     Account giveAccountInfo(@Param("id") UUID id);
 
+
+
+
 }
