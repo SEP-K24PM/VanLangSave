@@ -14,8 +14,6 @@ public class ThingDTO {
     private UUID category_id;
     private UserAccountDTO userAccount;
     private CategoryDTO category;
-    private PostDTO post;
-
     public ThingDTO() {
     }
 
@@ -133,11 +131,4 @@ public class ThingDTO {
         this.category = category;
     }
 
-    public PostDTO getPost() {
-        return post;
-    }
-
-    public void setPost(PostDTO post) {
-        this.post = post;
-    }
 }
