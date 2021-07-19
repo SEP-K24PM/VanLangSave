@@ -27,11 +27,14 @@ public class postelastic {
     private String origin;
     @Field(type = FieldType.Text)
     private String category_name;
+    @Field(type = FieldType.Text)
+    private String image;
 
     public postelastic() {
     }
 
-    public postelastic(String id, String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
+    public postelastic(String id, String description, String exchange_methods, Date created_time, 
+    boolean visible, String thing_name, String origin, String category_name, String image) {
         this.id = id;
         this.description = description;
         this.exchange_methods = exchange_methods;
@@ -39,15 +42,18 @@ public class postelastic {
         this.thing_name = thing_name;
         this.origin = origin;
         this.category_name = category_name;
+        this.image = image;
     }
 
-    public postelastic(String description, String exchange_methods, Date created_time, boolean visible, String thing_name, String origin, String category_name) {
+    public postelastic(String description, String exchange_methods, Date created_time, boolean visible, 
+    String thing_name, String origin, String category_name, String image) {
         this.description = description;
         this.exchange_methods = exchange_methods;
         this.created_time = created_time;
         this.thing_name = thing_name;
         this.origin = origin;
         this.category_name = category_name;
+        this.image = image;
     }
 
     public String getId() {
@@ -112,6 +118,14 @@ public class postelastic {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
