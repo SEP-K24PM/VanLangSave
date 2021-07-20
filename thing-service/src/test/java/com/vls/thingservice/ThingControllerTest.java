@@ -48,7 +48,7 @@ public class ThingControllerTest extends AbstractTest {
         postService = new PostService(postRepository);
         categoryService = new CategoryService(categoryRepository);
         thingService = new ThingService(thingRepository, postService, categoryService);
-        thingController = new ThingController(thingService);
+        // thingController = new ThingController(thingService);
     }
 
     private List<Thing> createListThing(UUID userId, UUID categoryId) {
@@ -56,10 +56,10 @@ public class ThingControllerTest extends AbstractTest {
         List<Thing> results = new ArrayList<>();
         results.add(new Thing(UUID.randomUUID(),"thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                userId, categoryId, UUID.randomUUID()));
+                userId));
         results.add(new Thing(UUID.randomUUID(),"thing name 2", "origin 2", 10000, 1,
                 "used time 2", "image2.png",
-                userId, categoryId, UUID.randomUUID()));
+                userId));
         return results;
     }
 
@@ -70,9 +70,7 @@ public class ThingControllerTest extends AbstractTest {
         List<Thing> results = createListThing(userId, category.getId());
         List<Thing> listWithCateName = new ArrayList<>();
         listWithCateName.addAll(results);
-        for (Thing t: listWithCateName) {
-            t.setCategory_name(category.getCategory_name());
-        }
+        
 
         Mockito.when(thingRepository.findByUserid(userId)).thenReturn(results);
         Mockito.when(categoryRepository.existsById(category.getId())).thenReturn(true);
@@ -89,26 +87,26 @@ public class ThingControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
         Thing thing = new Thing(UUID.randomUUID(),"thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                thingId, UUID.randomUUID(), UUID.randomUUID());
+                thingId);
 
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
 
-        ResponseEntity<Thing> response = thingController.getThingDetails(thingId.toString());
-        Assert.assertEquals(thing, response.getBody());
-        Assert.assertEquals(200, response.getStatusCodeValue());
+        // ResponseEntity<Thing> response = thingController.getThingDetails(thingId.toString());
+        // Assert.assertEquals(thing, response.getBody());
+        // Assert.assertEquals(200, response.getStatusCodeValue());
 
-        ResponseEntity<Thing> exceptionResponse = thingController.getThingDetails(UUID.randomUUID().toString());
-        Assert.assertEquals(404, exceptionResponse.getStatusCodeValue());
+        // ResponseEntity<Thing> exceptionResponse = thingController.getThingDetails(UUID.randomUUID().toString());
+        // Assert.assertEquals(404, exceptionResponse.getStatusCodeValue());
     }
 
     @Test
     public void addThingShouldReturnRightThing() {
         Thing newThing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+                UUID.randomUUID());
         Thing savedThing = new Thing(UUID.randomUUID(), newThing.getThing_name(), newThing.getOrigin(),
                 newThing.getPrice(), newThing.getQuantity(), newThing.getUsed_time(), newThing.getImage(),
-                newThing.getUserid(), newThing.getCategory_id(), newThing.getPost_id());
+                newThing.getUserid());
 
         Mockito.when(thingRepository.save(newThing)).thenReturn(savedThing);
 
@@ -122,15 +120,15 @@ public class ThingControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+                UUID.randomUUID());
         Thing updatedThing = new Thing("thing name 2", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                thing.getUserid(), UUID.randomUUID(), UUID.randomUUID());
+                thing.getUserid());
         Post post = new Post(UUID.randomUUID(), "description", new Date(), thingId, "Mở",
-                "Free", "contact");
+                "Free", "contact", true, false);
 
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
-        Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(java.util.Optional.of(post));
+        //Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(java.util.Optional.of(post));
         Mockito.when(thingRepository.save(thing)).thenReturn(updatedThing);
 
         ResponseEntity<Thing> response = thingController.updateThing(thingId.toString(), thing);
@@ -146,7 +144,7 @@ public class ThingControllerTest extends AbstractTest {
 
         Optional<Post> emptyPost = Optional.empty();
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
-        Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(emptyPost);
+        //Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(emptyPost);
         ResponseEntity<Thing> responseRightWithNullPost = thingController.updateThing(thingId.toString(), thing);
         Assert.assertEquals(200, responseRightWithNullPost.getStatusCodeValue());
         Assert.assertEquals(updatedThing, responseRightWithNullPost.getBody());
@@ -157,13 +155,13 @@ public class ThingControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-        thing.setPost_id(null);
+                UUID.randomUUID());
+        //thing.setPost_id(null);
 
         Thing updatedThing = new Thing("thing name 2", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                thing.getUserid(), UUID.randomUUID(), UUID.randomUUID());
-        updatedThing.setPost_id(null);
+                thing.getUserid());
+        //updatedThing.setPost_id(null);
 
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
         Mockito.when(thingRepository.save(thing)).thenReturn(updatedThing);
@@ -179,13 +177,13 @@ public class ThingControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+                UUID.randomUUID());
 
         Post post = new Post(UUID.randomUUID(), "description", new Date(), thingId, "Mở",
-                "Free", "contact");
+                "Free", "contact", true, false);
 
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
-        Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(java.util.Optional.of(post));
+        //Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(java.util.Optional.of(post));
         Mockito.doNothing().when(thingRepository).deleteById(thingId);
 
         ResponseEntity<Thing> response = thingController.deleteThing(thingId.toString());
@@ -200,8 +198,8 @@ public class ThingControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-        thing.setPost_id(null);
+                UUID.randomUUID());
+        //thing.setPost_id(null);
 
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
         Mockito.doNothing().when(thingRepository).deleteById(thingId);
@@ -215,14 +213,14 @@ public class ThingControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
         Thing thing = new Thing("thing name 1", "origin 1", 10000, 1,
                 "used time 1", "image1.png",
-                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+                UUID.randomUUID());
         Post post = new Post(UUID.randomUUID(), "description",
-                new Date(), UUID.randomUUID(), "Đóng","Free", "contact");
+                new Date(), UUID.randomUUID(), "Đóng","Free", "contact", true, false);
 
-        thing.setPost_id(post.getThing_id());
+        //thing.setPost_id(post.getThing_id());
 
         Mockito.when(thingRepository.findById(thingId)).thenReturn(java.util.Optional.of(thing));
-        Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(java.util.Optional.of(post));
+        //Mockito.when(postRepository.findById(thing.getPost_id())).thenReturn(java.util.Optional.of(post));
         Mockito.doNothing().when(thingRepository).deleteById(thingId);
 
         ResponseEntity<Thing> response = thingController.deleteThing(thingId.toString());

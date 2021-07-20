@@ -3,7 +3,6 @@ package com.vls.managementservice.service;
 import java.util.List;
 import java.util.UUID;
 
-import java.util.Optional;
 import com.vls.managementservice.model.UserHandling;
 import com.vls.managementservice.repository.UserHandlingRepository;
 

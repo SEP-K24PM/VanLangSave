@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import Constants.PostSearchApiConstants;
+
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class SearchController {
@@ -24,19 +25,19 @@ public class SearchController {
 
     @RequestMapping("/posts")
     public ResponseEntity<List<postelastic>> posts(@RequestBody String search) {
-        List<postelastic> result = restTemplate.postForObject("http://post-search-service/posts", search, List.class);
+        List<postelastic> result = restTemplate.postForObject(PostSearchApiConstants.Post.POST_SEARCH, search, List.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping("/newsfeed")
     public ResponseEntity<List<PostDTO>> newsfeed() {
-        List<PostDTO> result = restTemplate.getForObject("http://newsfeed-service/", List.class);
+        List<PostDTO> result = restTemplate.getForObject(PostSearchApiConstants.Post.NEWSFEED, List.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/details/{id}")
     public ResponseEntity<PostDTO> postDetails(@PathVariable("id") String id) {
-        PostDTO result = restTemplate.postForObject("http://newsfeed-service/post/", id, PostDTO.class);
+        PostDTO result = restTemplate.postForObject(PostSearchApiConstants.Post.POST_DETAILS, id, PostDTO.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

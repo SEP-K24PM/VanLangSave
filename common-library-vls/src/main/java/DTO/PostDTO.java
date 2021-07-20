@@ -13,6 +13,8 @@ public class PostDTO {
     private String contact;
     private String exchange_method;
     private String status;
+    private UUID giver;
+    private UUID given;
     private UUID thing_id;
     private ThingDTO thing;
     private List<PostRegistrationDTO> postRegistrationList;
@@ -20,9 +22,26 @@ public class PostDTO {
     public PostDTO() {
     }
 
-    public PostDTO(UUID id, String description, Date created_time,
-                   boolean visible, boolean deletion, String contact,
-                   String exchange_method, String status, UUID thing_id) {
+    
+
+    public PostDTO(String description, Date created_time, boolean visible, boolean deletion, String contact,
+            String exchange_method, String status, UUID giver, UUID given, UUID thing_id) {
+        this.description = description;
+        this.created_time = created_time;
+        this.visible = visible;
+        this.deletion = deletion;
+        this.contact = contact;
+        this.exchange_method = exchange_method;
+        this.status = status;
+        this.giver = giver;
+        this.given = given;
+        this.thing_id = thing_id;
+    }
+
+
+
+    public PostDTO(UUID id, String description, Date created_time, boolean visible, boolean deletion, String contact,
+            String exchange_method, String status, UUID giver, UUID given, UUID thing_id) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
@@ -31,21 +50,12 @@ public class PostDTO {
         this.contact = contact;
         this.exchange_method = exchange_method;
         this.status = status;
+        this.giver = giver;
+        this.given = given;
         this.thing_id = thing_id;
     }
 
-    public PostDTO(String description, Date created_time,
-                   boolean visible, boolean deletion, String contact,
-                   String exchange_method, String status, UUID thing_id) {
-        this.description = description;
-        this.created_time = created_time;
-        this.visible = visible;
-        this.deletion = deletion;
-        this.contact = contact;
-        this.exchange_method = exchange_method;
-        this.status = status;
-        this.thing_id = thing_id;
-    }
+
 
     public UUID getId() {
         return id;
@@ -125,6 +135,22 @@ public class PostDTO {
 
     public void setThing(ThingDTO thing) {
         this.thing = thing;
+    }
+
+    public UUID getGiver() {
+        return giver;
+    }
+
+    public void setGiver(UUID giver) {
+        this.giver = giver;
+    }
+
+    public UUID getGiven() {
+        return given;
+    }
+
+    public void setGiven(UUID given) {
+        this.given = given;
     }
 
     public List<PostRegistrationDTO> getPostRegistrationList() {

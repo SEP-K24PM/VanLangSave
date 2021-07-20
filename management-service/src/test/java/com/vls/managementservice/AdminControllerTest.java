@@ -3,8 +3,12 @@ package com.vls.managementservice;
 import com.vls.managementservice.controller.AdminController;
 import com.vls.managementservice.model.AdminAccount;
 import com.vls.managementservice.repository.AdminAccountRepository;
+import com.vls.managementservice.repository.PostReportRepository;
 import com.vls.managementservice.service.AdminService;
 import com.vls.managementservice.service.PostReportService;
+import com.vls.managementservice.service.PostService;
+import com.vls.managementservice.service.UserAccountService;
+import com.vls.managementservice.service.UserHandlingService;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,6 +33,9 @@ public class AdminControllerTest extends AbstractTest {
     private AdminService adminService;
     private ModelMapper modelMapper;
     private PostReportService postReportService;
+    private PostService postService;
+    private UserAccountService userAccountService;
+    private UserHandlingService userHandlingService;
 
     @Mock
     private RestTemplate restTemplate;
@@ -36,14 +43,18 @@ public class AdminControllerTest extends AbstractTest {
     @Mock
     private AdminAccountRepository adminAccountRepository;
 
+    @Mock
+    private PostReportRepository postReportRepository;
+
     @Override
     @Before
     public void setUp() {
         super.setUp();
         adminService = new AdminService(adminAccountRepository);
         modelMapper = new ModelMapper();
-        // postReportService = new Pos
-        // adminController = new AdminController(adminService, restTemplate, modelMapper);
+        postReportService = new PostReportService(postReportRepository);
+        adminController = new AdminController(adminService, modelMapper, postReportService, postService,
+            userAccountService, userHandlingService);
     }
 
     @Test

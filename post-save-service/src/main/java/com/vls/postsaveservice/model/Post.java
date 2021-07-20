@@ -40,10 +40,17 @@ public class Post {
     @Column(name = "contact")
     private String contact;
 
+    @Column(name = "giver")
+    private UUID giver;
+
+    @Column(name = "given")
+    private UUID given;
+
     public Post() {
     }
 
-    public Post(String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status, String exchange_method, String contact) {
+    public Post(String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status,
+            String exchange_method, String contact, UUID giver, UUID given) {
         this.description = description;
         this.created_time = created_time;
         this.thing_id = thing_id;
@@ -52,9 +59,12 @@ public class Post {
         this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
+        this.giver = giver;
+        this.given = given;
     }
 
-    public Post(UUID id, String description, Date created_time, UUID thing_id, boolean visible, boolean deletion, String status, String exchange_method, String contact) {
+    public Post(UUID id, String description, Date created_time, UUID thing_id, boolean visible, boolean deletion,
+            String status, String exchange_method, String contact, UUID giver, UUID given) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
@@ -64,6 +74,8 @@ public class Post {
         this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
+        this.giver = giver;
+        this.given = given;
     }
 
     public UUID getId() {
@@ -138,18 +150,20 @@ public class Post {
         this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", created_time=" + created_time +
-                ", thing_id=" + thing_id +
-                ", visible=" + visible +
-                ", deletion=" + deletion +
-                ", status='" + status + '\'' +
-                ", exchange_method='" + exchange_method + '\'' +
-                ", contact='" + contact + '\'' +
-                '}';
+    public UUID getGiver() {
+        return giver;
     }
+
+    public void setGiver(UUID giver) {
+        this.giver = giver;
+    }
+
+    public UUID getGiven() {
+        return given;
+    }
+
+    public void setGiven(UUID given) {
+        this.given = given;
+    }
+
 }

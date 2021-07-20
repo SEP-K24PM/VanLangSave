@@ -1,11 +1,17 @@
 package com.vls.thingservice.controller;
 
+import com.vls.thingservice.model.Post;
 import com.vls.thingservice.model.Thing;
+import com.vls.thingservice.service.PostService;
 import com.vls.thingservice.service.ThingService;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import DTO.ThingDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,12 +19,15 @@ import java.util.UUID;
 
 @RestController
 public class ThingController {
-
     private final ThingService thingService;
+    private final ModelMapper modelMapper;
+    private final PostService postService;
 
     @Autowired
-    public ThingController(ThingService thingService) {
+    public ThingController(ThingService thingService, ModelMapper modelMapper, PostService postService) {
         this.thingService = thingService;
+        this.modelMapper = modelMapper;
+        this.postService = postService;
     }
 
     @RequestMapping("/list/{userId}")
@@ -28,10 +37,11 @@ public class ThingController {
     }
 
     @RequestMapping(value = "/details/{thingId}")
-    public ResponseEntity<Thing> getThingDetails(@PathVariable("thingId") String thingId) {
+    public ResponseEntity<ThingDTO> getThingDetails(@PathVariable("thingId") String thingId) {
         Optional<Thing> thing = thingService.getThingDetails(thingId);
         if(thing.isPresent()) {
-            return new ResponseEntity<>(thing.get(), HttpStatus.OK);
+            ThingDTO thingDTO = modelMapper.map(thing.get(), ThingDTO.class);
+            return new ResponseEntity<>(thingDTO, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -56,8 +66,6 @@ public class ThingController {
                 _thing.setImage(thing.getImage());
                 _thing.setUserid(thing.getUserid());
                 _thing.setUsed_time(thing.getUsed_time());
-                _thing.setCategory_id(thing.getCategory_id());
-                _thing.setPost_id(thing.getPost_id());
 
                 return new ResponseEntity<>(thingService.updateThing(_thing), HttpStatus.OK);
             } else {
@@ -87,5 +95,17 @@ public class ThingController {
     public ResponseEntity<List<Thing>> getListAvaialbe(@PathVariable("userId") String userId) {
         List<Thing> things = thingService.getListThingsAvailable(UUID.fromString(userId));
         return new ResponseEntity<>(things, HttpStatus.OK);
+    }
+
+    @RequestMapping("/get-post/{thingId}")
+    public ResponseEntity<Post> getPostByThingId(@PathVariable("thingId") String thingId) {
+        Post post = postService.findPostByThingId(UUID.fromString(thingId));
+        if(post != null) {
+            if(post.isDeletion() == false && post.isVisible() == true) {
+                return new ResponseEntity<Post>(post, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

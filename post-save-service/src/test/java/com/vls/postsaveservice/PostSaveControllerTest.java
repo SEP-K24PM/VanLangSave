@@ -62,14 +62,14 @@ public class PostSaveControllerTest extends AbstractTest {
         UUID thingId = UUID.randomUUID();
 
         Post post = new Post("description", new Date(), thingId,
-                true, false, "Mở", "Free", "contact");
+                true, false, "Mở", "Free", "contact", UUID.randomUUID(), UUID.randomUUID());
         Thing thing = new Thing(thingId, "name", "origin", 1000,
                 1, "used_time", "image", UUID.randomUUID(),
                 UUID.randomUUID());
         Category category = new Category(thing.getCategory_id(), "name");
 
         Post savedPost = new Post(UUID.randomUUID(),"description", new Date(), thing.getId(),
-                true, false, "Mở", "Free", "contact");
+                true, false, "Mở", "Free", "contact", UUID.randomUUID(), UUID.randomUUID());
         Thing updatedThing = new Thing(thing.getId(), "name", "origin", 1000,
                 1, "used_time", "image", category.getId(),
                 UUID.randomUUID());

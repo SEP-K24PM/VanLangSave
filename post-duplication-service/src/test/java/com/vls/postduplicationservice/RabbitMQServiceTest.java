@@ -31,7 +31,7 @@ public class RabbitMQServiceTest extends AbstractTest {
     }
 
     @Test
-    public void RabbitMQServiceTest() {
+    public void RabbitMQTest() {
         postelastic postelastic = new postelastic(UUID.randomUUID().toString(), "description",
                 "exchange method", new Date(), true, "thing name", "origin", "category name", "image");
 

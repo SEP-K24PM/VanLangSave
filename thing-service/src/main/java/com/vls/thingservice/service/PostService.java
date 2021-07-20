@@ -20,4 +20,8 @@ public class PostService {
     public Optional<Post> getPost(UUID id) {
         return postRepository.findById(id);
     }
+
+    public Post findPostByThingId(UUID thingId) {
+        return postRepository.findByThingId(thingId);
+    }
 }

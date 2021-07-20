@@ -1,8 +1,5 @@
 package com.vls.managementservice.model;
 
-import com.vls.managementservice.model.Thing;
-import com.vls.managementservice.model.UserRating;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;

@@ -22,8 +22,9 @@ public class Post {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date created_time;
 
-    @Column(name = "thing_id")
-    private UUID thing_id;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="thing_id", referencedColumnName="id")
+    private Thing thing;
 
     @Column(name = "status")
     private String status;
@@ -34,27 +35,45 @@ public class Post {
     @Column(name = "contact")
     private String contact;
 
+    @Column(name = "given")
+    private UUID given;
+
+    @Column(name = "giver")
+    private UUID giver;
+
     public Post() {
     }
 
-    public Post(String description, Date created_time, UUID thing_id, String status, String exchange_method, String contact) {
+    
+
+    public Post(String description, Date created_time, Thing thing, String status, String exchange_method,
+            String contact, UUID given, UUID giver) {
         this.description = description;
         this.created_time = created_time;
-        this.thing_id = thing_id;
+        this.thing = thing;
         this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
+        this.given = given;
+        this.giver = giver;
     }
 
-    public Post(UUID id, String description, Date created_time, UUID thing_id, String status, String exchange_method, String contact) {
+
+
+    public Post(UUID id, String description, Date created_time, Thing thing, String status, String exchange_method,
+            String contact, UUID given, UUID giver) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
-        this.thing_id = thing_id;
+        this.thing = thing;
         this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
+        this.given = given;
+        this.giver = giver;
     }
+
+
 
     public UUID getId() {
         return id;
@@ -78,14 +97,6 @@ public class Post {
 
     public void setCreated_time(Date created_time) {
         this.created_time = created_time;
-    }
-
-    public UUID getThing_id() {
-        return thing_id;
-    }
-
-    public void setThing_id(UUID thing_id) {
-        this.thing_id = thing_id;
     }
 
     public String getStatus() {
@@ -112,16 +123,26 @@ public class Post {
         this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", created_time=" + created_time +
-                ", thing_id=" + thing_id +
-                ", status='" + status + '\'' +
-                ", exchange_method='" + exchange_method + '\'' +
-                ", contact='" + contact + '\'' +
-                '}';
+    public UUID getGiven() {
+        return given;
     }
+
+
+
+    public void setGiven(UUID given) {
+        this.given = given;
+    }
+
+
+
+    public UUID getGiver() {
+        return giver;
+    }
+
+
+
+    public void setGiver(UUID giver) {
+        this.giver = giver;
+    }
+    
 }

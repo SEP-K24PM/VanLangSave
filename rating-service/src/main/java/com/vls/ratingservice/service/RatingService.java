@@ -1,6 +1,5 @@
 package com.vls.ratingservice.service;
 
-import DTO.PostDTO;
 import com.vls.ratingservice.model.UserRating;
 import com.vls.ratingservice.repository.UserRatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

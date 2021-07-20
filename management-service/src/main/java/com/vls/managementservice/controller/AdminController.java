@@ -46,7 +46,10 @@ public class AdminController {
     public ResponseEntity<AdminAccount> login(@RequestBody AdminAccount adminAccount) {
         Optional<AdminAccount> admin = adminService.getAccount(adminAccount.getEmail());
         if(admin.isPresent()) {
-            return new ResponseEntity<>(admin.get(), HttpStatus.FOUND);
+            if(admin.get().getPwd().equalsIgnoreCase(adminAccount.getPwd())) {
+                return new ResponseEntity<>(admin.get(), HttpStatus.ACCEPTED);
+            }
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

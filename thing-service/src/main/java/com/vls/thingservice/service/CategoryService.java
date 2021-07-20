@@ -18,16 +18,16 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Thing> addCategoryNameToThing(List<Thing> list) {
-        List<Thing> listWithCateName = new ArrayList<>();
-        Category tmpCategory = new Category();
-        for (Thing thing: list) {
-            if(categoryRepository.existsById(thing.getCategory_id())) {
-                tmpCategory = categoryRepository.getOne(thing.getCategory_id());
-            }
-            thing.setCategory_name(tmpCategory.getCategory_name());
-            listWithCateName.add(thing);
-        }
-        return listWithCateName;
-    }
+    // public List<Thing> addCategoryNameToThing(List<Thing> list) {
+    //     List<Thing> listWithCateName = new ArrayList<>();
+    //     Category tmpCategory = new Category();
+    //     for (Thing thing: list) {
+    //         if(categoryRepository.existsById(thing.getCategory_id())) {
+    //             tmpCategory = categoryRepository.getOne(thing.getCategory_id());
+    //         }
+    //       //  thing.setCategory_name(tmpCategory.getCategory_name());
+    //         listWithCateName.add(thing);
+    //     }
+    //     return listWithCateName;
+    // }
 }
