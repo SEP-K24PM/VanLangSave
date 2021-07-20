@@ -20,8 +20,8 @@ public class PostService {
         return postRepository.findById(postId).get();
     }
 
-    public void closePost(Post post) {
+    public Post closePost(Post post) {
         post.setStatus("Đóng");
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 }

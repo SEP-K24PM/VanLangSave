@@ -24,15 +24,15 @@ public class TradeController {
     }
     //duyệt đăng ký
     @RequestMapping(value = "/accept-register/{postRegisId}", method = RequestMethod.POST)
-    public ResponseEntity<PostRegistration> chooseRegister(@PathVariable("postRegisId") UUID postRegisId) {
+    public ResponseEntity<Post> chooseRegister(@PathVariable("postRegisId") UUID postRegisId) {
         Optional<PostRegistration> postRegistration = postRegistrationService.getPostRegis(postRegisId);
         if(postRegistration.isPresent()) {
             PostRegistration postRegistrationData = postRegistration.get();
             Post post = postService.getPost(postRegistrationData.getPost_id());
             if(post.getStatus().equalsIgnoreCase("Mở")) {
                 postRegistrationService.setChosen(postRegistrationData);
-                postService.closePost(post);
-                return new ResponseEntity<>(HttpStatus.OK);
+                Post savedPost = postService.closePost(post);
+                return new ResponseEntity<>(savedPost, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
