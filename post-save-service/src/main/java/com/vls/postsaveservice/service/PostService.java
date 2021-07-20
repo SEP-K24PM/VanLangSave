@@ -48,7 +48,7 @@ public class PostService {
     }
 
     public boolean checkIfAllowUpdate(Post post) {
-        if(post.getStatus().equalsIgnoreCase(ActionConstants.PostStatus.OPEN))
+        if (post.getStatus().equalsIgnoreCase(ActionConstants.PostStatus.OPEN))
             return true;
         return false;
     }
@@ -58,7 +58,7 @@ public class PostService {
     }
 
     public boolean checkIfDeletePossible(Post post) {
-        if(post.getStatus().equalsIgnoreCase(ActionConstants.PostStatus.OPEN)) {
+        if (post.getStatus().equalsIgnoreCase(ActionConstants.PostStatus.OPEN)) {
             return true;
         }
         return false;
@@ -66,5 +66,27 @@ public class PostService {
 
     public void deletePost(Post post) {
         postRepository.delete(post);
+    }
+
+    public Post cancelPost(Post post) {
+        post.setStatus(ActionConstants.PostStatus.CANCELLED);
+        return postRepository.save(post);
+    }
+
+    public Post completePost(Post post, UUID userId) {
+        if(post.getGiven() != userId && post.getGiver() != userId) {
+            if(post.getGiven() == null) {
+                post.setGiven(userId);
+                if(post.getGiver() != null) {
+                    post.setStatus(ActionConstants.PostStatus.COMPLETE);
+                }
+            } else {
+                if(post.getGiver() == null) {
+                    post.setGiver(userId);
+                    post.setStatus(ActionConstants.PostStatus.COMPLETE);
+                }
+            }
+        }
+        return postRepository.save(post);
     }
 }

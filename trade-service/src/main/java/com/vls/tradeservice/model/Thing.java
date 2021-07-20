@@ -35,14 +35,12 @@ public class Thing {
     @Column(name = "category_id")
     private UUID category_id;
 
-    @Column(name = "post_id")
-    private UUID post_id;
 
 
     public Thing() {
     }
 
-    public Thing(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID userid, UUID category_id, UUID post_id) {
+    public Thing(String thing_name, String origin, int price, int quantity, String used_time, String image, UUID userid, UUID category_id) {
         this.thing_name = thing_name;
         this.origin = origin;
         this.price = price;
@@ -51,10 +49,9 @@ public class Thing {
         this.image = image;
         this.userid = userid;
         this.category_id = category_id;
-        this.post_id = post_id;
     }
 
-    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID userid, UUID category_id, UUID post_id) {
+    public Thing(UUID id, String thing_name, String origin, int price, int quantity, String used_time, String image, UUID userid, UUID category_id) {
         this.id = id;
         this.thing_name = thing_name;
         this.origin = origin;
@@ -64,7 +61,6 @@ public class Thing {
         this.image = image;
         this.userid = userid;
         this.category_id = category_id;
-        this.post_id = post_id;
     }
 
     public UUID getId() {
@@ -137,29 +133,5 @@ public class Thing {
 
     public void setCategory_id(UUID category_id) {
         this.category_id = category_id;
-    }
-
-    public UUID getPost_id() {
-        return post_id;
-    }
-
-    public void setPost_id(UUID post_id) {
-        this.post_id = post_id;
-    }
-
-    @Override
-    public String toString() {
-        return "Thing{" +
-                "id=" + id +
-                ", thing_name='" + thing_name + '\'' +
-                ", origin='" + origin + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", used_time='" + used_time + '\'' +
-                ", image='" + image + '\'' +
-                ", user_id=" + userid +
-                ", category_id=" + category_id +
-                ", post_id=" + post_id +
-                '}';
     }
 }

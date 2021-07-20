@@ -24,8 +24,7 @@ public class ThingService {
     }
 
     public List<Thing> getListThings(UUID userId) {
-        List<Thing> list = thingRepository.findByUserid(userId);
-        return categoryService.addCategoryNameToThing(list);
+        return thingRepository.findByUserid(userId);
     }
 
     public Thing addThing(Thing thing) {
@@ -44,16 +43,16 @@ public class ThingService {
     }
 
     public boolean checkIsPossibleToUpdateOrDelete(Thing thing) {
-        if(thing.getPost_id() != null) {
-            Optional<Post> post = postService.getPost(thing.getPost_id());
-            if(post.isPresent()) {
-                if(post.get().getStatus().equalsIgnoreCase("Mở")) {
-                    return true;
-                }
-                return false;
-            }
-            return true;
-        }
+        // if(thing.getPost_id() != null) {
+        //     Optional<Post> post = postService.getPost(thing.getPost_id());
+        //     if(post.isPresent()) {
+        //         if(post.get().getStatus().equalsIgnoreCase("Mở")) {
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        //     return true;
+        // }
         return true;
     }
 
@@ -62,7 +61,6 @@ public class ThingService {
     }
 
     public List<Thing> getListThingsAvailable(UUID userId) {
-        List<Thing> list = thingRepository.findAvailableThing(userId);
-        return categoryService.addCategoryNameToThing(list);
+        return thingRepository.findAvailableThing(userId);
     }
 }

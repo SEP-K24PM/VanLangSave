@@ -34,19 +34,17 @@ public class Post {
     @Column(name = "contact")
     private String contact;
 
+    @Column(name = "visible")
+    private boolean visible;
+
+    @Column(name = "deletion")
+    private boolean deletion;
+
     public Post() {
     }
 
-    public Post(String description, Date created_time, UUID thing_id, String status, String exchange_method, String contact) {
-        this.description = description;
-        this.created_time = created_time;
-        this.thing_id = thing_id;
-        this.status = status;
-        this.exchange_method = exchange_method;
-        this.contact = contact;
-    }
-
-    public Post(UUID id, String description, Date created_time, UUID thing_id, String status, String exchange_method, String contact) {
+    public Post(UUID id, String description, Date created_time, UUID thing_id, String status, String exchange_method,
+            String contact, boolean visible, boolean deletion) {
         this.id = id;
         this.description = description;
         this.created_time = created_time;
@@ -54,6 +52,20 @@ public class Post {
         this.status = status;
         this.exchange_method = exchange_method;
         this.contact = contact;
+        this.visible = visible;
+        this.deletion = deletion;
+    }
+
+    public Post(String description, Date created_time, UUID thing_id, String status, String exchange_method,
+            String contact, boolean visible, boolean deletion) {
+        this.description = description;
+        this.created_time = created_time;
+        this.thing_id = thing_id;
+        this.status = status;
+        this.exchange_method = exchange_method;
+        this.contact = contact;
+        this.visible = visible;
+        this.deletion = deletion;
     }
 
     public UUID getId() {
@@ -112,16 +124,21 @@ public class Post {
         this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", created_time=" + created_time +
-                ", thing_id=" + thing_id +
-                ", status='" + status + '\'' +
-                ", exchange_method='" + exchange_method + '\'' +
-                ", contact='" + contact + '\'' +
-                '}';
+    public boolean isVisible() {
+        return visible;
     }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isDeletion() {
+        return deletion;
+    }
+
+    public void setDeletion(boolean deletion) {
+        this.deletion = deletion;
+    }
+
+    
 }

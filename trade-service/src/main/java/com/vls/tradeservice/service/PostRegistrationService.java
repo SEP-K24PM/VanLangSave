@@ -2,7 +2,9 @@ package com.vls.tradeservice.service;
 
 import com.vls.tradeservice.model.PostRegistWithEntities;
 import com.vls.tradeservice.model.PostRegistration;
+import com.vls.tradeservice.model.PostRegistrationWithPost;
 import com.vls.tradeservice.repository.PostRegistrationRepo;
+import com.vls.tradeservice.repository.PostRegistrationWithPostRepo;
 import com.vls.tradeservice.repository.PostRegistrationWithRelatedEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,14 @@ import java.util.UUID;
 public class PostRegistrationService {
     private final PostRegistrationWithRelatedEntityRepository postRegistrationWithRelatedEntityRepository;
     private final PostRegistrationRepo postRegistrationRepo;
+    private final PostRegistrationWithPostRepo postRegistrationWithPostRepo;
 
     @Autowired
-    public PostRegistrationService(PostRegistrationWithRelatedEntityRepository postRegistrationWithRelatedEntityRepository, PostRegistrationRepo postRegistrationRepo) {
+    public PostRegistrationService(PostRegistrationWithRelatedEntityRepository postRegistrationWithRelatedEntityRepository, PostRegistrationRepo postRegistrationRepo,
+                PostRegistrationWithPostRepo postRegistrationWithPostRepo) {
         this.postRegistrationWithRelatedEntityRepository = postRegistrationWithRelatedEntityRepository;
         this.postRegistrationRepo = postRegistrationRepo;
+        this.postRegistrationWithPostRepo = postRegistrationWithPostRepo;
     }
 
     public List<PostRegistWithEntities> getListPostRegis(UUID postId) {
@@ -37,5 +42,9 @@ public class PostRegistrationService {
     public void setChosen(PostRegistration postRegistration) {
         postRegistration.setChosen(true);
         postRegistrationRepo.save(postRegistration);
+    }
+
+    public List<PostRegistrationWithPost> getUserRegisList(UUID userId) {
+        return postRegistrationWithPostRepo.getUserRegisList(userId);
     }
 }

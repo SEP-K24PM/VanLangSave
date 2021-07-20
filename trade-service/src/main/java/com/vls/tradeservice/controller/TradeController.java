@@ -53,4 +53,9 @@ public class TradeController {
         return new ResponseEntity<>(listRegister, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/user-regis/{userId}")
+    public ResponseEntity<List<PostRegistrationWithPost>> userRegistList(@PathVariable("userId") UUID userId) {
+        List<PostRegistrationWithPost> list = postRegistrationService.getUserRegisList(userId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

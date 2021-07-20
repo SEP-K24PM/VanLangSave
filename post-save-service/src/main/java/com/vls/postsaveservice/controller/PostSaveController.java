@@ -21,8 +21,8 @@ public class PostSaveController {
     private final CategoryService categoryService;
 
     @Autowired
-    public PostSaveController(PostService postService, RabbitMQSender rabbitMQSender,
-        ThingService thingService, CategoryService categoryService) {
+    public PostSaveController(PostService postService, RabbitMQSender rabbitMQSender, ThingService thingService,
+            CategoryService categoryService) {
         this.postService = postService;
         this.rabbitMQSender = rabbitMQSender;
         this.categoryService = categoryService;
@@ -45,8 +45,8 @@ public class PostSaveController {
     @RequestMapping(value = "/update/{postId}")
     public ResponseEntity<PostDTO> updatePost(@PathVariable("postId") String postId, @RequestBody Post post) {
         Optional<Post> postData = postService.getPostDetails(UUID.fromString(postId));
-        if(postData.isPresent()) {
-            if(postService.checkIfAllowUpdate(postData.get())) {
+        if (postData.isPresent()) {
+            if (postService.checkIfAllowUpdate(postData.get())) {
                 Post _post = postData.get();
                 _post.setDescription(post.getDescription());
                 _post.setStatus(post.getStatus());
@@ -57,7 +57,7 @@ public class PostSaveController {
                 Thing thing = thingService.findThingById(updatedPost.getThing_id());
                 Category category = categoryService.findCategoryById(thing.getCategory_id());
                 PostDTO postDTO = postService.convertToPostDTO(updatedPost, thing, category);
-                
+
                 new Thread(() -> {
                     PostElastic postelastic = rabbitMQSender.convertToPostElastic(postDTO);
                     rabbitMQSender.send(postelastic);
@@ -69,24 +69,43 @@ public class PostSaveController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-   @RequestMapping(value = "/delete/{postId}")
-   public ResponseEntity<Boolean> delete(@PathVariable("postId") UUID postId) {
-       Optional<Post> postData = postService.getPostDetails(postId);
-       if(postData.isPresent()) {
-           Post post = postData.get();
-           if(postService.checkIfDeletePossible(post)) {
-               postService.deletePost(post);
-               new Thread(() -> {
-                   PostElastic postElastic = new PostElastic();
-                   postElastic.setId(post.getId().toString());
-                   rabbitMQSender.sendDelete(postElastic);
-               }).start();
-               return new ResponseEntity<>(HttpStatus.OK);
-           } else {
-               return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-           }
-       } else {
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       }
-   }
+    @RequestMapping(value = "/delete/{postId}")
+    public ResponseEntity<Boolean> delete(@PathVariable("postId") UUID postId) {
+        Optional<Post> postData = postService.getPostDetails(postId);
+        if (postData.isPresent()) {
+            Post post = postData.get();
+            if (postService.checkIfDeletePossible(post)) {
+                postService.deletePost(post);
+                new Thread(() -> {
+                    PostElastic postElastic = new PostElastic();
+                    postElastic.setId(post.getId().toString());
+                    rabbitMQSender.sendDelete(postElastic);
+                }).start();
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/cancel/{postId}")
+    public ResponseEntity<Post> cancel(@PathVariable("postId") UUID postId) {
+        Optional<Post> postData = postService.getPostDetails(postId);
+        if (postData.isPresent()) {
+            return new ResponseEntity<>(postService.cancelPost(postData.get()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/complete")
+    public ResponseEntity<Post> complete(Post post) {
+        Optional<Post> postData = postService.getPostDetails(post.getId());
+        if (postData.isPresent()) {
+            Post updatedPost = postService.completePost(postData.get(), post.getGiven());
+            return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
