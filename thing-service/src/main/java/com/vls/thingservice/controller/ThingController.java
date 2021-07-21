@@ -1,7 +1,9 @@
 package com.vls.thingservice.controller;
 
+import com.vls.thingservice.model.Category;
 import com.vls.thingservice.model.Post;
 import com.vls.thingservice.model.Thing;
+import com.vls.thingservice.service.CategoryService;
 import com.vls.thingservice.service.PostService;
 import com.vls.thingservice.service.ThingService;
 
@@ -22,12 +24,14 @@ public class ThingController {
     private final ThingService thingService;
     private final ModelMapper modelMapper;
     private final PostService postService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ThingController(ThingService thingService, ModelMapper modelMapper, PostService postService) {
+    public ThingController(ThingService thingService, ModelMapper modelMapper, PostService postService, CategoryService categoryService) {
         this.thingService = thingService;
         this.modelMapper = modelMapper;
         this.postService = postService;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping("/list/{userId}")
@@ -47,7 +51,12 @@ public class ThingController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Thing> addThing(@RequestBody Thing thing) {
+    public ResponseEntity<Thing> addThing(@RequestBody ThingDTO thingDTO) {
+        Thing thing = modelMapper.map(thingDTO, Thing.class);
+        thing.setUserid(thingDTO.getUser_id());
+        Category category = new Category();
+        category.setCategory_name(thingDTO.getCategory().getCategory_name());
+        thing.setCategory(category);
         Thing _thing = thingService.addThing(thing);
         return new ResponseEntity<>(_thing, HttpStatus.CREATED);
     }
@@ -107,5 +116,11 @@ public class ThingController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping("/get-categories")
+    public ResponseEntity<List<Category>> getCategories() {
+        List<Category> list = categoryService.getCategories();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
