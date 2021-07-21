@@ -2,6 +2,8 @@ package com.vls.thingservice.service;
 
 import com.vls.thingservice.model.Post;
 import com.vls.thingservice.model.Thing;
+import com.vls.thingservice.model.ThingForSaving;
+import com.vls.thingservice.repository.ThingFSRepository;
 import com.vls.thingservice.repository.ThingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,51 +15,39 @@ import java.util.UUID;
 @Service
 public class ThingService {
     private final ThingRepository thingRepository;
-    private final PostService postService;
-    private final CategoryService categoryService;
+    private final ThingFSRepository thingFSRepository;
 
     @Autowired
-    public ThingService(ThingRepository thingRepository, PostService postService, CategoryService categoryService) {
+    public ThingService(ThingRepository thingRepository, ThingFSRepository thingFSRepository) {
         this.thingRepository = thingRepository;
-        this.postService = postService;
-        this.categoryService = categoryService;
+        this.thingFSRepository = thingFSRepository;
     }
 
     public List<Thing> getListThings(UUID userId) {
         return thingRepository.findByUserid(userId);
     }
 
-    public Thing addThing(Thing thing) {
-        Thing savedThing = thingRepository.save(thing);
+    public ThingForSaving addThing(ThingForSaving thing) {
+        ThingForSaving savedThing = thingFSRepository.save(thing);
         savedThing.setImage(savedThing.getId().toString()+".png");
-        thingRepository.save(savedThing);
+        thingFSRepository.save(savedThing);
         return savedThing;
     }
 
     public Optional<Thing> getThingDetails(String thingId) {
         return thingRepository.findById(UUID.fromString(thingId));
     }
-
-    public Thing updateThing(Thing thing) {
-        return thingRepository.save(thing);
+    
+    public Optional<ThingForSaving> getThingFSDetails(String thingId) {
+        return thingFSRepository.findById(UUID.fromString(thingId));
     }
 
-    public boolean checkIsPossibleToUpdateOrDelete(Thing thing) {
-        // if(thing.getPost_id() != null) {
-        //     Optional<Post> post = postService.getPost(thing.getPost_id());
-        //     if(post.isPresent()) {
-        //         if(post.get().getStatus().equalsIgnoreCase("Mở")) {
-        //             return true;
-        //         }
-        //         return false;
-        //     }
-        //     return true;
-        // }
-        return true;
+    public ThingForSaving updateThing(ThingForSaving thing) {
+        return thingFSRepository.save(thing);
     }
 
     public void deleteThing(String thingId) {
-        thingRepository.deleteById(UUID.fromString(thingId));
+        thingFSRepository.deleteById(UUID.fromString(thingId));
     }
 
     public List<Thing> getListThingsAvailable(UUID userId) {
