@@ -99,11 +99,12 @@ public class PostSaveController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/complete")
-    public ResponseEntity<Post> complete(Post post) {
-        Optional<Post> postData = postService.getPostDetails(post.getId());
+    @RequestMapping(value = "/complete/{postId}/{given}", method = RequestMethod.POST)
+    public ResponseEntity<Post> complete(@PathVariable("postId") String postId, @PathVariable("given") String given) {
+        Optional<Post> postData = postService.getPostDetails(UUID.fromString(postId));
         if (postData.isPresent()) {
-            Post updatedPost = postService.completePost(postData.get(), post.getGiven());
+            Thing thing = thingService.findThingById(postData.get().getThing_id());
+            Post updatedPost = postService.completePost(postData.get(), UUID.fromString(given), thing);
             return new ResponseEntity<>(updatedPost, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

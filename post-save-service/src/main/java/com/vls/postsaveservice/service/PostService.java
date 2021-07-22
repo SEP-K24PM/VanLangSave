@@ -73,16 +73,18 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post completePost(Post post, UUID userId) {
-        if(post.getGiven() != userId && post.getGiver() != userId) {
-            if(post.getGiven() == null) {
-                post.setGiven(userId);
-                if(post.getGiver() != null) {
+    public Post completePost(Post post, UUID userId, Thing thing) {
+        if (thing.getUser_id().toString().equalsIgnoreCase(userId.toString())) {
+            if (post.getGiver() == null) {
+                post.setGiver(userId);
+                if (post.getGiven() != null) {
                     post.setStatus(ActionConstants.PostStatus.COMPLETE);
                 }
-            } else {
-                if(post.getGiver() == null) {
-                    post.setGiver(userId);
+            }
+        } else {
+            if (post.getGiven() == null) {
+                post.setGiven(userId);
+                if (post.getGiver() != null) {
                     post.setStatus(ActionConstants.PostStatus.COMPLETE);
                 }
             }
