@@ -63,16 +63,7 @@ public class ThingController {
         Optional<ThingForSaving> thingData = thingService.getThingFSDetails(thingId);
         if(thingData.isPresent()) {
             if(postService.findPostByThingId(thingData.get().getId()) == null) {
-                ThingForSaving _thing = thingData.get();
-                _thing.setId(UUID.fromString(thingId));
-                _thing.setThing_name(thingDTO.getThing_name());
-                _thing.setOrigin(thingDTO.getOrigin());
-                _thing.setPrice(thingDTO.getPrice());
-                _thing.setQuantity(thingDTO.getQuantity());
-                _thing.setImage(thingDTO.getImage());
-                _thing.setUser_id(thingDTO.getUser_id());
-                _thing.setUsed_time(thingDTO.getUsed_time());
-                return new ResponseEntity<>(thingService.updateThing(_thing), HttpStatus.OK);
+                return new ResponseEntity<>(thingService.updateThing(thingId, thingDTO), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
