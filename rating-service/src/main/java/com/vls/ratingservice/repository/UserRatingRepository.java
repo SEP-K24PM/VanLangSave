@@ -13,4 +13,7 @@ import java.util.UUID;
 public interface UserRatingRepository extends JpaRepository<UserRating, UUID> {
     @Query("SELECT u FROM UserRating u WHERE u.rated_user_id = :userId")
     public List<UserRating> findAllByUser(@Param("userId") UUID userId);
+
+    @Query("SELECT u FROM UserRating u WHERE u.post_id = :postId")
+    public List<UserRating> findAllByPost(@Param("postId") UUID postId);
 }

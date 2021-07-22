@@ -27,4 +27,9 @@ public class RatingController {
     public ResponseEntity<UserRating> createRating(@RequestBody UserRating userRating) {
         return new ResponseEntity<>(ratingService.createRating(userRating), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/list-by-post/{postId}", method = RequestMethod.POST)
+    public ResponseEntity<List<UserRating>> listRatingsByPost(@PathVariable("postId") UUID postId) {
+        return new ResponseEntity<>(ratingService.getRatingsByPost(postId), HttpStatus.OK);
+    }
 }

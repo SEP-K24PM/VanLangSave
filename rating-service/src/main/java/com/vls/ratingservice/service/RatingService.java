@@ -25,4 +25,7 @@ public class RatingService {
         return userRatingRepository.save(userRating);
     }
 
+    public List<UserRating> getRatingsByPost(UUID postId) {
+        return userRatingRepository.findAllByPost(postId);
+    }
 }
