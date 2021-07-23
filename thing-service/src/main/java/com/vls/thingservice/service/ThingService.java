@@ -30,10 +30,7 @@ public class ThingService {
     }
 
     public ThingForSaving addThing(ThingForSaving thing) {
-        ThingForSaving savedThing = thingFSRepository.save(thing);
-        savedThing.setImage(savedThing.getId().toString() + ".png");
-        thingFSRepository.save(savedThing);
-        return savedThing;
+        return thingFSRepository.save(thing);
     }
 
     public Optional<Thing> getThingDetails(String thingId) {
