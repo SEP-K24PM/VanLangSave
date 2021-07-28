@@ -2,6 +2,7 @@ package com.vls.managementservice.controller;
 
 import com.vls.managementservice.model.Category;
 import com.vls.managementservice.model.Post;
+import com.vls.managementservice.model.PostWT;
 import com.vls.managementservice.service.CategoryService;
 import com.vls.managementservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class ManagerController {
     }
 
     @RequestMapping("/post")
-    public ResponseEntity<List<Post>> getSucessPost() {
-        List<Post> posts = postService.findByStatus();
+    public ResponseEntity<List<PostWT>> getSucessPost() {
+        List<PostWT> posts = postService.findByStatus();
         return new ResponseEntity<>(posts, HttpStatus.OK);
 
     }
