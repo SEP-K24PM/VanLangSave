@@ -29,7 +29,6 @@ public class ManagerController {
     public ResponseEntity<List<PostWT>> getSucessPost() {
         List<PostWT> posts = postService.findByStatus();
         return new ResponseEntity<>(posts, HttpStatus.OK);
-
     }
 
     @RequestMapping("/category")

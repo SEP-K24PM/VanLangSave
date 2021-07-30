@@ -1,5 +1,6 @@
 package com.vls.searchservice;
 
+import Constants.PostSearchApiConstants;
 import DTO.PostDTO;
 import DTO.ThingDTO;
 import com.vls.searchservice.controller.SearchController;
@@ -49,7 +50,7 @@ public class SearchControllerTest extends AbstractTest {
                 "this is origin",
                 "this is category name"));
 
-       Mockito.when(restTemplate.postForObject("http://post-search-service/posts", search, List.class)).thenReturn(result);
+       Mockito.when(restTemplate.postForObject(PostSearchApiConstants.Post.POST_SEARCH, search, List.class)).thenReturn(result);
        ResponseEntity<List<postelastic>> response = searchController.posts(search);
        Assert.assertEquals(200, response.getStatusCodeValue());
        Assert.assertEquals(result, response.getBody());
@@ -57,23 +58,13 @@ public class SearchControllerTest extends AbstractTest {
 
     @Test
     public void newsFeed() throws ParseException {
-        ThingDTO thing = new ThingDTO(UUID.randomUUID(), "name", "origin",
-                10000, 1, "used time", "image.jpeg",
-                UUID.randomUUID(), UUID.randomUUID());
-        ThingDTO thing1 = new ThingDTO(UUID.randomUUID(), "name", "origin",
-                10000, 1, "used time", "image.jpeg",
-                UUID.randomUUID(), UUID.randomUUID());
         PostDTO post = new PostDTO(UUID.randomUUID(), "description", new Date(), true, false,
-                "contact", "method exchange", "Mở", thing.getId());
-        PostDTO post1 = new PostDTO(UUID.randomUUID(), "description",
-                new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1998"),
-                true, false,
-                "contact", "method exchange", "Mở", thing1.getId());
+                "contact", "method exchange", "Mở",
+                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
         List<PostDTO> list = new ArrayList<>();
         list.add(post);
-        list.add(post1);
 
-        Mockito.when(restTemplate.getForObject("http://newsfeed-service/", List.class)).thenReturn(list);
+        Mockito.when(restTemplate.getForObject(PostSearchApiConstants.Post.NEWSFEED, List.class)).thenReturn(list);
         ResponseEntity<List<PostDTO>> response = searchController.newsfeed();
         Assert.assertEquals(200, response.getStatusCodeValue());
         Assert.assertEquals(list, response.getBody());
@@ -81,13 +72,12 @@ public class SearchControllerTest extends AbstractTest {
 
     @Test
     public void details() {
-        ThingDTO thing = new ThingDTO(UUID.randomUUID(), "name", "origin",
-                10000, 1, "used time", "image.jpeg",
-                UUID.randomUUID(), UUID.randomUUID());
         PostDTO post = new PostDTO(UUID.randomUUID(), "description", new Date(), true, false,
-                "contact", "method exchange", "Mở", thing.getId());
+                "contact", "method exchange", "Mở",
+                UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
 
-        Mockito.when(restTemplate.postForObject("http://newsfeed-service/post/", post.getId(), PostDTO.class)).thenReturn(post);
+        Mockito.when(restTemplate.postForObject(PostSearchApiConstants.Post.POST_DETAILS, post.getId().toString(), PostDTO.class))
+                .thenReturn(post);
         ResponseEntity<PostDTO> response = searchController.postDetails(post.getId().toString());
         Assert.assertEquals(200, response.getStatusCodeValue());
         Assert.assertEquals(post, response.getBody());

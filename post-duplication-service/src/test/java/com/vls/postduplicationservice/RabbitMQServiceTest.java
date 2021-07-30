@@ -36,6 +36,8 @@ public class RabbitMQServiceTest extends AbstractTest {
                 "exchange method", new Date(), true, "thing name", "origin", "category name", "image");
 
         Mockito.when(postRepository.save(postelastic)).thenReturn(postelastic);
+        Mockito.doNothing().when(postRepository).delete(postelastic);
         rabbitMQService.receivedMessage(postelastic);
+        rabbitMQService.receivedDeleteMessage(postelastic);
     }
 }

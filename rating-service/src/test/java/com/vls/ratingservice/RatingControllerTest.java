@@ -65,4 +65,20 @@ public class RatingControllerTest extends AbstractTest {
         Assert.assertEquals(201, response.getStatusCodeValue());
         Assert.assertEquals(savedRating, response.getBody());
     }
+
+    @Test
+    public void listRatingsByPostTest() {
+        UUID postId = UUID.randomUUID();
+        UserRating rating = new UserRating("description",
+                5, UUID.randomUUID(), UUID.randomUUID(), postId);
+        List<UserRating> list = new ArrayList<>();
+        list.add(rating);
+        list.add(rating);
+
+        Mockito.when(userRatingRepository.findAllByPost(postId)).thenReturn(list);
+
+        ResponseEntity<List<UserRating>> response = ratingController.listRatingsByPost(postId);
+        Assert.assertEquals(200, response.getStatusCodeValue());
+        Assert.assertEquals(list.size(), response.getBody().size());
+    }
 }

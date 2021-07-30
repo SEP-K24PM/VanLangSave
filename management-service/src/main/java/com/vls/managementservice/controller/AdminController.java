@@ -55,7 +55,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/list-report")
-    public ResponseEntity<List<PostReportDTO>> hidePost() {
+    public ResponseEntity<List<PostReportDTO>> listReport() {
         List<PostReport> list = postReportService.getReports();
         List<PostReportDTO> result = new ArrayList<>();
         for (PostReport postReport : list) {
