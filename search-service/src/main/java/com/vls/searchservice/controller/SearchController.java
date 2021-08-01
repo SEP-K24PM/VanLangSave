@@ -3,14 +3,14 @@ package com.vls.searchservice.controller;
 import DTO.PostDTO;
 import com.vls.searchservice.dto.postelastic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import Constants.PostSearchApiConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,7 +25,10 @@ public class SearchController {
 
     @RequestMapping("/posts")
     public ResponseEntity<List<postelastic>> posts(@RequestBody String search) {
-        List<postelastic> result = restTemplate.postForObject(PostSearchApiConstants.Post.POST_SEARCH, search, List.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+//        List<postelastic> result = restTemplate.postForObject(PostSearchApiConstants.Post.POST_SEARCH, search, List.class);
+        List<postelastic> result = restTemplate.postForObject(PostSearchApiConstants.Post.POST_SEARCH, new HttpEntity<String>(search, headers), List.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
